@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FilmesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,6 @@ Route::get('/', function () {
     /* TESTE GITHUB ANDRE*/
     /*Teste*/
 });
+
+ Route::get('filmes', [FilmesController::class, 'index'])
+         ->name('filmes.index');
