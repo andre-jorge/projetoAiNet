@@ -15,7 +15,8 @@ class FilmesController extends Controller
 
     public function index()
     {
-        $todosFilmes = Filme::all();
+        $todosFilmes = Filme::paginate(8);
+        //$todosFilmes = Filme::all();
         return view('filmes.index')->with('filmes', $todosFilmes);
     }
 }
