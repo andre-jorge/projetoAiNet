@@ -16,9 +16,11 @@ use App\Http\Controllers\FilmesController;
 
 Route::get('/', function () {
     return view('welcome');
-    /* TESTE GITHUB ANDRE*/
-    /*Teste*/
 });
 
  Route::get('filmes', [FilmesController::class, 'index'])
          ->name('filmes.index');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
