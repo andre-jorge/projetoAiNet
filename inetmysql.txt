@@ -1,0 +1,7 @@
+SELECT f.titulo, f.sumario , f.genero_code, f.cartaz_url, s.data
+FROM filmes f
+LEFT JOIN sessoes s
+ON f.id = s.filme_id
+WHERE s.data >= CURDATE()
+GROUP BY f.titulo, f.sumario , f.genero_code, f.cartaz_url, s.data
+ORDER BY f.titulo

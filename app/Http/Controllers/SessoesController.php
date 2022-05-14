@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Filme;
+use App\Models\Sessao;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 
-class FilmesController extends Controller
+class SessoesController extends Controller
 {
     // public function admin_index()
     // {
     //     $todosCursos = Curso::all();
     //     return view('cursos.admin')->with('cursos', $todosCursos);
     // }
-
 
     public function index()
     {
