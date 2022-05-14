@@ -15,7 +15,7 @@ use App\Http\Controllers\FilmesController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
  Route::get('filmes', [FilmesController::class, 'index'])
