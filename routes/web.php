@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmesController;
+use App\Http\Controllers\SessoesController;
 
 /*
 |--------------------------------------------------------------------------
