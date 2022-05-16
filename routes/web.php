@@ -14,12 +14,13 @@ use App\Http\Controllers\FilmesController;
 |
 */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+// Route::get('/home', function () {
+//     return view('home');
+// });
+
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
  Route::get('filmes', [FilmesController::class, 'index'])
@@ -27,4 +28,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
