@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sessao extends Model
 {
-    use HasFactory;
+    //use HasFactory;
+    protected $table = "sessoes";
 }

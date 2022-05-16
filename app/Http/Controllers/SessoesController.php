@@ -11,10 +11,10 @@ class SessoesController extends Controller
 
         public function index()
      {
-        $todasSessoes = DB::table('sessoes')
-         ->where('data', '<', '2020-01-03');//getdate())
+        $todasSessoes = Sessao::all();
+         //->where('data', '<', '2020-01-03');//getdate())
 
-         //dd($todosFilmes);
+         //dd($todasSessoes);
          //$todosFilmes = Filme::all();
          return view('sessoes.index')->with('sessoes', $todasSessoes);
      }
