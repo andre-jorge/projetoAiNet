@@ -16,17 +16,29 @@ class FilmesController extends Controller
     //     return view('cursos.admin')->with('cursos', $todosCursos);
     // }
 
+    // public function index(Request $request)
+    // {
+    //     $listaFilmes = DB::table('filmes')
+    //     ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
+    //     ->where('sessoes.data', '<', '2020-01-03')//getdate())
+    //     ->orderBy('data','asc')
+    //     ->paginate(8);
+    //     $id = $request->query('film', $listaFilmes[0]->id);
+    //     $filme = Filme::findOrFail($id);
+    //     return view('filmes.index', compact('listaFilmes', 'filme'));
+    // }
 
-    public function index()
-    {
+
+     public function index()
+     {
         $todosFilmes = DB::table('filmes')
-        ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
-        ->where('sessoes.data', '<', '2020-01-03')//getdate())
-        ->orderBy('data','asc')
-        ->paginate(8);
+         ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
+         ->where('sessoes.data', '<', '2020-01-03')//getdate())
+         ->orderBy('data','asc')
+         ->paginate(8);
 
-        //dd($todosFilmes);
-        //$todosFilmes = Filme::all();
-        return view('filmes.index')->with('filmes', $todosFilmes);
-    }
+         //dd($todosFilmes);
+         //$todosFilmes = Filme::all();
+         return view('filmes.index')->with('filmes', $todosFilmes);
+     }
 }

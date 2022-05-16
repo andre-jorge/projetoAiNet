@@ -21,7 +21,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#!">Casa</a></li>
+                            <a class="nav-link active" aria-current="page" href="{{route('sessoes.index')}}">Sessoes</a></li>
                         <li class="{{Route::currentRouteName() == 'filmes.index' ? 'sel' : ''}}">
                             <a class="nav-link" href="{{route('filmes.index')}}">Filmes</a></li>
                         <li class="nav-item dropdown">

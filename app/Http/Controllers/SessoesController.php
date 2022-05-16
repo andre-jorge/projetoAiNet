@@ -1,31 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Models\Sessao;
-use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
 
+use App\Models\Sessao;
+use Illuminate\Http\Request;
 
 class SessoesController extends Controller
 {
-    // public function admin_index()
-    // {
-    //     $todosCursos = Curso::all();
-    //     return view('cursos.admin')->with('cursos', $todosCursos);
-    // }
-
-    public function index()
-    {
-        $todosFilmes = DB::table('filmes')
-        ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
-        ->where('sessoes.data', '<', '2020-01-03')//getdate())
-        ->orderBy('data','asc')
-        ->paginate(8);
-
-        //dd($todosFilmes);
-        //$todosFilmes = Filme::all();
-        return view('filmes.index')->with('filmes', $todosFilmes);
-    }
+     public function index()
+     {
+         $todasSessoes = Sessao::all();
+         return view('sessoes.index')->with('sessoes', $todasSessoes);
+     }
 }

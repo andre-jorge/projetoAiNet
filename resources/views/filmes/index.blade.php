@@ -13,7 +13,6 @@
                     <!-- Product name-->
                     <h5 class="fw-bolder"><?= $filme->titulo ?></h5>
                     <span class="fw-bolder"><?= $filme->genero_code ?></span>
-                    <h5 class="fw-bolder"><?= $filme->id ?></h5>
                 </div>
             </div>
             <!-- Product actions-->
