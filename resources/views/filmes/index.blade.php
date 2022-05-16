@@ -13,6 +13,9 @@
                     <!-- Product name-->
                     <h5 class="fw-bolder"><?= $filme->titulo ?></h5>
                     <span class="fw-bolder"><?= $filme->genero_code ?></span>
+                    @foreach ($sessoes as $sec)
+                    <span class="fw-bolder"><?= $sec->filme_id ?></span>
+                    @endforeach 
                 </div>
             </div>
             <!-- Product actions-->

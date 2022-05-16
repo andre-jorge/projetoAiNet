@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Filme;
+use App\Models\Sessao;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -37,8 +38,19 @@ class FilmesController extends Controller
          ->orderBy('data','asc')
          ->paginate(8);
 
-         //dd($todosFilmes);
+         $idfilme = Filme::where('id',$todosFilmes)->pluck('id');    
+         dd($idfilme);
+        
+        $todasSessoes = DB::table('sessoes')
+        ->select('horario_inicio')
+        ->where('filme_id', '=', $idfilme)//getdate())
+        ->get();
+
+         
+
+         
          //$todosFilmes = Filme::all();
-         return view('filmes.index')->with('filmes', $todosFilmes);
+         return view('filmes.index')->with('filmes', $todosFilmes)
+                                    ->with('sessoes', $todasSessoes);
      }
 }

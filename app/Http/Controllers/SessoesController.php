@@ -11,7 +11,7 @@ class SessoesController extends Controller
 
         public function index()
      {
-        $todasSessoes = Sessao::all();
+        $todasSessoes = DB::table('sessoes')->get();
          //->where('data', '<', '2020-01-03');//getdate())
 
          //dd($todasSessoes);

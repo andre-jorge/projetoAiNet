@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filme extends Model
 {
-    use HasFactory;
+    use HasFactory;protected $table = "sessoes";
 }
