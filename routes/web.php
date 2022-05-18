@@ -21,7 +21,7 @@ use App\Http\Controllers\SessoesController;
 
 
 Route::get('/', function () {
-    return view('home');
+     return view('home');
 });
 
  Route::get('filmes', [FilmesController::class, 'index'])

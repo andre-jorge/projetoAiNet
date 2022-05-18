@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>CineDEI</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -86,14 +86,14 @@
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-dark py-5">
+        <!-- <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <h1 class="display-4 fw-bolder">Filmes em Destaques</h1>
                     <p class="lead fw-normal text-white-50 mb-0">---------------</p>
                 </div>
             </div>
-        </header>
+        </header> -->
                 <!-- Section-->
                 <section class="py-5">
                 <div class="container px-4 px-lg-5 mt-5">
