@@ -32,25 +32,21 @@ class FilmesController extends Controller
 
      public function index()
      {
+        // $todosFilmes = DB::table('filmes')
+        //  ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
+        //  ->where('sessoes.data', '<', '2020-01-03')//getdate())
+        //  ->orderBy('data','asc')
+        //  ->paginate(8);
+
         $todosFilmes = DB::table('filmes')
-         ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
-         ->where('sessoes.data', '<', '2020-01-03')//getdate())
-         ->orderBy('data','asc')
-         ->paginate(8);
-
-         $idfilme = Filme::where('id',$todosFilmes)->pluck('id');    
-         dd($idfilme);
+                    ->paginate(8);
+          
+         //dd($idfilme);
         
-        $todasSessoes = DB::table('sessoes')
-        ->select('horario_inicio')
-        ->where('filme_id', '=', $idfilme)//getdate())
-        ->get();
-
-         
+            
 
          
          //$todosFilmes = Filme::all();
-         return view('filmes.index')->with('filmes', $todosFilmes)
-                                    ->with('sessoes', $todasSessoes);
+         return view('filmes.index')->with('filmes', $todosFilmes);
      }
 }

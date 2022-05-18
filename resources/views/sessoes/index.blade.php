@@ -5,11 +5,13 @@
     <div class="col mb-5">
         <div class="card h-100">
             <div class="card-body p-4">
-                <div class="text-center">
-                    <!-- Product name-->
-                    @foreach ($sessoes as $sessao)
-                    <h5 class="fw-bolder"><?= $sessao->horario_inicio ?></h5>
+                <div class="text-center" name="sess" id="idSess">
+                    @foreach ($listaFilmes as $sess)
+                        <option value="{{$sess->id}}" {{$filmes->id == $sess->id ? 'selected' : ''}}>
+                            {{$sess->data}} - {{$sess->horario_inicio}}
+                        </option>
                     @endforeach
+                    
                 </div>
             </div>
             <!-- Product actions-->
