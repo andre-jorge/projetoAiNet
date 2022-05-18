@@ -6,12 +6,24 @@
         <div class="card h-100">
             <div class="card-body p-4">
                 <div class="text-center" name="sess" id="idSess">
-                    @foreach ($listaFilmes as $sess)
-                        <option value="{{$sess->id}}" {{$filmes->id == $sess->id ? 'selected' : ''}}>
-                            {{$sess->data}} - {{$sess->horario_inicio}}
-                        </option>
-                    @endforeach
                     
+
+                    <form class="sess-search" action="#" method="GET">
+                        <div class="search-item">
+                            <label for="idSess">Disc:</label>
+                            <div name="Sess" id="idSess">
+                            @foreach ($listaFilmes as $sess)
+                                <option value="{{$sess->id}}" {{$filmes->id == $sess->id ? 'selected' : ''}}>
+                                    {{$sess->data}} - {{$sess->horario_inicio}}
+                                </option>
+                            @endforeach
+                            </div>
+                        </div>
+                        <div class="search-item">
+                            <button type="submit" class="bt" id="btn-filter">Filtrar</button>
+                        </div>
+                    </form>
+                                        
                 </div>
             </div>
             <!-- Product actions-->

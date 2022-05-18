@@ -24,6 +24,7 @@ class SessoesController extends Controller
     {
         $listaFilmes = Filme::all();
         $id = $request->query('sess', $listaFilmes[0]->id);
+        dd($id);
         $filmes = Filme::findOrFail($id);
         $sessao = $filmes->sessao;
         return view(
