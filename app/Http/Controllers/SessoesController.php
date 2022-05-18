@@ -22,14 +22,34 @@ class SessoesController extends Controller
 
      public function index(Request $request)
     {
-        $listaFilmes = Filme::all();
-        $id = $request->query('sess', $listaFilmes[0]->id);
-        dd($id);
-        $filmes = Filme::findOrFail($id);
-        $sessao = $filmes->sessao;
+        // $listaFilmes = Filme::all();
+        // $id = $request->query('sess', $listaFilmes[0]->id);
+        // dd($id);
+        // $filmes = Filme::findOrFail($id);
+        // $Filmesessao = DB::table('filmes')
+        // ->where('id', $filmes->id)
+        // ->pluck('id');
+        // $filmes = Filmes::whereIn('id', $Filmesessao)->get();
+        // $sessao = $filmes->sessao;
+        // return view(
+        //     'sessoes.index',
+        //     compact('sessao', 'listaFilmes', 'filmes')
+        // );
+
+        $Sessoes = Sessao::all();
+        $id = $request->query('fil', $Sessoes[0]->id);
+        //dd($id);
+        $idfilme = Filme::findOrFail($id);
+        //dd($idfilme);
+        //$DetalhesFilme = Filme::whereIn('filme_id', $id)->get();
+            
+        $FilmeSessoes = DB::table('sessoes')
+        ->get();
+        //dd($FilmeSessoes);
+
         return view(
-            'sessoes.index',
-            compact('sessao', 'listaFilmes', 'filmes')
-        );
+        'sessoes.index',
+        compact('FilmeSessoes', 'Sessoes'));
+
     }
 }

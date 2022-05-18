@@ -11,11 +11,10 @@
                     <form class="sess-search" action="#" method="GET">
                         <div class="search-item">
                             <label for="idSess">Disc:</label>
-                            <div name="Sess" id="idSess">
-                            @foreach ($listaFilmes as $sess)
-                                <option value="{{$sess->id}}" {{$filmes->id == $sess->id ? 'selected' : ''}}>
-                                    {{$sess->data}} - {{$sess->horario_inicio}}
-                                </option>
+                            <div name="Fil" id="idFilme">
+                            @foreach ($FilmeSessoes as $fil)
+                            <a value="{{$fil->id}}">{{$fil->data}} - {{$fil->horario_inicio}}</a>
+                                
                             @endforeach
                             </div>
                         </div>
