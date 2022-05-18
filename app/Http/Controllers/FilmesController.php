@@ -42,7 +42,7 @@ class FilmesController extends Controller
         $FilmeSessoes = DB::table('sessoes')
         ->where('filme_id',$id)
         ->get();// buscar sessoes do filme
-        //  dd($FilmeSessoes);
+        // \ dd($FilmeSessoes);
          
         return view(
             'filmes.show',
