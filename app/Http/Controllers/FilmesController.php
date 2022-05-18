@@ -17,36 +17,35 @@ class FilmesController extends Controller
     //     return view('cursos.admin')->with('cursos', $todosCursos);
     // }
 
-    // public function index(Request $request)
-    // {
-    //     $listaFilmes = DB::table('filmes')
-    //     ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
-    //     ->where('sessoes.data', '<', '2020-01-03')//getdate())
-    //     ->orderBy('data','asc')
-    //     ->paginate(8);
-    //     $id = $request->query('film', $listaFilmes[0]->id);
-    //     $filme = Filme::findOrFail($id);
-    //     return view('filmes.index', compact('listaFilmes', 'filme'));
-    // }
-
-
-     public function index()
+    public function index()
      {
-        // $todosFilmes = DB::table('filmes')
-        //  ->leftjoin('sessoes', 'filmes.id', '=', 'sessoes.filme_id')
-        //  ->where('sessoes.data', '<', '2020-01-03')//getdate())
-        //  ->orderBy('data','asc')
-        //  ->paginate(8);
-
         $todosFilmes = DB::table('filmes')
                     ->paginate(8);
-          
-         //dd($idfilme);
-        
-            
+        //dd($todosFilmes);
+        return view('filmes.index')->with('filmes', $todosFilmes);
 
+     }
+
+    public function show(Request $request)
+     {
+        $Filme = Filme::all();
+        $id = $request->query('filmeid', $Filme[0]->id);
+        //dd($id);
+
+        $Filmeinfo = DB::table('filmes')
+        ->where('id',$id)
+        ->get();// buscar sessoes do filme
+
+        //dd($Filmeinfo);
+        //$DetalhesFilme = Filme::whereIn('filme_id', $id)->get();
+            
+        $FilmeSessoes = DB::table('sessoes')
+        ->where('filme_id',$id)
+        ->get();// buscar sessoes do filme
+        //  dd($FilmeSessoes);
          
-         //$todosFilmes = Filme::all();
-         return view('filmes.index')->with('filmes', $todosFilmes);
+        return view(
+            'filmes.show',
+            compact('FilmeSessoes', 'Filmeinfo'));
      }
 }
