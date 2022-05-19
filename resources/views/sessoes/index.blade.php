@@ -1,29 +1,48 @@
 @extends('home')
 
 @section('content')
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Filmes em Destaques</h1>
-                <div class="text-center" name="sess" id="idSess">
-                    <form class="sess-search" action="#" method="GET">
-                        <div class="search-item">
-                                <div name="Fil" id="idFilme">
-                                    @foreach ($FilmeSessoes as $fil)
-                                        <a value="{{$fil->id}}">{{$fil->data}} - {{$fil->horario_inicio}}</a>
-                                    @endforeach
-                                </div>
+@foreach ($Filme as $filme)
+<div class="container-fluid px-4">
+    <h1 class="mt-4"><?= $filme->titulo ?></h1>
+    <div class="card h-100">
+        <div class="card-body p-10">
+            <div class="text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4"  >
+                            <img width="300" height="435"  src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." /></img>
                         </div>
-                        <div class="search-item">
-                            <button type="submit" class="bt" id="btn-filter">Filtrar</button>
+                        <div >
+                            <p class="font-weight-bold"><?= $filme->sumario ?></p>
+                            <small class="float-left">Ano: <?= $filme->ano ?></small><p></p>
+                            <small> Genero:<?= $filme->genero ?>Texto de espessura leve.</small>
                         </div>
-                    </form>                          
+                    </div>
                 </div>
-        </div>
-
-        </div>
+                    <table class="table">
+                    <thead>
+                        <tr>
+                        
+                        <th scope="col">Dia Sessao</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Filme_id</th>
+                        <th scope="col">sala_id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($sessoesFilme as $sessao)
+                        <tr>
+                        <td><?= $sessao->data ?></td>
+                        <td><?= $sessao->horario_inicio ?></td>
+                        <td><?= $sessao->filme_id ?></td>
+                        <td><?= $sessao->sala_id ?></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    
+            </div>
         </div>
     </div>
-    <div>
 </div>
+@endforeach
 @endsection

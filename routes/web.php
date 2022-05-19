@@ -27,8 +27,6 @@ Route::get('/', function () {
  Route::get('filmes', [FilmesController::class, 'index'])
          ->name('filmes.index');
 
-
-Route::get('/filmes/{id}', [FilmesController::class, 'show']);
         
 Route::get('sessoes', [SessoesController::class, 'index'])
         ->name('sessoes.index');
@@ -37,3 +35,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -11,13 +11,19 @@ class Sessao extends Model
     protected $table = "sessoes";
 
 
-    public function sessoes()
+    public function FilmeSessoes()
     {
-        return $this->belongsToMany(
-            Disciplina::class,
-            'docentes_disciplinas',
-            'docente_id',
-            'disciplina_id'
-        );
+        //Docente tem um Departamento
+        //aqui se define o relacionamento
+        return $this->belongsTo(Filme::class);
+        //departamento é opcional define a chave estrangeira
+        //abreviatura opcial define a primary key
     }
+
+    public function salas()
+    {
+    return $this->belongsTo(Salas::class);
+    }
+
+
 }
