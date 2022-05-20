@@ -18,15 +18,12 @@ class FilmesController extends Controller
     // }
 
     
-
-
-
    public function index()
       {
          $todosFilmes = DB::table('filmes')
                      ->paginate(8);
          //dd($todosFilmes);
-         return view('filmes.index')->with('filmes', $todosFilmes);
+         return view('pages.index')->with('filmes', $todosFilmes);
 
    //   }
 

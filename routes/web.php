@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmesController;
 use App\Http\Controllers\SessoesController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +21,12 @@ use App\Http\Controllers\SessoesController;
 // });
 
 
-Route::get('/', function () {
-     return view('home');
-});
+// Route::get('/', function () {
+//      return view('page.index');
+// });
 
- Route::get('filmes', [FilmesController::class, 'index'])
-         ->name('filmes.index');
+Route::get('/', [FilmesController::class, 'index'])
+         ->name('home');
 
         
 Route::get('/sessoes/{id?}', [SessoesController::class, 'index'])
