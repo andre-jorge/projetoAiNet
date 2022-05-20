@@ -25,7 +25,7 @@
                         
                         <th scope="col">Dia Sessao</th>
                         <th scope="col">Hora</th>
-                        <th scope="col">Sala</th>
+                        <th scope="col">sala_id</th>
                         </tr>
                     </thead>
                     <tbody>
