@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Salas extends Model
 {
     use HasFactory;
-    public function SessoesSala()
+    protected $table = 'salas';
+
+    public function sala()
     {
-        return $this->hasone(Sessao::class);
+        return $this->hasMany(Sessao::class);
         //1departamento tem varios docentes
         //docentes relacionados com departamentos
         //departamento é opcional define a chave estrangeira

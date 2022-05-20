@@ -9,16 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class SessoesController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
         $listaSessoes = Sessao::all();
         //dd($listaSessoes);
-        $idfilme = $request->query('disc', $listaSessoes[0]->id);
-        $Filme = Filme::where('id', $idfilme)->get();
-        $sessoesFilme = Sessao::where('filme_id', $idfilme)->get();
+        //$idfilme = $request->query('filmeid', $listaSessoes[0]->id);
+        $filme = Filme::where('id', $id)->first();
+        //$sessoesFilme = Sessao::where('filme_id', $id)->get();
         //dd($sessoesFilme);
+        $sessoesFilme=DB::table('sessoes')
+                        ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
+                        ->where('sessoes.filme_id', $id)
+                        ->get();
+        //    //       //->where('data', '<', '2020-01-03');//getdate())
 
-    return view('sessoes.index', compact('sessoesFilme', 'Filme','idfilme'));
+    return view('sessoes.index', compact('sessoesFilme', 'filme', 'id'));
     }
    
 }

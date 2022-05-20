@@ -28,7 +28,7 @@ Route::get('/', function () {
          ->name('filmes.index');
 
         
-Route::get('sessoes', [SessoesController::class, 'index'])
+Route::get('/sessoes/{id?}', [SessoesController::class, 'index'])
         ->name('sessoes.index');
 
 Auth::routes();

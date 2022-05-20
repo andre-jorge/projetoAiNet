@@ -20,7 +20,7 @@ class Filme extends Model
 
     public function FilmeGenero()
     {
-        return $this->belongsTo(Genero::class);
+        return $this->belongsTo(Genero::class, 'code', 'code');
     }
 
 }

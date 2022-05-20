@@ -1,31 +1,30 @@
 @extends('home')
 
 @section('content')
-@foreach ($Filme as $filme)
-<div class="container-fluid px-4">
-    <h1 class="mt-4"><?= $filme->titulo ?></h1>
-    <div class="card h-100">
+
+
+
+    <div class="card h-50">
         <div class="card-body p-10">
             <div class="text-center">
-                <div class="container">
+                
                     <div class="row">
-                        <div class="col-4"  >
-                            <img width="300" height="435"  src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." /></img>
+                        <div class="col-3">
+                            <img src="/storage/cartazes/{{$filme->cartaz_url}}" class="img-fluid" alt="">
                         </div>
-                        <div >
-                            <p class="font-weight-bold"><?= $filme->sumario ?></p>
-                            <small class="float-left">Ano: <?= $filme->ano ?></small><p></p>
-                            <small> Genero:<?= $filme->genero ?>Texto de espessura leve.</small>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title"><?= $filme->titulo ?></h4>
+                                <span class="float-left"><?= $filme->sumario ?></span>
+                                <span class="float-left"><?= $filme->ano ?> </span>
+                            </div>
                         </div>
-                    </div>
-                </div>
                     <table class="table">
                     <thead>
                         <tr>
                         
                         <th scope="col">Dia Sessao</th>
                         <th scope="col">Hora</th>
-                        <th scope="col">Filme_id</th>
                         <th scope="col">sala_id</th>
                         </tr>
                     </thead>
@@ -34,8 +33,7 @@
                         <tr>
                         <td><?= $sessao->data ?></td>
                         <td><?= $sessao->horario_inicio ?></td>
-                        <td><?= $sessao->filme_id ?></td>
-                        <td><?= $sessao->sala_id ?></td>
+                        <td><?= $sessao->nome ?></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -43,6 +41,5 @@
             </div>
         </div>
     </div>
-</div>
-@endforeach
+
 @endsection
