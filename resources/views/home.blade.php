@@ -118,6 +118,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Filmes
                             </a>
+                            <a class="nav-link" href="{{route('filmes.admin')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Filmes ADMIN
+                            </a>
                             <a class="nav-link" href="{{route('sessoes.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Sessoes

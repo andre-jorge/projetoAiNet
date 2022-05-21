@@ -9,22 +9,47 @@ use Illuminate\Support\Facades\DB;
 
 class SessoesController extends Controller
 {
+    public static function ContaBilhetes($arg1,$arg2,$args3){
+        $sessoesFilmeBilhetes=DB::table('sessoes')
+                        ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
+                        ->leftJoin('bilhetes', 'bilhetes.sessao_id', '=', 'sessoes.id')
+                        ->where('sessoes.filme_id', $arg1)
+                        ->where('sessoes.data', $arg2)
+                        ->where('sessoes.horario_inicio', $args3)
+                        ->count();
+        return $sessoesFilmeBilhetes;
+    }
+
     public function index(Request $request, $id)
     {
         $listaSessoes = Sessao::all();
         //dd($listaSessoes);
         //$idfilme = $request->query('filmeid', $listaSessoes[0]->id);
-        $filme = Filme::where('id', $id)->first();
+        $filme2 = Filme::where('id', $id)->first();
+        $FilmeDetalhes = DB::table('filmes')
+                        ->select('*')
+                        ->leftJoin('generos', 'generos.code', '=', 'filmes.genero_code')
+                        ->where('filmes.id', $id)
+                        ->first();
+                        //dd($filme2);
         //$sessoesFilme = Sessao::where('filme_id', $id)->get();
         //dd($sessoesFilme);
         $sessoesFilme=DB::table('sessoes')
                         ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
                         ->where('sessoes.filme_id', $id)
                         ->get();
+        
         //    //       //->where('data', '<', '2020-01-03');//getdate())
+        //$soma= SessoesController::ContaBilhetes
+        //($filme->id,$sessoesFilme->data,$sessoesFilme->horario_inicio);
+        //dd($conta);
 
-    return view('sessoes.index', compact('sessoesFilme', 'filme', 'id'));
+    return view('sessoes.index', compact('sessoesFilme', 'FilmeDetalhes', 'id'));
     }
+
+    
+
+
 
    
 }
