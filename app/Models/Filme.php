@@ -22,5 +22,8 @@ class Filme extends Model
     // {
     //     return $this->belongsTo(Genero::class, 'code', 'code');
     // }
+    protected $fillable = [
+        'titulo', 'genero_code', 'ano', 'cartaz_url', 'sumario',
+        'trailer_url'];
 
 }

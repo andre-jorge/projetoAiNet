@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Filme;
 use App\Models\Sessao;
+use App\Models\Genero;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,11 +17,11 @@ class FilmesController extends Controller
     //     $todosCursos = Curso::all();
     //     return view('cursos.admin')->with('cursos', $todosCursos);
     // }
-    public function admin_index()
-   {
-      $filmes = Filme::all();
-      return view('filmes.admin', compact('filmes'));
-   }
+   public function admin_index()
+      {
+         $filmes = Filme::all();
+         return view('filmes.admin', compact('filmes'));
+      }
 
     
    public function index()
@@ -31,27 +32,25 @@ class FilmesController extends Controller
          return view('filmes.index')->with('filmes', $todosFilmes);
          
       }
-         //   }
+   public function create()
+    {
+        $listaGeneros = Genero::pluck('code', 'nome');
+        return view('filmes.create')->with('Generos', $listaGeneros);
+    }
 
-   //  public function show(Request $request)
-   //   {
-   //      $Filme = Filme::all();
-   //      $id = $request->query('filmeid', $Filme[0]->id);
-   //      //dd($id);
-
-   //      $Filmeinfo = DB::table('filmes')
-   //      ->where('id',$id)
-   //      ->get();// buscar sessoes do filme
-
-   //      //dd($Filmeinfo);
-   //      //$DetalhesFilme = Filme::whereIn('filme_id', $id)->get();
-            
-   //      $FilmeSessoes = DB::table('sessoes')
-   //      ->where('filme_id',$id)
-   //      ->get();// buscar sessoes do filme
-   //      // \ dd($FilmeSessoes);
-         
-   //      return view(
-   //          'filmes.show',
-   //  
+   public function store(Request $request)
+   {
+      $validatedData = $request->validate([
+         'titulo' => 'required|max:50',
+         'genero_code' => 'required|max:20',
+         'ano' => 'required|numeric|between:1950,2100',
+         'cartaz_url' => 'required|max:200',
+         'sumario' => 'required|max:255',
+         'trailer_url' => 'required|max:200'
+      ]);
+      $newFilme = Filme::create($validatedData);
+      return redirect()->route('filmes.index')
+            ->with('alert-msg', 'Filme inserido com Sucesso')
+            ->with('alert-type', 'success');
+    }
 }

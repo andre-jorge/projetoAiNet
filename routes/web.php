@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmesController;
 use App\Http\Controllers\SessoesController;
-use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +27,20 @@ use App\Http\Controllers\PageController;
 Route::get('/', [FilmesController::class, 'index'])
          ->name('filme.index');
 
-        
 Route::get('/sessoes/{id?}', [SessoesController::class, 'index'])
-        ->name('sessoes.index');
+        ->name('sessoes.index');//sessoes
+
+Route::get('generos', [GeneroController::class, 'index'])
+        ->name('generos.index');//generos!!
         
 Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
-        ->name('filmes.admin');
+        ->name('filmes.admin');// admin filmes
+
+Route::get('filmes', [FilmesController::class, 'create'])
+        ->name('filmes.index'); //index filmes
+
+Route::post('filmes', [FilmesController::class, 'store'])
+        ->name('filmes.store'); // store filmes
 
 
 Auth::routes();
