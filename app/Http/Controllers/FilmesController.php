@@ -33,10 +33,18 @@ class FilmesController extends Controller
          
       }
    public function create()
-    {
+      {
         $listaGeneros = Genero::pluck('code', 'nome');
         return view('filmes.create')->with('Generos', $listaGeneros);
-    }
+      }
+
+   public function edit(Request $request,$id)
+      {
+         $filme = Filme::where('id', $id)->first();
+         $listaGeneros = Genero::pluck('code', 'nome');
+         return view('filmes.edit')->withFilme($filme)
+                                   ->with('Generos', $listaGeneros);
+      }
 
    public function store(Request $request)
    {

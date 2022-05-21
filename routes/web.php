@@ -39,6 +39,9 @@ Route::get('generos', [GeneroController::class, 'index'])
 Route::get('filmes', [FilmesController::class, 'create'])
         ->name('filmes.index'); //index filmes
 
+Route::get('filmes/{id?}/edit', [FilmesController::class, 'edit'])
+        ->name('filmes.edit');
+
 Route::post('filmes', [FilmesController::class, 'store'])
         ->name('filmes.store'); // store filmes
 

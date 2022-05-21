@@ -10,6 +10,7 @@
                 <th scope="col">cartaz_url</th>
                 <th scope="col">sumario</th>
                 <th scope="col">trailer_url</th>
+                <th scope="col">Editar?</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,7 @@
                 <td>{{$filme->cartaz_url}}</td>
                 <td>{{$filme->sumario}}</td>
                 <td>{{$filme->trailer_url}}</td>
+                <td><a class="btn btn-outline-dark mt-auto" name="filmeid" value='{{$filme->id}}' href="{{ route('filmes.edit', $filme->id) }}">Editar</a></td>
             </tr>
             @endforeach
         </tbody>
