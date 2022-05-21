@@ -30,12 +30,12 @@ Route::get('/', [FilmesController::class, 'index'])
 Route::get('/sessoes/{id?}', [SessoesController::class, 'index'])
         ->name('sessoes.index');//sessoes
 
-Route::get('generos', [GeneroController::class, 'index'])
-        ->name('generos.index');//generos!!
-        
 Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
         ->name('filmes.admin');// admin filmes
 
+Route::get('generos', [GeneroController::class, 'index'])
+        ->name('generos.index');//generos!!
+        
 Route::get('filmes', [FilmesController::class, 'create'])
         ->name('filmes.index'); //index filmes
 

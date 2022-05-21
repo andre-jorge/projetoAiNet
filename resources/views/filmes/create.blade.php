@@ -2,23 +2,31 @@
 
 @section('content')
 <form action="{{ route('filmes.store') }}" id="filmes-form" method="POST">
- @csrf
+    
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Criar Filme</h3></div>
-        <div class="card-body">
+       
+    <div class="card-body">
+    @csrf
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" id="idTitulo" type="select" value="{{old('titulo')}}" placeholder="Insira o Nome do Filme">
+                        <input class="form-control" name="titulo" id="idTitulo" type="select" value="{{old('titulo')}}" placeholder="Insira o Nome do Filme">
+                        @error('titulo')
+                            <div class="error">{{ $message }}</div>
+                        @enderror
                         <label for="idTitulo">Titulo</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating" >
-                        <select class="form-select" name="curso" id="idGenero">
+                        <select class="form-select" name="genero_code" id="idGenero">
                             @foreach($Generos as $code => $nome)
-                                <option value="{{$code}}" >{{$code}}</option>
+                                <option value="{{$nome}}" {{old('code')==$code?'selected':''}}>{{$code}}</option>
                             @endforeach
                         </select>
+                        @error('code')
+                            <div class="error">{{ $message }}</div>
+                        @enderror
                         <label for="idGenero_code">Genero</label>
                     </div>
                 </div>
@@ -27,25 +35,37 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" id="idTCartaz_url" type="text" value="{{old('cartaz_url')}}" placeholder="234bjbdf.jpg"> 
-                        <label for="idTCartaz_url">Cartaz URL</label>
+                        <input class="form-control" name="cartaz_url" id="idCartaz_url" type="text" value="{{old('cartaz_url')}}" placeholder="234bjbdf.jpg"> 
+                        @error('cartaz_url')
+                            <div class="error">{{ $message }}</div>
+                        @enderror
+                        <label for="idCartaz_url">Cartaz URL</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" id="idAno" type="number" value="{{old('ano')}}" placeholder="2022">
+                        <input class="form-control" name="ano" id="idAno" type="number" value="{{old('ano')}}" placeholder="2022">
+                        @error('ano')
+                            <div class="error">{{ $message }}</div>
+                        @enderror
                         <label for="idAno">Ano</label>
                     </div>
                 </div>
             </div>
             
             <div class="form-floating mb-3">
-                <input class="form-control" id="idSumario" type="text" value="{{old('sumario')}}" placeholder="Sumario"> 
+                <input class="form-control" id="idSumario" name="sumario" type="text" value="{{old('sumario')}}" placeholder="Sumario"> 
+                @error('sumario')
+                    <div class="error">{{ $message }}</div>
+                @enderror
                 <label for="idSumario">Sumario</label>
             </div>
             <div class="form-floating mb-3">
-                <input class="form-control" id="idTrailer" type="text" value="{{old('trailer_url')}}" placeholder="Sumario"> 
-                <label for="idTrailer">Trailer URL</label>
+                <input class="form-control" id="idTrailer_url" name="trailer_url" type="text" value="{{old('trailer_url')}}" placeholder="Sumario"> 
+                @error('trailer_url')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+                <label for="idTrailer_url">Trailer URL</label>
             </div>
             <div class="mt-4 mb-0">
                 <div class="d-grid">

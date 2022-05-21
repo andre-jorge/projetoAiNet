@@ -48,8 +48,10 @@ class FilmesController extends Controller
          'sumario' => 'required|max:255',
          'trailer_url' => 'required|max:200'
       ]);
+      //dd($validatedData);
       $newFilme = Filme::create($validatedData);
-      return redirect()->route('filmes.index')
+      //DB::table('filmes')->insert($validatedData);
+      return redirect()->route('filmes.admin')
             ->with('alert-msg', 'Filme inserido com Sucesso')
             ->with('alert-type', 'success');
     }
