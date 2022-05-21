@@ -16,6 +16,11 @@ class FilmesController extends Controller
     //     $todosCursos = Curso::all();
     //     return view('cursos.admin')->with('cursos', $todosCursos);
     // }
+    public function admin_index()
+   {
+      $filmes = Filme::all();
+      return view('filmes.admin', compact('filmes'));
+   }
 
     
    public function index()
@@ -23,9 +28,10 @@ class FilmesController extends Controller
          $todosFilmes = DB::table('filmes')
                      ->paginate(8);
          //dd($todosFilmes);
-         return view('pages.index')->with('filmes', $todosFilmes);
-
-   //   }
+         return view('filmes.index')->with('filmes', $todosFilmes);
+         
+      }
+         //   }
 
    //  public function show(Request $request)
    //   {
@@ -47,6 +53,5 @@ class FilmesController extends Controller
          
    //      return view(
    //          'filmes.show',
-   //          compact('FilmeSessoes', 'Filmeinfo'));
-      }
+   //  
 }

@@ -26,11 +26,15 @@ use App\Http\Controllers\PageController;
 // });
 
 Route::get('/', [FilmesController::class, 'index'])
-         ->name('home');
+         ->name('filme.index');
 
         
 Route::get('/sessoes/{id?}', [SessoesController::class, 'index'])
         ->name('sessoes.index');
+        
+Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
+        ->name('filmes.admin');
+
 
 Auth::routes();
 

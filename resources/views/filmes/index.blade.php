@@ -26,7 +26,7 @@
     @endforeach
     </div>
     <div>
-    
+    {{ $filmes->links() }}
 </div>
 @endsection
 
