@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Salas extends Model
 {
     use HasFactory;
-    protected $table = 'salas';
+    protected $fillable = [
+        'nome'];
 
-    public function sala()
+    public function salas()
     {
         return $this->hasMany(Sessao::class);
         //1departamento tem varios docentes
