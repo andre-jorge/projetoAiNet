@@ -26,13 +26,13 @@ class FilmesController extends Controller
     
    public function index(Request $request)
       {
-              
+         $filmes = Filme::all();    
          // PROCURA POR NOME ou Sumario
           $todosFilmes = Filme::where([
              [function($query) use ($request){
-               if (($term = $request->term)){
-                  $query->orWhere('titulo', 'LIKE', '%' . $term . '%')->get();
-                   $query->orWhere('sumario', 'LIKE', '%' . $term . '%')->get();
+               if (($genero = $request->genero)){
+                  $query->Where('genero_code', $genero)->get();
+                  //$query->orWhere('sumario', 'LIKE', '%' . $sumario . '%')->get();
                 }
              }]
           ])
