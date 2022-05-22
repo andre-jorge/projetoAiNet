@@ -1,21 +1,32 @@
 @extends('home')
 @section('content')
+<form method="get" action="{{route('salas.create')}}">
+    <button class="btn btn-secondary" href="{{route('filmes.store')}}">Novo</button>
+</form> 
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">Foto</th>
                 <th scope="col">Numero Sala</th>
                 <th scope="col">Sala</th>
-                <th scope="col">Editar nome</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($salas as $sala)
+            @foreach ($todassalas as $sala)
             <tr>
-                <td><img class="img-fluid" src="/storage/cartazes/{{$sala->costum}}" alt="..." /></td>
+                <td></td>
                 <td>{{$sala->id}}</td>
                 <td>{{$sala->nome}}</td>
-                <td><a class="btn btn-outline-dark mt-auto" name="salaid" value='{{$sala->id}}' href="{{ route('salas.edit', $sala->id) }}">Editar</a></td>
+                <td>
+                <a href="{{ route('salas.edit', $sala->id, $sala->nome) }}" name="salaid" value='{{$sala->id}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Alterar</a>
+                <td>
+                    <form method="post" action="{{ route('salas.destroy', $sala->id) }}">
+                        @method('DELETE')
+                        @csrf
+                        <input type="submit" class="btn btn-danger btn-sm" value="Eliminar">
+                    </form> 
                 </tr>
             @endforeach
         </tbody>

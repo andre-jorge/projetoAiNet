@@ -1,5 +1,8 @@
 @extends('home')
-@section('content')
+@section('content')   
+<form method="get" action="{{route('filmes.store')}}">
+    <button class="btn btn-secondary" href="{{route('filmes.store')}}">Novo</button>
+</form>  
     <table class="table">
         <thead>
             <tr>

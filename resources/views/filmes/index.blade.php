@@ -38,6 +38,7 @@
 <!-- FILMES -->
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
     @foreach ($filmes as $filme) 
+    
     <div class="col mb-10">
         <div class="card h-100">
             <!-- Product image-->

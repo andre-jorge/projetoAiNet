@@ -20,7 +20,7 @@ class Filme extends Model
 
     public function generos()
     {
-        return $this->hasMany(Genero::class, 'genero_code', 'code');
+        return $this->belongsTo(Genero::class, 'genero_code', 'code');
     }
 
 
@@ -32,7 +32,6 @@ class Filme extends Model
     protected $fillable = [
         'titulo', 'genero_code', 'cartaz_url', 'ano', 'sumario',
         'trailer_url'];
-   
 
 }
 

@@ -32,27 +32,35 @@ Route::get('/', [FilmesController::class, 'index'])
 Route::get('/sessoes/{id?}', [SessoesController::class, 'index'])
         ->name('sessoes.index');//sessoes
 
-//Salas-----------------
-Route::get('salas', [SalasController::class, 'index'])
+//---------------------Salas-------------------------------------------------
+Route::get('admin/salas', [SalasController::class, 'index'])
          ->name('salas.index');//salas
 
-Route::get('salas/criar', [SalasController::class, 'create'])
-         ->name('salas.index'); //criar filme
+Route::get('admin/salas/criar', [SalasController::class, 'create'])
+         ->name('salas.create'); //criar filme
 
-Route::post('salas', [SalasController::class, 'store'])
+Route::post('admin/salas', [SalasController::class, 'store'])
         ->name('salas.store'); // guardar filmes
 
-Route::get('salas/{id?}/edit', [SalasController::class, 'edit'])
+Route::get('admin/salas/{id?}', [SalasController::class, 'edit'])
         ->name('salas.edit'); // editar sala
 
+Route::put('admin/salas/{id?}', [SalasController::class, 'update'])
+        ->name('salas.update');
 
-//---------------------
-
-Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
-        ->name('filmes.admin');// admin filmes
+Route::delete('admin/salas/{id?}', [SalasController::class, 'destroy'])
+        ->name('salas.destroy');
+//-----------------------------------------------------------------------------
 
 Route::get('generos', [GeneroController::class, 'index'])
         ->name('generos.index');//generos!!
+
+
+//---------------------FILMES----------------------------------------------------
+Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
+        ->name('filmes.admin');// admin filmes
+
+
         
 Route::get('filmes', [FilmesController::class, 'create'])
         ->name('filmes.index'); //criar filme
@@ -63,6 +71,7 @@ Route::get('filmes/{id?}/edit', [FilmesController::class, 'edit'])
 Route::post('filmes', [FilmesController::class, 'store'])
         ->name('filmes.store'); // guardar filmes
 
+//-----------------------------------------------------------------------------
 
 Auth::routes();
 

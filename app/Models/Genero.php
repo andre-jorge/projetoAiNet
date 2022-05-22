@@ -10,11 +10,7 @@ class Genero extends Model
     use HasFactory;
     
     public function Filme(){
-        return $this->hasOne(Filme::class,'genero_code','nome');
+        return $this->hasMany(Filme::class,'genero_code','code');
     }
-
-    
-    
-
 
 }

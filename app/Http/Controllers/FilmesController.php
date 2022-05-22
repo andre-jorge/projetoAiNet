@@ -12,21 +12,19 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class FilmesController extends Controller
 {
-    // public function admin_index()
-    // {
-    //     $todosCursos = Curso::all();
-    //     return view('cursos.admin')->with('cursos', $todosCursos);
-    // }
    public function admin_index()
       {
          $filmes = Filme::all();
          return view('filmes.admin', compact('filmes'));
       }
 
-    
    public function index(Request $request)
       {
-         $filmes = Filme::all();    
+         $filmes = DB::table('filmes')
+                     ->select('*')
+                     ->leftjoin('generos','generos.code','=','filmes.genero_code')
+                     ->paginate(8);  
+                     //dd($filmes);
          // PROCURA POR NOME ou Sumario
           $todosFilmes = Filme::where([
              [function($query) use ($request){
@@ -37,12 +35,12 @@ class FilmesController extends Controller
              }]
           ])
           ->paginate(8);
+         
          $listaGeneros = Genero::all();
          $filmes = $todosFilmes;
          return view(
              'filmes.index',
-             compact('filmes', 'listaGeneros')
-         );
+             compact('filmes', 'listaGeneros'));
 
 
         //ORIGINAL
