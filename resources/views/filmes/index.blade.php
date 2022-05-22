@@ -5,8 +5,9 @@
 
 
 <!--  Navbar Search -->
-
+<div class="navbar-nav ms-auto">
 <p></p>
+
 <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="#" method="GET">
     <div class="search-item">  
             <label for="genfilme">Genero:</label>
@@ -27,7 +28,7 @@
 </form>
 
 <p></p>
-
+</div>
 
 <!-- FILMES -->
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">

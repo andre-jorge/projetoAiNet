@@ -26,10 +26,7 @@ class FilmesController extends Controller
     
    public function index(Request $request)
       {
-         
-        
-
-
+              
          // PROCURA POR NOME ou Sumario
           $todosFilmes = Filme::where([
              [function($query) use ($request){
@@ -60,6 +57,7 @@ class FilmesController extends Controller
       {
         $listaGeneros = Genero::pluck('code', 'nome');
         return view('filmes.create')->with('Generos', $listaGeneros);
+      }
 
 
    public function edit(Request $request,$id)

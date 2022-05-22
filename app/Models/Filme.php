@@ -22,7 +22,8 @@ class Filme extends Model
     {
         return $this->hasMany(Genero::class, 'genero_code', 'code');
     }
-}
+
+
 
     // public function FilmeGenero()
     // {
@@ -31,4 +32,10 @@ class Filme extends Model
     protected $fillable = [
         'titulo', 'genero_code', 'cartaz_url', 'ano', 'sumario',
         'trailer_url'];
+   
+
+}
+
+    
+    
 
