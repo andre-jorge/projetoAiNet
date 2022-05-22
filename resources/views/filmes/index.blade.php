@@ -1,6 +1,34 @@
 @extends('home')
 
 @section('content')
+
+
+
+<!--  Navbar Search -->
+
+<p></p>
+<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="#" method="GET">
+    <div class="search-item">  
+            <label for="genfilme">Genero:</label>
+            <select name="genero" id="genfilme">
+            <option value="ALL">Todos</option>
+            @foreach ($listaGeneros as $gen)
+                <option value="{{$gen->nome}}" {{$gen->nome == $gen->nome ?  : 'Todos'}}>
+                    {{$gen->nome}}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    <div class="input-group">
+      <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" name="term" id="term"/>
+        <button class="btn btn-primary" id="btn-filter" value="btnNavbarSearch" type="submit" href="#!"><i class="fas fa-search">aaa</i></button>
+    </div>
+</form>
+
+<p></p>
+
+
+<!-- FILMES -->
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
     @foreach ($filmes as $filme) 
     <div class="col mb-10">

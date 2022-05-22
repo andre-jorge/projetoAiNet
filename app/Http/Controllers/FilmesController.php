@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Filme;
 use App\Models\Sessao;
+use App\Models\Genero;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -23,16 +24,51 @@ class FilmesController extends Controller
    }
 
     
-   public function index()
+   public function index(Request $request)
       {
-         $todosFilmes = DB::table('filmes')
-                     ->paginate(8);
+         
+         $todosFilmes = Filme::where([
+            [function($query) use ($request){
+               if (($term = $request->term)){
+                  $query->orWhere('titulo', 'LIKE', '%' . $term . '%')->get();
+               }
+            }]
+         ])
+            ->paginate(8);
+
+         
+
+         // $listaGeneros = Genero::where([
+
+         //    [function($query) use ($request){
+         //       if (($genero = $request->genero)){
+         //          $query->where('nome', )
+         //       }
+         //    }]
+         // ])
+
+
+         //ORIGINAL
+         //$todosFilmes = DB::table('filmes')
+          //          ->paginate(8);
          //dd($todosFilmes);
-         return view('filmes.index')->with('filmes', $todosFilmes);
+         //return view('filmes.index')->with('filmes', $todosFilmes);
+      
+
+         
+         $listaGeneros = Genero::all();
+         
+
+        $filmes = $todosFilmes;
+        
+        return view(
+            'filmes.index',
+            compact('filmes', 'listaGeneros')
+        );
          
       }
-         //   }
 
+}
    //  public function show(Request $request)
    //   {
    //      $Filme = Filme::all();
@@ -54,4 +90,6 @@ class FilmesController extends Controller
    //      return view(
    //          'filmes.show',
    //  
-}
+
+   
+
