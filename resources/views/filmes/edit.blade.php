@@ -70,7 +70,7 @@
             </div>
             <div class="mt-4 mb-0">
                 <div class="d-grid">
-                    <button class="btn btn-primary btn-block" type="submit">Criar Filme</button>
+                    <button class="btn btn-primary btn-block" type="submit">Gravar alterações</button>
                 </div>
             </div>
         </div>

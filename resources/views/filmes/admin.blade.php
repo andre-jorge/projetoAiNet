@@ -3,7 +3,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">id</th>
+                <th scope="col">Foto</th>
                 <th scope="col">titulo</th>
                 <th scope="col">genero_code.</th>
                 <th scope="col">ano</th>
@@ -16,7 +16,7 @@
         <tbody>
             @foreach ($filmes as $filme)
             <tr>
-                <td>{{$filme->id}}</td>
+                <td><img class="img-fluid" src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." /></td>
                 <td>{{$filme->titulo}}</td>
                 <td>{{$filme->genero_code}}</td>
                 <td>{{$filme->ano}}</td>
