@@ -18,6 +18,13 @@ class Filme extends Model
         //abreviatura opcial define a primary key
     }
 
+    public function generos()
+    {
+        return $this->hasMany(Genero::class, 'genero_code', 'code');
+    }
+
+
+
     // public function FilmeGenero()
     // {
     //     return $this->belongsTo(Genero::class, 'code', 'code');
@@ -25,5 +32,10 @@ class Filme extends Model
     protected $fillable = [
         'titulo', 'genero_code', 'cartaz_url', 'ano', 'sumario',
         'trailer_url'];
+   
 
 }
+
+    
+    
+
