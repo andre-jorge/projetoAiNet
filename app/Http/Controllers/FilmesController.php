@@ -24,19 +24,43 @@ class FilmesController extends Controller
       }
 
     
-   public function index()
+   public function index(Request $request)
       {
-         $todosFilmes = DB::table('filmes')
-                     ->paginate(8);
+         
+        
+
+
+         // PROCURA POR NOME ou Sumario
+          $todosFilmes = Filme::where([
+             [function($query) use ($request){
+               if (($term = $request->term)){
+                  $query->orWhere('titulo', 'LIKE', '%' . $term . '%')->get();
+                   $query->orWhere('sumario', 'LIKE', '%' . $term . '%')->get();
+                }
+             }]
+          ])
+          ->paginate(8);
+         $listaGeneros = Genero::all();
+         $filmes = $todosFilmes;
+         return view(
+             'filmes.index',
+             compact('filmes', 'listaGeneros')
+         );
+
+
+        //ORIGINAL
+         //$todosFilmes = DB::table('filmes')
+          //          ->paginate(8);
          //dd($todosFilmes);
-         return view('filmes.index')->with('filmes', $todosFilmes);
+         //return view('filmes.index')->with('filmes', $todosFilmes);
          
       }
-   public function create()
+
+  public function create()
       {
         $listaGeneros = Genero::pluck('code', 'nome');
         return view('filmes.create')->with('Generos', $listaGeneros);
-      }
+
 
    public function edit(Request $request,$id)
       {
@@ -45,6 +69,9 @@ class FilmesController extends Controller
          return view('filmes.edit')->withFilme($filme)
                                    ->with('Generos', $listaGeneros);
       }
+
+
+
 
    public function store(Request $request)
    {
@@ -64,3 +91,4 @@ class FilmesController extends Controller
             ->with('alert-type', 'success');
     }
 }
+

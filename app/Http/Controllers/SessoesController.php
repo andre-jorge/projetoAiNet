@@ -47,6 +47,8 @@ class SessoesController extends Controller
     return view('sessoes.index', compact('sessoesFilme', 'FilmeDetalhes', 'id'));
     }
 
+  
+
     
 
 

@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Genero extends Model
 {
     use HasFactory;
-    // public function Filme()
-    // {
-    //     return $this->hasMany(Filme::class,'genero_code','id');
-    // }
+    
+    public function Filme(){
+        return $this->hasOne(Filme::class,'genero_code','nome');
+    }
+
+    
     
 
 
