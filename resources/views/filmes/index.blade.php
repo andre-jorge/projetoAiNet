@@ -19,6 +19,7 @@
             @endforeach
         </select>
     </div>
+    <p></p>
     <div class="input-group">
       <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" name="term" id="term"/>
         <button class="btn btn-primary" id="btn-filter" value="btnNavbarSearch" type="submit" href="#!"><i class="fas fa-search">aaa</i></button>

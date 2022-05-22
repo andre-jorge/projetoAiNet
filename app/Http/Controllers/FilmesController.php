@@ -27,44 +27,32 @@ class FilmesController extends Controller
    public function index(Request $request)
       {
          
-         $todosFilmes = Filme::where([
-            [function($query) use ($request){
+        
+
+
+         // PROCURA POR NOME ou Sumario
+          $todosFilmes = Filme::where([
+             [function($query) use ($request){
                if (($term = $request->term)){
                   $query->orWhere('titulo', 'LIKE', '%' . $term . '%')->get();
-               }
-            }]
-         ])
-            ->paginate(8);
-
-         
-
-         // $listaGeneros = Genero::where([
-
-         //    [function($query) use ($request){
-         //       if (($genero = $request->genero)){
-         //          $query->where('nome', )
-         //       }
-         //    }]
-         // ])
+                   $query->orWhere('sumario', 'LIKE', '%' . $term . '%')->get();
+                }
+             }]
+          ])
+          ->paginate(8);
+         $listaGeneros = Genero::all();
+         $filmes = $todosFilmes;
+         return view(
+             'filmes.index',
+             compact('filmes', 'listaGeneros')
+         );
 
 
-         //ORIGINAL
+        //ORIGINAL
          //$todosFilmes = DB::table('filmes')
           //          ->paginate(8);
          //dd($todosFilmes);
          //return view('filmes.index')->with('filmes', $todosFilmes);
-      
-
-         
-         $listaGeneros = Genero::all();
-         
-
-        $filmes = $todosFilmes;
-        
-        return view(
-            'filmes.index',
-            compact('filmes', 'listaGeneros')
-        );
          
       }
 
