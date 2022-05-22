@@ -70,6 +70,48 @@
   box-sizing: border-box;
 }
 
+
+
+.alert {
+  padding: 1.25rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  font-size: 1.2rem;
+ }
+ .alert-success {
+  color: #155724;
+  background-color: #3af966;
+  border-color: #1a6f2e;
+ }
+ Marco Monteiro 22
+ .alert-warning {
+  color: #856404;
+  background-color: #f9ca30;
+  border-color: #967511;
+ }
+ .alert-danger {
+  color: #721c24;
+  background-color: #fe596a;
+  border-color: #821d27;
+ }
+ .alert-info {
+  color: #0c5460;
+  background-color: #2fdffe;
+  border-color: #2f71fe;
+ }
+ .closebtn {
+  margin-left: 1.5rem;
+  color: black;
+  font-weight: bold;
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+ }
+
+
+
+ 
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;

@@ -17,11 +17,11 @@ class FilmesController extends Controller
     //     $todosCursos = Curso::all();
     //     return view('cursos.admin')->with('cursos', $todosCursos);
     // }
-    public function admin_index()
-   {
-      $filmes = Filme::all();
-      return view('filmes.admin', compact('filmes'));
-   }
+   public function admin_index()
+      {
+         $filmes = Filme::all();
+         return view('filmes.admin', compact('filmes'));
+      }
 
     
    public function index(Request $request)
@@ -56,28 +56,39 @@ class FilmesController extends Controller
          
       }
 
+  public function create()
+      {
+        $listaGeneros = Genero::pluck('code', 'nome');
+        return view('filmes.create')->with('Generos', $listaGeneros);
+
+
+   public function edit(Request $request,$id)
+      {
+         $filme = Filme::where('id', $id)->first();
+         $listaGeneros = Genero::pluck('code', 'nome');
+         return view('filmes.edit')->withFilme($filme)
+                                   ->with('Generos', $listaGeneros);
+      }
+
+
+
+
+   public function store(Request $request)
+   {
+      $validatedData = $request->validate([
+         'titulo' => 'required|max:50',
+         'genero_code' => 'required|max:20',
+         'ano' => 'required|numeric|between:1950,2100',
+         'cartaz_url' => 'required|max:200',
+         'sumario' => 'required|max:255',
+         'trailer_url' => 'required|max:200'
+      ]);
+      //dd($validatedData);
+      $newFilme = Filme::create($validatedData);
+      //DB::table('filmes')->insert($validatedData);
+      return redirect()->route('filmes.admin')
+            ->with('alert-msg', 'Filme inserido com Sucesso')
+            ->with('alert-type', 'success');
+    }
 }
-   //  public function show(Request $request)
-   //   {
-   //      $Filme = Filme::all();
-   //      $id = $request->query('filmeid', $Filme[0]->id);
-   //      //dd($id);
-
-   //      $Filmeinfo = DB::table('filmes')
-   //      ->where('id',$id)
-   //      ->get();// buscar sessoes do filme
-
-   //      //dd($Filmeinfo);
-   //      //$DetalhesFilme = Filme::whereIn('filme_id', $id)->get();
-            
-   //      $FilmeSessoes = DB::table('sessoes')
-   //      ->where('filme_id',$id)
-   //      ->get();// buscar sessoes do filme
-   //      // \ dd($FilmeSessoes);
-         
-   //      return view(
-   //          'filmes.show',
-   //  
-
-   
 
