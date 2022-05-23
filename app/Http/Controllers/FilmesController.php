@@ -14,7 +14,9 @@ class FilmesController extends Controller
 {
    public function admin_index()
       {
-         $filmes = Filme::all();
+         $filmes = DB::table('filmes')
+                     ->select('*')
+                     ->paginate(8);
          return view('filmes.admin', compact('filmes'));
       }
 
@@ -53,9 +55,15 @@ class FilmesController extends Controller
 
   public function create()
       {
-        $listaGeneros = Genero::pluck('code', 'nome');
-        return view('filmes.create')->with('Generos', $listaGeneros);
-      }
+         $filmes = DB::table('filmes')
+                     ->select('*')
+                     ->leftjoin('generos','generos.code','=','filmes.genero_code')
+                     ->paginate(8); 
+                     $listaGeneros = Genero::pluck('code', 'nome');
+         return view(
+         'filmes.create',
+         compact('filmes', 'listaGeneros'));
+   }
 
 
    public function edit(Request $request,$id)
@@ -65,6 +73,31 @@ class FilmesController extends Controller
          return view('filmes.edit')->withFilme($filme)
                                    ->with('Generos', $listaGeneros);
       }
+
+   public function update(Request $request, $id)
+   {
+      $validatedData = $request->validate([
+         'titulo' => 'required|max:50',
+         'genero_code' => 'required|max:20',
+         'ano' => 'required|numeric|between:1950,2100',
+         'cartaz_url' => 'required|max:200',
+         'sumario' => 'required|max:255',
+         'trailer_url' => 'required|max:200'
+      ]);
+         //dd($validatedData);
+         DB::table('filmes')
+               ->where('id', $id)
+               ->update(['titulo' => $validatedData['titulo'],
+               'genero_code' => $validatedData['genero_code'],
+               'ano' => $validatedData['ano'],
+               'cartaz_url' => $validatedData['cartaz_url'],
+               'sumario' => $validatedData['sumario'],
+               'trailer_url' => $validatedData['trailer_url']]);
+         //seleciona apenas o valor nome no array que é a ediçao
+         return redirect()->route('filmes.admin')
+            ->with('alert-msg', 'Filme alterado com sucesso!')
+            ->with('alert-type', 'success');
+   }
 
 
 
@@ -83,7 +116,17 @@ class FilmesController extends Controller
       $newFilme = Filme::create($validatedData);
       //DB::table('filmes')->insert($validatedData);
       return redirect()->route('filmes.admin')
-            ->with('alert-msg', 'Filme inserido com Sucesso')
+            ->with('alert-msg', 'Filme inserido com sucesso')
+            ->with('alert-type', 'success');
+    }
+
+    public function destroy(Request $request, $id)
+    {
+      $filmeApagar = Filme::find($id);
+      $filmeApagar->delete();
+      //$deleted = DB::table('salas')->select('*')->where('id', $id)->delete();
+        return redirect()->route('filmes.admin')
+            ->with('alert-msg', 'Filme foi eliminado com sucesso!')
             ->with('alert-type', 'success');
     }
 }

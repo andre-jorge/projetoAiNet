@@ -1,5 +1,5 @@
 @extends('home')
-@section('title','Alterar Sala' )
+@section('title','Alterar Filme' )
 @section('content')
 <form action="{{ route('salas.update', $sala->id) }}" id="salas-form" method="POST">
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Editar Sala</h3></div>  
@@ -16,6 +16,7 @@
                         @enderror
                         <label for="idnome">Nome Sala</label>
                     </div>
+                    
                 </div>
             </div>  
             <div class="mt-4 mb-0">

@@ -1,7 +1,7 @@
 @extends('home')
 
 @section('content')
-<form action="{{ route('filmes.store') }}" id="filmes-form" method="POST">
+<form action="{{ route('filmes.update', $filme->id) }}" id="filmes-form" method="POST">
     
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Editar Filme</h3></div>
        
@@ -22,7 +22,7 @@
                     <div class="form-floating" >
                         <select class="form-select" name="genero_code" id="idGenero">
                             @foreach($Generos as $code => $nome)
-                                <option value="{{$nome}}" {{$nome==$code?'selected':''}}>{{$code}}</option>
+                                <option value="{{$nome}}" {{$nome==$code?'selected':''}}>{{$nome}}</option>
                             @endforeach
                         </select>
                         @error('code')

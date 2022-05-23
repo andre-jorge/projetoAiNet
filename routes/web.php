@@ -59,17 +59,23 @@ Route::get('generos', [GeneroController::class, 'index'])
 //---------------------FILMES----------------------------------------------------
 Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
         ->name('filmes.admin');// admin filmes
-
-
         
-Route::get('filmes', [FilmesController::class, 'create'])
-        ->name('filmes.index'); //criar filme
+Route::get('admin/filmes/criar', [FilmesController::class, 'create'])
+        ->name('filmes.create'); //criar filme
+        
 
-Route::get('filmes/{id?}/edit', [FilmesController::class, 'edit'])
+
+Route::get('admin/filmes/{id?}', [FilmesController::class, 'edit'])
         ->name('filmes.edit'); // editar filme
 
-Route::post('filmes', [FilmesController::class, 'store'])
+Route::post('admin/filmes', [FilmesController::class, 'store'])
         ->name('filmes.store'); // guardar filmes
+
+Route::put('admin/filmes/{id?}', [FilmesController::class, 'update'])
+        ->name('filmes.update');
+
+Route::delete('admin/filmes/{id?}', [FilmesController::class, 'destroy'])
+        ->name('filmes.destroy');
 
 //-----------------------------------------------------------------------------
 
