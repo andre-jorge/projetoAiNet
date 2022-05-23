@@ -5,6 +5,8 @@ use App\Http\Controllers\FilmesController;
 use App\Http\Controllers\SessoesController;
 use App\Http\Controllers\SalasController;
 use App\Http\Controllers\GenerosController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +31,8 @@ use App\Http\Controllers\GenerosController;
 Route::get('/', [FilmesController::class, 'index'])
          ->name('filme.index');
 
-Route::get('/sessoes/{id?}', [SessoesController::class, 'index'])
-        ->name('sessoes.index');//sessoes
+ Route::get('sessoes/{id?}', [SessoesController::class, 'index'])
+         ->name('sessoes.index');//sessoes
 
 //---------------------Salas-------------------------------------------------
 Route::get('admin/salas', [SalasController::class, 'index'])
@@ -63,8 +65,6 @@ Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
 Route::get('admin/filmes/criar', [FilmesController::class, 'create'])
         ->name('filmes.create'); //criar filme
         
-
-
 Route::get('admin/filmes/{id?}', [FilmesController::class, 'edit'])
         ->name('filmes.edit'); // editar filme
 
@@ -80,9 +80,30 @@ Route::delete('admin/filmes/{id?}', [FilmesController::class, 'destroy'])
 //-----------------------------------------------------------------------------
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+        ->name('home');
     
-Auth::routes();
+//------------------------------------------------------------------------------
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//------------------USERS----------------------
+
+Route::get('user/{id?}', [usersController::class, 'index'])
+         ->name('users.index');// admin filmes
+
+Route::get('admin/users', [usersController::class, 'index_admin'])
+        ->name('users.admin');
+
+//Route::put('user/{id?}', [usersController::class, 'update'])
+//       ->name('user.update');
+
+
+// Route::get('sessoes/{id?}', [SessoesController::class, 'index'])
+// ->name('sessoes.index');
+// // Route::get('carrinho', [App\Http\Controllers\SessoesController::class, 'addToCart'])
+// // ->name('sessoes.index');
+
+
+Route::get('cart', [CartController::class, 'index'])
+        ->name('cart.index');
+
+

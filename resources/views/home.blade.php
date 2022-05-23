@@ -39,11 +39,15 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('users.index', $userid=Auth::user()->id ) }}">
+                                            Dados Cliente 
+                                            {{-- {{ route('user.index', $userid=Auth::user()->id ) }} --}}
+                                        </a>    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -82,6 +86,7 @@
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link" href="{{route('salas.index')}}">Salas</a>
+                                <a class="nav-link" href="{{route('users.admin')}}">Clientes</a>
                                     
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Outros
@@ -158,5 +163,6 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        @yield('footer-scripts')
     </body>
 </html>

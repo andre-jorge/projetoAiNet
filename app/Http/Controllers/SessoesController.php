@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sessao;
 use App\Models\Filme;
+use App\Models\Genero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,15 +39,24 @@ class SessoesController extends Controller
                         ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
                         ->where('sessoes.filme_id', $id)
                         ->get();
-        
-        //    //       //->where('data', '<', '2020-01-03');//getdate())
-        //$soma= SessoesController::ContaBilhetes
-        //($filme->id,$sessoesFilme->data,$sessoesFilme->horario_inicio);
-        //dd($conta);
 
-    return view('sessoes.index', compact('sessoesFilme', 'FilmeDetalhes', 'id'));
+        //Carinho
+        $cart = session()->get('cart');
+        if ($cart == null)
+            $cart = [];
+
+    return view('sessoes.index', compact('sessoesFilme', 'FilmeDetalhes', 'id', 'cart'));
     }
 
+
+    public function addToCart(Request $request)
+        {
+            session()->put('cart', $request->post('cart'));
+
+            return response()->json([
+                'status' => 'added'
+            ]);
+        }
   
 
     
