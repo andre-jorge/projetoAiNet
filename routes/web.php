@@ -34,7 +34,10 @@ Route::get('/', [FilmesController::class, 'index'])
 Route::get('sessoes/{id?}', [SessoesController::class, 'index'])
         ->name('sessoes.index');//sessoes
 
-Route::get('funcionario/sessoes', [SessoesController::class, 'edit'])
+Route::get('funcionario/sessoes', [SessoesController::class, 'sessoes'])
+        ->name('sessoes.sessoes');//sessoes
+
+Route::get('funcionario/sessoes/{id?}{id2?}{id3?}', [SessoesController::class, 'edit'])
         ->name('sessoes.edit');//sessoes
 
 Route::put('funcionario/sessoes/{id?}', [SessoesController::class, 'update'])

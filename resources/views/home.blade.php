@@ -113,17 +113,13 @@
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Funcionarios</div>
-                            <a class="nav-link" href="{{route('sessoes.edit')}}">
+                            <a class="nav-link" href="{{route('sessoes.sessoes')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Validar Sessões
                             </a>
                             <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Sessões Validadas
-                            </a>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                ------
                             </a>
                         </div>
                     </div>

@@ -35,7 +35,7 @@ $height = '450px'; ?>
             frameborder="0" allowfullscreen></iframe> 
       </div>
       <div class="text-center">
-          <table class="table">
+          <table class="table table-striped">
               <thead>
                   <tr>
                     <th scope="col">Dia Sessao</th>

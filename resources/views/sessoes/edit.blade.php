@@ -2,7 +2,7 @@
 
 @section('content')
 
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Num. Recibo</th>
@@ -42,5 +42,6 @@
                 @endforeach
             </tbody>
         </table>
+        
            
 @endsection

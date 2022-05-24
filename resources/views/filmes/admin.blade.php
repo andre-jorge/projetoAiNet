@@ -4,7 +4,7 @@
     <button class="btn btn-secondary" href="{{route('filmes.store')}}">Novo</button>
 </form>  
 <div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Foto</th>

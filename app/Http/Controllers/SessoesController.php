@@ -60,19 +60,34 @@ class SessoesController extends Controller
         }
         
 
-    public function edit(Request $request){
+    public function edit(Request $request, $id){
         $todasSessoes=DB::table('bilhetes')
                         ->select('bilhetes.id as bil', 'bilhetes.*', 'sessoes.*', 'lugares.*', 'salas.*')
                         ->leftJoin('sessoes', 'sessoes.id', '=', 'bilhetes.sessao_id')
                         ->leftJoin('lugares', 'lugares.id', '=', 'bilhetes.lugar_id')
                         ->leftJoin('salas', 'salas.id', '=', 'lugares.sala_id')
-                        ->where('sessoes.data', '=','2020-01-01')
-                        ->where('sessoes.horario_inicio', '=','19:00:00')
-                        ->where('sessoes.filme_id', '=','327')
+                        ->where('bilhetes.sessao_id', $id)
                         ->where('bilhetes.estado', '=','não usado')
                         ->get();
                         //dd($todasSessoes);
         return view('sessoes.edit', compact('todasSessoes'));
+    }
+
+    public function sessoes(){
+        $todasSessoesFilmesHoje=DB::table('sessoes')
+                                    ->leftJoin('filmes', 'sessoes.filme_id', '=', 'filmes.id')
+                                    ->where('sessoes.data', '=','2020-01-01')
+                                    ->get();
+                                    //dd($todasSessoesFilmesHoje);
+        // $todosHorarios=DB::table('sessoes')
+        //                             ->select('horario_inicio')
+        //                             ->where('filme_id', $todasSessoesFilmesHoje->filme_id)
+        //                             ->where('data', $todasSessoesFilmesHoje->data)
+        //                             ->distinct('horario_inicio');
+                                    
+        //                             dd($todosHorarios);
+                                
+        return view('sessoes.sessoes', compact('todasSessoesFilmesHoje'));
     }
     
 
