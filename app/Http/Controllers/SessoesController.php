@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sessao;
 use App\Models\Filme;
 use App\Models\Genero;
+use App\Models\Bilhetes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -57,12 +58,33 @@ class SessoesController extends Controller
                 'status' => 'added'
             ]);
         }
-  
+        
 
+    public function edit(Request $request){
+        $todasSessoes=DB::table('bilhetes')
+                        ->select('bilhetes.id as bil', 'bilhetes.*', 'sessoes.*', 'lugares.*', 'salas.*')
+                        ->leftJoin('sessoes', 'sessoes.id', '=', 'bilhetes.sessao_id')
+                        ->leftJoin('lugares', 'lugares.id', '=', 'bilhetes.lugar_id')
+                        ->leftJoin('salas', 'salas.id', '=', 'lugares.sala_id')
+                        ->where('sessoes.data', '=','2020-01-01')
+                        ->where('sessoes.horario_inicio', '=','19:00:00')
+                        ->where('sessoes.filme_id', '=','327')
+                        ->where('bilhetes.estado', '=','não usado')
+                        ->get();
+                        //dd($todasSessoes);
+        return view('sessoes.edit', compact('todasSessoes'));
+    }
     
 
-
-
+    public function update(Request $request, $id)
+    {
+        $testes= "nao usado";
+        //dd($testes);
+        Bilhetes::where('id',$id)->update(['estado'=>'usado']);
+        return redirect()->route('sessoes.edit')
+                ->with('alert-msg', 'Bilhete validado com sucesso!')
+                ->with('alert-type', 'success');
+    }
    
 }
 

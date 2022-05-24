@@ -29,17 +29,23 @@ use App\Http\Controllers\UsersController;
 // });
 
 Route::get('/', [FilmesController::class, 'index'])
-         ->name('filme.index');
+        ->name('filme.index');
 
- Route::get('sessoes/{id?}', [SessoesController::class, 'index'])
-         ->name('sessoes.index');//sessoes
+Route::get('sessoes/{id?}', [SessoesController::class, 'index'])
+        ->name('sessoes.index');//sessoes
+
+Route::get('funcionario/sessoes', [SessoesController::class, 'edit'])
+        ->name('sessoes.edit');//sessoes
+
+Route::put('funcionario/sessoes/{id?}', [SessoesController::class, 'update'])
+        ->name('sessoes.update');
 
 //---------------------Salas-------------------------------------------------
 Route::get('admin/salas', [SalasController::class, 'index'])
-         ->name('salas.index');//salas
+        ->name('salas.index');//salas
 
 Route::get('admin/salas/criar', [SalasController::class, 'create'])
-         ->name('salas.create'); //criar filme
+        ->name('salas.create'); //criar filme
 
 Route::post('admin/salas', [SalasController::class, 'store'])
         ->name('salas.store'); // guardar filmes

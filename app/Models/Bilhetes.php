@@ -5,7 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bilhete extends Model
+class Bilhetes extends Model
 {  
-    protected $table = 'bilhets';
+    use HasFactory;
+    
+    protected $fillable = [
+        'estado'];
 }
