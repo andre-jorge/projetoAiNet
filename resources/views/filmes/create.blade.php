@@ -20,8 +20,8 @@
                 <div class="col-md-6">
                     <div class="form-floating" >
                         <select class="form-select" name="genero_code" id="idGenero">
-                            @foreach($listaGeneros as $code => $nome)
-                                <option value="{{$nome}}" {{old('code')==$code?'selected':''}}>{{$code}}</option>
+                            @foreach($listaGeneros as $nome => $code)
+                                <option value="{{$code}}" {{old('nome')==$nome?'selected':''}}>{{$nome}}</option>
                             @endforeach
                         </select>
                         @error('code')

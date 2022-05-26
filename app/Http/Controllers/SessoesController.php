@@ -6,6 +6,7 @@ use App\Models\Sessao;
 use App\Models\Filme;
 use App\Models\Genero;
 use App\Models\Bilhetes;
+use App\Models\Salas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
@@ -97,65 +98,88 @@ class SessoesController extends Controller
                 ->with('alert-type', 'success');
     }
 
+//-----------------------------------------------------------------------------------
+//------------------------------ADMIN------------------------------------------------
+//-----------------------------------------------------------------------------------
+    
+
+    //INDEX----------------------------------------
     public function admin_index(Filme $filme)
     {
         $uri = $filme;
         //dd($filme->sessoes);
         $sessoesFilme=DB::table('sessoes')
-                        ->where('filme_id', $filme->id)
+                        ->leftjoin('salas','salas.id','=','sessoes.sala_id')
+                        ->where('sessoes.filme_id', $filme->id)
                         ->get();
-        //dd($sessoesFilme)
+        //dd($sessoesFilme);
         //CONTINUAR AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 
     return view('sessoes.admin.index', compact('sessoesFilme'));
     }
 
-//-----------------------------------------------------------------------------------
-//------------------------------ADMIN------------------------------------------------
-//-----------------------------------------------------------------------------------
 
+
+
+
+    //CRIAR---------------------------------------
     public function admin_create()
       {
-        $todassessoes = Sessao::pluck('data', 'horario_inicio');
-        return view('sessoes.admin.create')->with('sessoes', $todassessoes);
+        $sessoes = DB::table('sessoes')
+                     ->leftjoin('filmes','filmes.id','=','Sessoes.filme_id')
+                     ->paginate(8); 
+        $listaFilmes = Filme::pluck('id', 'Titulo');
+        $listaSalas = Salas::pluck('id', 'nome');
+         return view('sessoes.admin.create', compact('sessoes','listaSalas', 'listaFilmes'));
       }
 
     public function admin_store(Request $request)
    {
-      $todassessoes= Sessao::all();
+       //dd($request);
+      //$todassessoes= Sessao::all();
       $validatedData = $request->validate([
         'filme_id' => 'required|max:500',
         'sala_id' => 'required|max:2',
         'data' => 'required|date',
         'horario_inicio' => 'required|date_format:H:i:s']);
         $newSessao = Sessao::create($validatedData);
-        return redirect()->route('sessoes.admin.index')
+        return redirect()->route('filme.index')
               ->with('alert-msg', 'Sessao criada com sucesso')
               ->with('alert-type', 'success');
     }
 
-    public function admin_edit(Request $request,$id)
+
+
+
+
+
+    //UPDATE---------------------------------------------
+    public function admin_edit(Sessao $sessao)
       {
-         $sessao = Sessao::where('id', $id)->first();
-         //$listaSessoes = Sessao::all();
-         //dd($sessao);
-         return view('sessoes.admin.edit')->with('sessao', $sessao);
+         //dd($sessao); 
+         $editarSessao = Sessao::where('id', $sessao->id)->first();
+         $filme = Filme::find($sessao->filme_id);
+         $listaSalas = Salas::pluck('id', 'nome');
+         //dd($filme);
+         return view('sessoes.admin.edit')
+                    ->with('filme', $filme)
+                    ->with('listaSalas', $listaSalas)
+                    ->with('sessao', $editarSessao);
       }
 
     public function admin_update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'filme_id' => 'required|max:500',
             'sala_id' => 'required|max:2',
             'data' => 'required|date',
             'horario_inicio' => 'required|date_format:H:i:s']);
+            //dd($validatedData);
             DB::table('sessoes')
                 ->where('id', $id)
-                ->update(['filme_id' => $validatedData['filme_id'],
-                'sala_id' => $validatedData['sala_id'],
+                ->update(['sala_id' => $validatedData['sala_id'],
                 'data' => $validatedData['data'],
                 'horario_inicio' => $validatedData['horario_inicio']]);
-        return redirect()->route('sessoes.admin.index')
+        return redirect()->route('filme.index')
             ->with('alert-msg', 'Sessao foi alterada com sucesso!')
             ->with('alert-type', 'success');
     }

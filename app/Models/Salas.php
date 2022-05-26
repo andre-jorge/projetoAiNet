@@ -11,7 +11,7 @@ class Salas extends Model
     protected $fillable = [
         'nome'];
 
-    public function salas()
+    public function sessao()
     {
         return $this->hasMany(Sessao::class);
         //1departamento tem varios docentes

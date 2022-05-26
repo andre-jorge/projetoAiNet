@@ -25,6 +25,7 @@ class Filme extends Model
 
 
 
+
     // public function FilmeGenero()
     // {
     //     return $this->belongsTo(Genero::class, 'code', 'code');
@@ -32,6 +33,9 @@ class Filme extends Model
     protected $fillable = [
         'titulo', 'genero_code', 'cartaz_url', 'ano', 'sumario',
         'trailer_url'];
+
+
+
 
 }
 

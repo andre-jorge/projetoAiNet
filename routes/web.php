@@ -45,22 +45,22 @@ Route::put('funcionario/sessoes/{id?}', [SessoesController::class, 'update'])
 
 
 //---------------------------Sessoes ADMIN-------------------------------------
-Route::get('admin/estesfilme/{filme}', [SessoesController::class, 'admin_index'])
+Route::get('admin/adminsessoes/{filme}', [SessoesController::class, 'admin_index'])
         ->name('sessoes.admin.index');
 
-Route::get('admin/sessoes/criar', [SessoesController::class, 'admin_create'])
-        ->name('sessoes.admin.create'); //criar filme
+Route::get('adminsessoes/criar', [SessoesController::class, 'admin_create'])
+        ->name('sessoes.admin.create');
 
-Route::post('admin/sessoes', [SessoesController::class, 'admin_store'])
-        ->name('sessoes.admin.store'); // guardar filmes
+Route::post('adminsessoes', [SessoesController::class, 'admin_store'])
+        ->name('sessoes.admin.store'); 
 
-Route::get('admin/sessoes/{id?}', [SessoesController::class, 'admin_edit'])
-        ->name('sessoes.admin.edit'); // editar sala
+Route::get('admin/adminsessoes/editar/{sessao}', [SessoesController::class, 'admin_edit'])
+        ->name('sessoes.admin.edit'); 
 
-Route::put('admin/sessoes/{id?}', [SessoesController::class, 'admin_update'])
+Route::put('admin/adminsessoes/editar/{id?}', [SessoesController::class, 'admin_update'])
         ->name('sessoes.admin.update');
 
-Route::delete('admin/sessoes/{id?}', [SessoesController::class, 'admin_destroy'])
+Route::delete('admin/adminsessoes/{id?}', [SessoesController::class, 'admin_destroy'])
         ->name('sessoes.admin.destroy');
 
 
