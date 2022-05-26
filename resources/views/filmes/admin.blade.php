@@ -16,6 +16,7 @@
                 <th scope="col">trailer_url</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
+                <th scope="col"></th>
                 </tr>
         </thead>
         <tbody>
@@ -35,11 +36,11 @@
                         @csrf
                         <input type="submit" class="btn btn-danger btn-sm" value="Eliminar">
                     </form> 
-                </tr>
+                
+                <td><a href="{{ route('sessoes.admin.index', $filme->id) }}" name="id" value='{{$filme->id}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Sessoes</a></td>
             </tr>
             @endforeach
         </tbody>
-        
     </table>
     {{ $filmes->links() }}
 </div>   

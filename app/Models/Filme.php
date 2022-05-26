@@ -18,7 +18,7 @@ class Filme extends Model
         //abreviatura opcial define a primary key
     }
 
-    public function generos()
+    public function Generos()
     {
         return $this->belongsTo(Genero::class, 'genero_code', 'code');
     }

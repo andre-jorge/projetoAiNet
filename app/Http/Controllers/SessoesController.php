@@ -8,6 +8,10 @@ use App\Models\Genero;
 use App\Models\Bilhetes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Mockery\Generator\Parameter;
+use PHPUnit\Framework\MockObject\Rule\Parameters;
 
 class SessoesController extends Controller
 {
@@ -78,15 +82,7 @@ class SessoesController extends Controller
                                     ->leftJoin('filmes', 'sessoes.filme_id', '=', 'filmes.id')
                                     ->where('sessoes.data', '=','2020-01-01')
                                     ->get();
-                                    //dd($todasSessoesFilmesHoje);
-        // $todosHorarios=DB::table('sessoes')
-        //                             ->select('horario_inicio')
-        //                             ->where('filme_id', $todasSessoesFilmesHoje->filme_id)
-        //                             ->where('data', $todasSessoesFilmesHoje->data)
-        //                             ->distinct('horario_inicio');
-                                    
-        //                             dd($todosHorarios);
-                                
+                                    //dd($todasSessoesFilmesHoje);                         
         return view('sessoes.sessoes', compact('todasSessoesFilmesHoje'));
     }
     
@@ -100,7 +96,79 @@ class SessoesController extends Controller
                 ->with('alert-msg', 'Bilhete validado com sucesso!')
                 ->with('alert-type', 'success');
     }
-   
+
+    public function admin_index(Filme $filme)
+    {
+        $uri = $filme;
+        //dd($filme->sessoes);
+        $sessoesFilme=DB::table('sessoes')
+                        ->where('filme_id', $filme->id)
+                        ->get();
+        //dd($sessoesFilme)
+        //CONTINUAR AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+
+    return view('sessoes.admin.index', compact('sessoesFilme'));
+    }
+
+//-----------------------------------------------------------------------------------
+//------------------------------ADMIN------------------------------------------------
+//-----------------------------------------------------------------------------------
+
+    public function admin_create()
+      {
+        $todassessoes = Sessao::pluck('data', 'horario_inicio');
+        return view('sessoes.admin.create')->with('sessoes', $todassessoes);
+      }
+
+    public function admin_store(Request $request)
+   {
+      $todassessoes= Sessao::all();
+      $validatedData = $request->validate([
+        'filme_id' => 'required|max:500',
+        'sala_id' => 'required|max:2',
+        'data' => 'required|date',
+        'horario_inicio' => 'required|date_format:H:i:s']);
+        $newSessao = Sessao::create($validatedData);
+        return redirect()->route('sessoes.admin.index')
+              ->with('alert-msg', 'Sessao criada com sucesso')
+              ->with('alert-type', 'success');
+    }
+
+    public function admin_edit(Request $request,$id)
+      {
+         $sessao = Sessao::where('id', $id)->first();
+         //$listaSessoes = Sessao::all();
+         //dd($sessao);
+         return view('sessoes.admin.edit')->with('sessao', $sessao);
+      }
+
+    public function admin_update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'filme_id' => 'required|max:500',
+            'sala_id' => 'required|max:2',
+            'data' => 'required|date',
+            'horario_inicio' => 'required|date_format:H:i:s']);
+            DB::table('sessoes')
+                ->where('id', $id)
+                ->update(['filme_id' => $validatedData['filme_id'],
+                'sala_id' => $validatedData['sala_id'],
+                'data' => $validatedData['data'],
+                'horario_inicio' => $validatedData['horario_inicio']]);
+        return redirect()->route('sessoes.admin.index')
+            ->with('alert-msg', 'Sessao foi alterada com sucesso!')
+            ->with('alert-type', 'success');
+    }
+
+    public function admin_destroy(Request $request, $id)
+    {
+      $sessaoApagar = Sessao::find($id);
+      $sessaoApagar->delete();
+      //$deleted = DB::table('salas')->select('*')->where('id', $id)->delete();
+        return redirect()->route('sessoes.admin.index')
+            ->with('alert-msg', 'Sessao foi apagada com sucesso!')
+            ->with('alert-type', 'success');  
+    }
 }
 
 

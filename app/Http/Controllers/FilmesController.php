@@ -14,6 +14,8 @@ class FilmesController extends Controller
 {
    public function admin_index()
       {
+         $filme = Filme::findOrFail(1);
+         //dd($filme->generos->nome);
          $filmes = DB::table('filmes')
                      ->select('*')
                      ->paginate(8);
@@ -22,12 +24,14 @@ class FilmesController extends Controller
 
    public function index(Request $request)
       {
+         //dd(123);
          $filmes = DB::table('filmes')
                      ->select('*')
                      ->leftjoin('generos','generos.code','=','filmes.genero_code')
                      ->paginate(8);  
                      //dd($filmes);
          // PROCURA POR NOME ou Sumario
+         
           $todosFilmes = Filme::where([
              [function($query) use ($request){
                if (($genero = $request->genero)){
@@ -37,9 +41,10 @@ class FilmesController extends Controller
              }]
           ])
           ->paginate(8);
-         
+          
          $listaGeneros = Genero::all();
          $filmes = $todosFilmes;
+         
          return view(
              'filmes.index',
              compact('filmes', 'listaGeneros'));

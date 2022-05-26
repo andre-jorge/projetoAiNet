@@ -43,6 +43,32 @@ Route::get('funcionario/sessoes/{id?}', [SessoesController::class, 'edit'])
 Route::put('funcionario/sessoes/{id?}', [SessoesController::class, 'update'])
         ->name('sessoes.update');
 
+
+//---------------------------Sessoes ADMIN-------------------------------------
+Route::get('admin/estesfilme/{filme}', [SessoesController::class, 'admin_index'])
+        ->name('sessoes.admin.index');
+
+Route::get('admin/sessoes/criar', [SessoesController::class, 'admin_create'])
+        ->name('sessoes.admin.create'); //criar filme
+
+Route::post('admin/sessoes', [SessoesController::class, 'admin_store'])
+        ->name('sessoes.admin.store'); // guardar filmes
+
+Route::get('admin/sessoes/{id?}', [SessoesController::class, 'admin_edit'])
+        ->name('sessoes.admin.edit'); // editar sala
+
+Route::put('admin/sessoes/{id?}', [SessoesController::class, 'admin_update'])
+        ->name('sessoes.admin.update');
+
+Route::delete('admin/sessoes/{id?}', [SessoesController::class, 'admin_destroy'])
+        ->name('sessoes.admin.destroy');
+
+
+
+
+
+
+
 //---------------------Salas-------------------------------------------------
 Route::get('admin/salas', [SalasController::class, 'index'])
         ->name('salas.index');//salas
