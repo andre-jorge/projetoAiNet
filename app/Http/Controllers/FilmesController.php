@@ -109,16 +109,24 @@ class FilmesController extends Controller
 
    public function store(Request $request)
    {
+      //dd($request);
+      $nameFile = $request->titulo . '.' . $request->cartaz_url->extension();   
+      $request->file('cartaz_url')->storeAS('public/cartazes',$nameFile );
+      //dd($nameFile);
+
       $validatedData = $request->validate([
          'titulo' => 'required|max:50',
          'genero_code' => 'required|max:20',
          'ano' => 'required|numeric|between:1950,2100',
-         'cartaz_url' => 'required|max:200',
+         'cartaz_url' => 'required',
          'sumario' => 'required|max:255',
          'trailer_url' => 'required|max:200'
       ]);
+      
       //dd($validatedData);
       $newFilme = Filme::create($validatedData);
+      $newFilme->cartaz_url = $nameFile;
+      $newFilme->save();
       //DB::table('filmes')->insert($validatedData);
       return redirect()->route('filmes.admin')
             ->with('alert-msg', 'Filme inserido com sucesso')

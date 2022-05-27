@@ -9,7 +9,7 @@ class Salas extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nome'];
+        'nome','costum'];
 
     public function sessao()
     {

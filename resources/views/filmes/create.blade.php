@@ -1,7 +1,7 @@
 @extends('home')
 
 @section('content')
-<form action="{{ route('filmes.store') }}" id="filmes-form" method="POST">
+<form action="{{ route('filmes.store') }}" enctype="multipart/form-data" id="filmes-form" method="POST">
     
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Criar Filme</h3></div>
        
@@ -35,7 +35,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="cartaz_url" id="idCartaz_url" type="text" value="{{old('cartaz_url')}}" placeholder="234bjbdf.jpg"> 
+                        <input class="form-control" name="cartaz_url" id="cartaz_url" type="file" value="{{old('cartaz_url')}}" placeholder="234bjbdf.jpg">  
                         @error('cartaz_url')
                             <div class="error">{{ $message }}</div>
                         @enderror

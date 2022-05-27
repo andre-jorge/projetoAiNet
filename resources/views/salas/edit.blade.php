@@ -16,7 +16,16 @@
                         @enderror
                         <label for="idnome">Nome Sala</label>
                     </div>
-                    
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                        <a value="{{$sala->nome}}"></a>
+                        <input class="form-control" name="custom" id="custom" type="text" value="{{$sala->custom}}" placeholder="Lotação Maxima"> 
+                        @error('custom')
+                            <div class="error">{{ $message }}</div>
+                        @enderror
+                        <label for="idnome">Lotação Maxima</label>
+                    </div>
                 </div>
             </div>  
             <div class="mt-4 mb-0">

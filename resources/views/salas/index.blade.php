@@ -19,7 +19,7 @@
                 <td></td>
                 <td>{{$sala->id}}</td>
                 <td>{{$sala->nome}}</td>
-                <td>{{$sala->costum}}</td>
+                <td>{{$sala->custom}}</td>
                 <td>
                 <a href="{{ route('salas.edit', $sala->id, $sala->nome) }}" name="salaid" value='{{$sala->id}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Alterar</a>
                 <td>

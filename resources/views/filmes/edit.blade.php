@@ -36,7 +36,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="cartaz_url" id="idCartaz_url" type="text" value="{{$filme->cartaz_url}}" placeholder="234bjbdf.jpg"> 
+                        <input class="form-control" name="cartaz_url" id="idCartaz_url" type="file" value="{{$filme->cartaz_url}}" placeholder="234bjbdf.jpg"> 
                         @error('cartaz_url')
                             <div class="error">{{ $message }}</div>
                         @enderror

@@ -25,11 +25,10 @@ class SalasController extends Controller
    {
       $todassalas= Salas::all();
       $validatedData = $request->validate([
-         'nome' => 'required|max:50'
+         'nome' => 'required|max:50',
+         'custom' => 'required|numeric|between:40,120'
       ]);
-        $newSala = DB::table('salas')->insert(
-          array('nome' => $validatedData)
-      );
+        $newSala = Salas::create($validatedData);
         //DB::table('filmes')->insert($validatedData);
         return redirect()->route('salas.index')
               ->with('alert-msg', 'Sala criada com Sucesso')
@@ -47,11 +46,13 @@ class SalasController extends Controller
       public function update(Request $request, $id)
     {
       $validatedData = $request->validate([
-        'nome' => 'required|max:50']);
+        'nome' => 'required|max:50',
+        'custom' => 'required|numeric|between:40,120'
+      ]);
         //dd($validatedData);
           DB::table('salas')
               ->where('id', $id)
-              ->update(['nome' => $validatedData['nome']]);//seleciona apenas o valor nome no array que é a ediçao
+              ->update(['nome' => $validatedData['nome'],'custom' => $validatedData['custom']]);//seleciona apenas o valor nome no array que é a ediçao
         return redirect()->route('salas.index')
             ->with('alert-msg', 'Sala foi alterada com sucesso!')
             ->with('alert-type', 'success');
