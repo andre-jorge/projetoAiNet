@@ -11,13 +11,9 @@ class Salas extends Model
     protected $fillable = [
         'nome','costum'];
 
-    public function sessao()
-    {
-        return $this->hasMany(Sessao::class);
-        //1departamento tem varios docentes
-        //docentes relacionados com departamentos
-        //departamento é opcional define a chave estrangeira
-        //abreviatura opcial define a primary key
+    //LIGAÇÃO SESSOES COM SALA OK
+    public function Sessao(){
+        return $this->hasMany(Sessao::class,'sala_id','id');
     }
 
 }

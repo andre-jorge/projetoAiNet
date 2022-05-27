@@ -10,19 +10,16 @@ class Sessao extends Model
     //use HasFactory;
     protected $table = "sessoes";
 
-
-    public function FilmeSessoes()
+    //LIGAÇÃO FILMES COM SESSOES OK
+    public function Filmes()
     {
-        //Docente tem um Departamento
-        //aqui se define o relacionamento
-        return $this->belongsTo(Filme::class);
-        //departamento é opcional define a chave estrangeira
-        //abreviatura opcial define a primary key
+        return $this->belongsTo(Filme::class, 'filme_id', 'id');
     }
 
-    public function salas()
+    //LIGAÇÃO SALAS COM SESSOES OK
+    public function Salas()
     {
-    return $this->belongsTo(Salas::class);
+    return $this->belongsTo(Salas::class,'sala_id','id');
     }
 
 

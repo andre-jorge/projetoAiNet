@@ -29,9 +29,13 @@ class SessoesController extends Controller
 
     public function index(Request $request, $id)
     {
-        $listaSessoes = Sessao::all();
+        //$listaSessoes = Sessao::all();
         //dd($listaSessoes);
         //$idfilme = $request->query('filmeid', $listaSessoes[0]->id);
+        $sessao = Sessao::findOrFail(1);
+        //dd($sessao);
+        dd($sessao->Salas->nome);
+
         $filme2 = Filme::where('id', $id)->first();
         $FilmeDetalhes = DB::table('filmes')
                         ->select('*')

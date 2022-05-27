@@ -9,18 +9,15 @@ class Filme extends Model
 {
     use HasFactory;
 
-    public function Sessoes()
-    {
-        return $this->hasMany(Sessao::class);
-        //1departamento tem varios docentes
-        //docentes relacionados com departamentos
-        //departamento é opcional define a chave estrangeira
-        //abreviatura opcial define a primary key
-    }
-
+    //LIGAÇÃO GENEROS COM FILMES OK
     public function Generos()
     {
         return $this->belongsTo(Genero::class, 'genero_code', 'code');
+    }
+
+    //LIGAÇÃO FILMES COM SESSOES OK
+    public function Sessao(){
+        return $this->hasMany(Sessao::class,'filme_id','id');
     }
 
 
