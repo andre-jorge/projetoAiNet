@@ -1,7 +1,7 @@
 @extends('home')
 @section('content')
 <form method="get" action="{{route('salas.create')}}">
-    <button class="btn btn-secondary" href="{{route('salas.store')}}">Novo</button>
+    <button style="float: right;" class="btn btn-secondary btn-lg" href="{{route('salas.store')}}">Nova Sala</button>
 </form> 
     <table class="table">
         <thead>

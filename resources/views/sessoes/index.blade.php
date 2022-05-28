@@ -55,11 +55,14 @@ $height = '450px'; ?>
                     <td> 
                     @php echo App\Http\Controllers\SessoesController::ContaBilhetes($filme->id,$sessao->data,$sessao->horario_inicio);  @endphp
                     </td>
-                    <td>80</td>
-                    <td><input type="number" value="0" min="0" max="50">
-                    <button class="add-to-cart" type="submit" href="{{route('cart.index')}}" class="btn btn-sm btn-outline-secondary" 
-                            data-id="{{$sessao->id}}" data-name="{{$sessao->filme_id}}" data-price="{{$sessao->sala_id}}">Add to Cart</button></td>
-                  </tr>
+                    <td><?= $sessao->Salas->custom ?></td>
+                    <td>
+                      <form action="{{route('carrinho.store_sessao', $sessao)}}" method="POST">
+                          @csrf
+                          <input type="submit" value="Add">
+                      </form>
+                    </td>
+                    </tr>
                   @endforeach
               </tbody>
               

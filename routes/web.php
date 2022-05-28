@@ -8,6 +8,7 @@ use App\Http\Controllers\GenerosController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\CarrinhoController;
 
 
 
@@ -141,12 +142,6 @@ Route::get('admin/users', [usersController::class, 'index_admin'])
 // // Route::get('carrinho', [App\Http\Controllers\SessoesController::class, 'addToCart'])
 // // ->name('sessoes.index');
 
-
-Route::get('cart', [CartController::class, 'index'])
-        ->name('cart.index');
-
-
-
 //------------------PDF----------------------
 
 Route::get('recibos/bilhete/{recibo}', [PdfController::class, 'geraPdfBilhete'])
@@ -164,6 +159,16 @@ Route::get('recibos/{recibo}', [PdfController::class, 'geraPdfRecibo'])
 
 // Route::get('recibos', [RecibosController::class, 'index'])
 // ->name('recibos.index');
+
+
+
+//------------------Carrinho----------------------
+Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
+Route::post('carrinho/sessao/{sessao}', [CarrinhoController::class, 'store_sessao'])->name('carrinho.store_sessao');
+Route::put('carrinho/sessao/{sessao}', [CarrinhoController::class, 'update_sessao'])->name('carrinho.update_sessao');
+Route::delete('carrinho/sessao/{sessao}', [CarrinhoController::class, 'destroy_sessao'])->name('carrinho.destroy_sessao');
+Route::post('carrinho', [CarrinhoController::class, 'store'])->name('carrinho.store');
+Route::delete('carrinho', [CarrinhoController::class, 'destroy'])->name('carrinho.destroy');
 
 
 

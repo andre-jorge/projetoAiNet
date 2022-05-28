@@ -8,6 +8,7 @@ use App\Models\Genero;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Carbon\Carbon;
 
 
 class FilmesController extends Controller
@@ -22,8 +23,12 @@ class FilmesController extends Controller
    // INDEX JA OK
    public function index(Request $request)
       {
-         //dd($request);
-         $filmes = Filme::paginate(8);  
+         $currentTime = Carbon::now();
+         $currentTime = $currentTime->toDateString();
+         $filmesAtuais = Sessao::where('data','>', $currentTime)
+                     ->orderby('data','asc')
+                     ->paginate(8);  
+         
          // PROCURA POR NOME ou Sumario
           $todosFilmes = Filme::where([
              [function($query) use ($request){
@@ -36,9 +41,10 @@ class FilmesController extends Controller
           ->paginate(8);
          $listaGeneros = Genero::all();
          $filmes = $todosFilmes;
+         
          return view(
              'filmes.index',
-             compact('filmes', 'listaGeneros'));
+             compact('filmes','filmesAtuais', 'listaGeneros'));
       }
 
   public function create()

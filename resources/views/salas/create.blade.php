@@ -2,9 +2,10 @@
 
 @section('content')
 <form action="{{ route('salas.store') }}" id="salas-form" method="POST">
-    
-    <div class="card-header"><h3 class="text-center font-weight-light my-4">Criar Sala</h3></div>
-       
+    <div class="card-header">
+            <h3 class="text-center font-weight-light my-4">Criar Sala</h3>
+            <span style="width: 100%;" text-align="center">Esta funcao irá criar a sala e respetivos lugares segundo o numero de lugares e filas</span>
+    </div> 
     <div class="card-body">
     @csrf
     

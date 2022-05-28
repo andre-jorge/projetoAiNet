@@ -13,6 +13,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery\Generator\Parameter;
 use PHPUnit\Framework\MockObject\Rule\Parameters;
+use Carbon\Carbon;
 
 class SessoesController extends Controller
 {
@@ -31,7 +32,12 @@ class SessoesController extends Controller
     //INDEX JÁ OK
     public function index(Filme $filme)
     {
-        $sessoesFilme = Sessao::where('filme_id', $filme->id)->get();
+        $currentTime = Carbon::now();
+        $currentTime = $currentTime->toDateString();
+
+        $sessoesFilme = Sessao::where('filme_id', $filme->id)
+                                    ->where('data','>', $currentTime)
+                                    ->get();
         //Carinho
         $cart = session()->get('cart');
         if ($cart == null)
