@@ -31,7 +31,7 @@ use App\Http\Controllers\UsersController;
 Route::get('/', [FilmesController::class, 'index'])
         ->name('filme.index');
 
-Route::get('sessoes/{id?}', [SessoesController::class, 'index'])
+Route::get('sessoes/{filme}', [SessoesController::class, 'index'])
         ->name('sessoes.index');//sessoes
 
 Route::get('funcionario/sessoes', [SessoesController::class, 'sessoes'])
@@ -45,10 +45,10 @@ Route::put('funcionario/sessoes/{id?}', [SessoesController::class, 'update'])
 
 
 //---------------------------Sessoes ADMIN-------------------------------------
-Route::get('admin/adminsessoes/{filme}', [SessoesController::class, 'admin_index'])
+Route::get('adminsessoes/{filme}', [SessoesController::class, 'admin_index'])
         ->name('sessoes.admin.index');
 
-Route::get('adminsessoes/criar', [SessoesController::class, 'admin_create'])
+Route::get('adminsessoes', [SessoesController::class, 'admin_create'])
         ->name('sessoes.admin.create');
 
 Route::post('adminsessoes', [SessoesController::class, 'admin_store'])

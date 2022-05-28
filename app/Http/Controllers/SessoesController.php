@@ -16,6 +16,7 @@ use PHPUnit\Framework\MockObject\Rule\Parameters;
 
 class SessoesController extends Controller
 {
+    //FUNÇAO PARA CONTAR BILHETES E DIZER LOTAÇÃO
     public static function ContaBilhetes($arg1,$arg2,$args3){
         $sessoesFilmeBilhetes=DB::table('sessoes')
                         ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
@@ -27,35 +28,18 @@ class SessoesController extends Controller
         return $sessoesFilmeBilhetes;
     }
 
-    public function index(Request $request, $id)
+    //INDEX JÁ OK
+    public function index(Filme $filme)
     {
-        //$listaSessoes = Sessao::all();
-        //dd($listaSessoes);
-        //$idfilme = $request->query('filmeid', $listaSessoes[0]->id);
-        $sessao = Sessao::findOrFail(1);
-        //dd($sessao);
-        dd($sessao->Salas->nome);
-
-        $filme2 = Filme::where('id', $id)->first();
-        $FilmeDetalhes = DB::table('filmes')
-                        ->select('*')
-                        ->leftJoin('generos', 'generos.code', '=', 'filmes.genero_code')
-                        ->where('filmes.id', $id)
-                        ->first();
-                        //dd($filme2);
-        //$sessoesFilme = Sessao::where('filme_id', $id)->get();
-        //dd($sessoesFilme);
-        $sessoesFilme=DB::table('sessoes')
-                        ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
-                        ->where('sessoes.filme_id', $id)
-                        ->get();
-
+        $sessoesFilme = Sessao::where('filme_id', $filme->id)->get();
         //Carinho
         $cart = session()->get('cart');
         if ($cart == null)
             $cart = [];
-
-    return view('sessoes.index', compact('sessoesFilme', 'FilmeDetalhes', 'id', 'cart'));
+        return view('sessoes.index')
+                    ->with('filme', $filme)
+                    ->with('sessoesFilme', $sessoesFilme)
+                    ->with('cart', $cart);
     }
 
 
@@ -82,16 +66,15 @@ class SessoesController extends Controller
         return view('sessoes.edit', compact('todasSessoes'));
     }
 
+    //SESSOES JÁ OK
     public function sessoes(){
-        $todasSessoesFilmesHoje=DB::table('sessoes')
-                                    ->leftJoin('filmes', 'sessoes.filme_id', '=', 'filmes.id')
-                                    ->where('sessoes.data', '=','2020-01-01')
-                                    ->get();
+        $todasSessoesFilmesHoje = Sessao::where('data','=', '2020-01-01')->get();
+        
                                     //dd($todasSessoesFilmesHoje);                         
         return view('sessoes.sessoes', compact('todasSessoesFilmesHoje'));
     }
     
-
+    
     public function update(Request $request, $id)
     {
         $testes= "nao usado";
@@ -107,66 +90,47 @@ class SessoesController extends Controller
 //-----------------------------------------------------------------------------------
     
 
-    //INDEX----------------------------------------
+    //INDEX JA OK -----------------------------------------------------
     public function admin_index(Filme $filme)
     {
-        $uri = $filme;
-        //dd($filme->sessoes);
-        $sessoesFilme=DB::table('sessoes')
-                        ->leftjoin('salas','salas.id','=','sessoes.sala_id')
-                        ->where('sessoes.filme_id', $filme->id)
-                        ->get();
-        //dd($sessoesFilme);
-        //CONTINUAR AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-
-    return view('sessoes.admin.index', compact('sessoesFilme'));
+        $sessoesFilme=Sessao::where('filme_id',$filme->id)->get();
+        return view('sessoes.admin.index', compact('sessoesFilme'));
     }
 
-
-
-
-
-    //CRIAR---------------------------------------
+    //CRIAR JA OK ----------------------------------------------------
     public function admin_create()
       {
-        $sessoes = DB::table('sessoes')
-                     ->leftjoin('filmes','filmes.id','=','Sessoes.filme_id')
-                     ->paginate(8); 
+        $sessoes = Sessao::paginate(8);
         $listaFilmes = Filme::pluck('id', 'Titulo');
         $listaSalas = Salas::pluck('id', 'nome');
          return view('sessoes.admin.create', compact('sessoes','listaSalas', 'listaFilmes'));
       }
 
+
+    //CRIAR PENSO OK ----------------------------------------------------  
     public function admin_store(Request $request)
-   {
-       //dd($request);
-      //$todassessoes= Sessao::all();
-      $validatedData = $request->validate([
-        'filme_id' => 'required|max:500',
-        'sala_id' => 'required|max:2',
-        'data' => 'required|date',
-        'horario_inicio' => 'required|date_format:H:i:s']);
-        $newSessao = Sessao::create($validatedData);
-        return redirect()->route('filme.index')
-              ->with('alert-msg', 'Sessao criada com sucesso')
-              ->with('alert-type', 'success');
+    {
+        //dd($request);
+        //$todassessoes= Sessao::all();
+        $validatedData = $request->validate([
+            'filme_id' => 'required|max:500',
+            'sala_id' => 'required|max:2',
+            'data' => 'required|date',
+            'horario_inicio' => 'required|date_format:H:i:s']);
+            $newSessao = Sessao::create($validatedData);
+            return redirect()->route('filme.index')
+                ->with('alert-msg', 'Sessao criada com sucesso')
+                ->with('alert-type', 'success');
     }
 
 
-
-
-
-
     //UPDATE---------------------------------------------
+    //ADMIN EDIT OK
     public function admin_edit(Sessao $sessao)
       {
-         //dd($sessao); 
          $editarSessao = Sessao::where('id', $sessao->id)->first();
-         $filme = Filme::find($sessao->filme_id);
          $listaSalas = Salas::pluck('id', 'nome');
-         //dd($filme);
          return view('sessoes.admin.edit')
-                    ->with('filme', $filme)
                     ->with('listaSalas', $listaSalas)
                     ->with('sessao', $editarSessao);
       }

@@ -15,7 +15,7 @@
                 <tr>
                     <td name="data" value="<?= $sessao->data ?>"><?= $sessao->data ?></td>
                     <td name="horario_inicio" value="<?= $sessao->horario_inicio ?>"><?= $sessao->horario_inicio ?></td>
-                    <td name="sala_id" value="<?= $sessao->sala_id ?>"><?= $sessao->nome ?></td>
+                    <td name="sala_id" value="<?= $sessao->Salas->nome ?>"><?= $sessao->Salas->nome ?></td>
                     <td></td>
                     <td></td>
                     <td></td>                    

@@ -5,7 +5,7 @@
     @foreach ($todasSessoesFilmesHoje as $filme)  
     <div class="col mb-10">
         <div class="card h-100">
-        <img class="card-img-left" src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." />
+        <img class="card-img-left" src="/storage/cartazes/{{$filme->Filmes->cartaz_url}}" alt="..." />
             <div class="card-body p-4">
                 <div class="text-center">
                     <!-- Product name-->
@@ -17,10 +17,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Product actions-->
         </div>
-        </div>
-    @endforeach
     </div>
-    
+@endforeach
+</div>
 @endsection
