@@ -7,6 +7,9 @@ use App\Http\Controllers\SalasController;
 use App\Http\Controllers\GenerosController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PdfController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -65,10 +68,6 @@ Route::delete('admin/adminsessoes/{id?}', [SessoesController::class, 'admin_dest
 
 
 
-
-
-
-
 //---------------------Salas-------------------------------------------------
 Route::get('admin/salas', [SalasController::class, 'index'])
         ->name('salas.index');//salas
@@ -89,8 +88,12 @@ Route::delete('admin/salas/{id?}', [SalasController::class, 'destroy'])
         ->name('salas.destroy');
 //-----------------------------------------------------------------------------
 
+
+
+//---------------------GENEROS----------------------------------------------------
 Route::get('generos', [GeneroController::class, 'index'])
         ->name('generos.index');//generos!!
+
 
 
 //---------------------FILMES----------------------------------------------------
@@ -109,7 +112,7 @@ Route::post('admin/filmes', [FilmesController::class, 'store'])
 Route::put('admin/filmes/{id?}', [FilmesController::class, 'update'])
         ->name('filmes.update');
 
-Route::delete('admin/filmes/{id?}', [FilmesController::class, 'destroy'])
+Route::delete('admin/filmes/{filme}', [FilmesController::class, 'destroy'])
         ->name('filmes.destroy');
 
 //-----------------------------------------------------------------------------
@@ -118,6 +121,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
         ->name('home');
     
+
 //------------------------------------------------------------------------------
 
 //------------------USERS----------------------
@@ -140,5 +144,32 @@ Route::get('admin/users', [usersController::class, 'index_admin'])
 
 Route::get('cart', [CartController::class, 'index'])
         ->name('cart.index');
+
+
+
+//------------------PDF----------------------
+
+Route::get('recibos/bilhete/{recibo}', [PdfController::class, 'geraPdfBilhete'])
+->name('pdf.bilhete');
+
+Route::get('recibos', [PdfController::class, 'indexRecibo'])
+->name('pdf.indexRecibo');
+
+Route::get('recibos/{recibo}', [PdfController::class, 'geraPdfRecibo'])
+->name('pdf.recibo');
+
+
+
+//------------------Recibos----------------------
+
+// Route::get('recibos', [RecibosController::class, 'index'])
+// ->name('recibos.index');
+
+
+
+
+
+
+
 
 

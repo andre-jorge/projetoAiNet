@@ -87,6 +87,7 @@
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link" href="{{route('salas.index')}}">Salas</a>
                                 <a class="nav-link" href="{{route('users.admin')}}">Clientes</a>
+                                <a class="nav-link" href="{{route('pdf.indexRecibo')}}">Recibos</a>
                                     
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Outros

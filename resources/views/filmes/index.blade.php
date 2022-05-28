@@ -48,7 +48,7 @@
                 <div class="text-center">
                     <!-- Product name-->
                     <h5 class="fw-bolder"><?= $filme->titulo ?></h5>
-                    <span class="fw-bolder"><?= $filme->genero_code ?></span>
+                    <span class="fw-bolder"><?= $filme->Generos->nome ?></span>
                 </div>
             </div>
             <!-- Product actions-->
@@ -83,7 +83,7 @@
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center">
-                    <a class="btn btn-outline-dark mt-auto" name="filmeid" value='{{$filme->id}}' href="{{ route('sessoes.index', $filme->id) }}">Ver Sessoes</a>
+                    <a class="btn btn-outline-dark mt-auto" name="filmeid" value='{{$filme}}' href="{{ route('sessoes.index') }}">Ver Sessoes</a>
                 </div>
             </div>
         </div>

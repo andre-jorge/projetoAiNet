@@ -25,7 +25,6 @@
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
-                
                 </tr>
         </thead>
         <tbody>
@@ -39,13 +38,13 @@
                 <td>{{$filme->trailer_url}}</td>
                 <td><a href="{{ route('filmes.edit', $filme->id, $filme->titulo) }}" name="filmeid" value='{{$filme->id}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Alterar</a></td>
                 <td>
-                    <form method="post" action="{{ route('filmes.destroy', $filme->id) }}">
+                    <form method="post" action="{{ route('filmes.destroy', $filme) }}">
                         @method('DELETE')
                         @csrf
                         <input type="submit" class="btn btn-danger btn-sm" value="Eliminar">
                     </form> 
                 
-                <td><a href="{{ route('sessoes.admin.index', $filme->id) }}" name="id" value='{{$filme->id}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Sessoes</a></td>
+                <td><a href="{{ route('sessoes.admin.index', $filme) }}" name="id" value='{{$filme->id}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Sessoes</a></td>
             </tr>
             @endforeach
         </tbody>

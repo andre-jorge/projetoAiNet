@@ -12,26 +12,19 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class FilmesController extends Controller
 {
+   // ADMIN_INDEX JA OK
    public function admin_index()
       {
-         $filme = Filme::findOrFail(1);
-         //dd($filme->generos->nome);
-         $filmes = DB::table('filmes')
-                     ->select('*')
-                     ->paginate(8);
+         $filmes = Filme::paginate(8);
          return view('filmes.admin', compact('filmes'));
       }
 
+   // INDEX JA OK
    public function index(Request $request)
       {
-         //dd(123);
-         $filmes = DB::table('filmes')
-                     ->select('*')
-                     ->leftjoin('generos','generos.code','=','filmes.genero_code')
-                     ->paginate(8);  
-                     //dd($filmes);
+         //dd($request);
+         $filmes = Filme::paginate(8);  
          // PROCURA POR NOME ou Sumario
-         
           $todosFilmes = Filme::where([
              [function($query) use ($request){
                if (($genero = $request->genero)){
@@ -41,30 +34,17 @@ class FilmesController extends Controller
              }]
           ])
           ->paginate(8);
-          
          $listaGeneros = Genero::all();
          $filmes = $todosFilmes;
-         
          return view(
              'filmes.index',
              compact('filmes', 'listaGeneros'));
-
-
-        //ORIGINAL
-         //$todosFilmes = DB::table('filmes')
-          //          ->paginate(8);
-         //dd($todosFilmes);
-         //return view('filmes.index')->with('filmes', $todosFilmes);
-         
       }
 
   public function create()
       {
-         $filmes = DB::table('filmes')
-                     ->select('*')
-                     ->leftjoin('generos','generos.code','=','filmes.genero_code')
-                     ->paginate(8); 
-                     $listaGeneros = Genero::pluck('code', 'nome');
+         $filmes = Filme::paginate(8); 
+         $listaGeneros = Genero::pluck('code', 'nome');
          return view(
          'filmes.create',
          compact('filmes', 'listaGeneros'));
@@ -79,8 +59,9 @@ class FilmesController extends Controller
                                    ->with('Generos', $listaGeneros);
       }
 
-   public function update(Request $request, $id)
+   public function update(Filme $filme)
    {
+      dd($filme);
       $validatedData = $request->validate([
          'titulo' => 'required|max:50',
          'genero_code' => 'required|max:20',
@@ -106,14 +87,14 @@ class FilmesController extends Controller
 
 
 
-
+   //STORE OK------------
    public function store(Request $request)
    {
-      //dd($request);
-      $nameFile = $request->titulo . '.' . $request->cartaz_url->extension();   
-      $request->file('cartaz_url')->storeAS('public/cartazes',$nameFile );
-      //dd($nameFile);
-
+      $nameFile = $request->titulo . '.' . $request->cartaz_url->extension(); 
+      if ( ! $nameFile ) {
+         unset( $this->styles[ $key ] );
+         $request->file('cartaz_url')->storeAS('storage/cartazes', $nameFile );
+      }
       $validatedData = $request->validate([
          'titulo' => 'required|max:50',
          'genero_code' => 'required|max:20',
@@ -122,25 +103,23 @@ class FilmesController extends Controller
          'sumario' => 'required|max:255',
          'trailer_url' => 'required|max:200'
       ]);
-      
-      //dd($validatedData);
       $newFilme = Filme::create($validatedData);
       $newFilme->cartaz_url = $nameFile;
       $newFilme->save();
-      //DB::table('filmes')->insert($validatedData);
       return redirect()->route('filmes.admin')
             ->with('alert-msg', 'Filme inserido com sucesso')
             ->with('alert-type', 'success');
-    }
+   }
 
-    public function destroy(Request $request, $id)
-    {
-      $filmeApagar = Filme::find($id);
+
+   //DESTROY OK------------
+   public function destroy(Filme $filme)
+   {
+      $filmeApagar = Filme::find($filme->id);
       $filmeApagar->delete();
-      //$deleted = DB::table('salas')->select('*')->where('id', $id)->delete();
-        return redirect()->route('filmes.admin')
+      return redirect()->route('filmes.admin')
             ->with('alert-msg', 'Filme foi eliminado com sucesso!')
             ->with('alert-type', 'success');
-    }
+   }
 }
 

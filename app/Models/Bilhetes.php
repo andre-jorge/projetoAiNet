@@ -8,6 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Bilhetes extends Model
 {  
     use HasFactory;
+    protected $table = 'bilhetes';
+
+    public function Cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'cliente_id', 'id');
+    }
+
+    public function Recibo()
+    {
+        return $this->belongsTo(Recibo::class, 'recibo_id', 'id');
+    }
+
+    public function Sessao()
+    {
+        return $this->belongsTo(Sessao::class, 'sessao_id', 'id');
+    }
+
+    public function Lugar()
+    {
+        return $this->belongsTo(Lugares::class, 'lugar_id', 'id');
+    }
     
     protected $fillable = [
         'estado'];

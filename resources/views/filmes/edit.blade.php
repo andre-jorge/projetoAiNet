@@ -1,7 +1,7 @@
 @extends('home')
 
 @section('content')
-<form action="{{ route('filmes.update', $filme->id) }}" id="filmes-form" method="POST">
+<form action="{{ route('filmes.update') }}" id="filmes-form" method="POST">
     
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Editar Filme</h3></div>
        
@@ -22,7 +22,7 @@
                     <div class="form-floating" >
                         <select class="form-select" name="genero_code" id="idGenero">
                             @foreach($Generos as $code => $nome)
-                                <option value="{{$nome}}" {{$nome==$code?'selected':''}}>{{$nome}}</option>
+                                <option value="{{$filme->Generos->code}}" {{$filme->Generos->nome==$filme->Generos->code?'selected':''}}>{{$filme->Generos->nome}}</option>
                             @endforeach
                         </select>
                         @error('code')
@@ -36,7 +36,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="cartaz_url" id="idCartaz_url" type="file" value="{{$filme->cartaz_url}}" placeholder="234bjbdf.jpg"> 
+                        <input class="form-control" name="cartaz_url" id="cartaz_url" type="text" value="{{$filme->cartaz_url}}" placeholder="imagem.jpg"> 
                         @error('cartaz_url')
                             <div class="error">{{ $message }}</div>
                         @enderror
