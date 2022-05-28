@@ -9,7 +9,7 @@
     @csrf
     
             <div class="row mb-3">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-floating mb-3 mb-md-0">
                         <input class="form-control" name="nome" id="idnome" type="text" value="{{old('nome')}}" placeholder="Nome Sala"> 
                         @error('nome')
@@ -18,7 +18,26 @@
                         <label for="idnome">Nome Sala</label>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="form-floating mb-3 mb-md-0">
+                        <input class="form-control" name="lugares" id="lugares" type="number" value="{{old('custom')}}" placeholder="lugares"> 
+                        @error('custom')
+                            <div class="error">{{ $message }}</div>
+                        @enderror
+                        <label for="costum">Lugares</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating mb-3 mb-md-0">
+                        <input class="form-control" name="filas" id="filas" type="number" value="{{old('custom')}}" placeholder="filas"> 
+                        @error('custom')
+                            <div class="error">{{ $message }}</div>
+                        @enderror
+                        <label for="costum">Filas</label>
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" name="custom" value="0" >
+                <!-- <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
                         <input class="form-control" name="custom" id="custom" type="number" value="{{old('custom')}}" placeholder="Lotação Max."> 
                         @error('custom')
@@ -26,7 +45,7 @@
                         @enderror
                         <label for="costum">Lotação Maxima</label>
                     </div>
-                </div>
+                </div> -->
             </div>  
             <div class="mt-4 mb-0">
                 <div class="d-grid">

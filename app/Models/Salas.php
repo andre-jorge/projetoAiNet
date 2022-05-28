@@ -8,8 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Salas extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
     protected $fillable = [
-        'nome','costum'];
+        'nome','custom'];
+
+    protected $casts = [
+            'custom' => 'array',
+        ];
 
     //LIGAÇÃO SESSOES COM SALA OK
     public function Sessao(){

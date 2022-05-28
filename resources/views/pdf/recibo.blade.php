@@ -97,42 +97,11 @@
     </div>
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr>
-        <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
-          <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;">
-            <tr>
-              <td align="center" height="6" style="background-image: linear-gradient(to right, #1b6fb9, #5a3aa5); background-color: #1b6fb9;" bgcolor="#1b6fb9"></td>
-            </tr>
-          </table>
-          <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:800px;">
-            <tr>
-              <td align="center" valign="top" style="background-color: #ffffff; font-size:0; padding: 35px 35px 0;" bgcolor="#ffffff">
-              </td>
-            </tr>
-            <tr>
-              <td align="center" style="padding: 0 15px 20px 15px; background-color: #ffffff;" bgcolor="#ffffff">
-                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
-                  <tr>
-                    <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
-                      <img src="http://healthplang.com/App_Themes/GHP/images/icon-check-mark.png" width="125" height="120" style="display: block; border: 0px;" /><br>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
-                      <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777; padding: 0 30px;">
-                        DESCRIÇÃO
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
                     <td align="left" style="padding-top: 20px;">
                       <table cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                           <td width="75%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                            Recibo #
-                          </td>
-                          <td width="25%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                          {{$recibo->id}}
+                            Recibo nº{{$recibo->id}}
                           </td>
                         </tr>
                         <tr>
@@ -160,16 +129,28 @@
                           </td>
                         </tr>
                         <tr>
-                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; line-height: 24px; padding: 20px 10px 5px 10px;">
-                            <span style="font-style: italic;">Bilhete Cinema</span> (1)
+                          <td width="75%" align="left" style="border-bottom: 2px solid #eeeeee; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px 20px 10px;">
+                            Ref. Documento
                           </td>
-                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 20px 10px 5px 10px;">
-                          {{$recibo->preco_total_sem_iva}}
+                          <td width="25%" align="left" style="border-bottom: 2px solid #eeeeee; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 5px 10px 20px 10px;">
+                          {{$recibo->ref_pagamento}}
                           </td>
                         </tr>
+                        @foreach($sessoes as $sessao)
+                        <tr>
+                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; line-height: 24px; padding: 20px 10px 5px 10px;">
+                            <span style="font-style: italic;">Bilhete {{$sessao->id}} </span>
+                          </td>
+                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 20px 10px 5px 10px;">
+                          <h7>Filme: {{$sessao->Sessao->Filmes->titulo}}</h7> 
+                          <p>Sala: {{$sessao->Sessao->Salas->nome}} | Hora: {{$sessao->Sessao->horario_inicio}}</p>
+                          <p>Fila: {{$sessao->Lugar->fila}} | Lugar: {{$sessao->Lugar->posicao}}</p>
+                          </td>
+                        </tr>
+                        @endforeach
                         <tr>
                           <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                            Iva
+                            Total Iva
                           </td>
                           <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 5px 10px;">
                           {{$recibo->iva}}
@@ -190,11 +171,5 @@
                           </td>
                         </tr>
                       </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>     
-    </table>
   </body>
 </html>

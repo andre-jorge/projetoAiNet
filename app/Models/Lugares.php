@@ -9,5 +9,9 @@ class Lugares extends Model
 {
     use HasFactory;
     protected $table = 'lugares';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'sala_id','fila','posicao'];
 
 }

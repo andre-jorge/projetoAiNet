@@ -23,9 +23,14 @@ class PdfController extends Controller
     {
         //dd($recibo);
         $recibo = Recibo::findOrFail($recibo->id);
-        //dd($bilhete);
-        $pdf = PDF::loadView('pdf.recibo', compact('recibo'));
+        $sessoes = Bilhetes::where('recibo_id',$recibo->id)->get();
+        //dd($sessoes);
+        $pdf = PDF::loadView('pdf.recibo', compact('recibo', 'sessoes'));
         //dd($pdf);
+        //guardar pdf em projeto\public\storage\pdf com nome (1.pdf)
+        $path = public_path('storage/pdf');
+        $fileName =  $recibo['id'] . '.' . 'pdf' ;
+        $pdf->save($path . '/' . $fileName);
         return $pdf->setPaper('A4')->stream('recibo.pdf');
     }
 
