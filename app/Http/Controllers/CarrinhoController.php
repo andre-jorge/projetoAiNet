@@ -102,6 +102,11 @@ class CarrinhoController extends Controller
         //dd($request);
         //dd($currentTime);
         //dd($user->id);
+
+        $dataForm = $request->session()->get('carrinho');
+        //dd($dataForm);
+
+
         $carro = $request->session()->get('carrinho');
         dd($carro);
         // AQUIIIIII

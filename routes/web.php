@@ -7,6 +7,7 @@ use App\Http\Controllers\SalasController;
 use App\Http\Controllers\GenerosController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\RecibosController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CarrinhoController;
 
@@ -133,6 +134,9 @@ Route::get('user/{id?}', [usersController::class, 'index'])
 Route::get('admin/users', [usersController::class, 'index_admin'])
         ->name('users.admin');
 
+Route::get('user/{id?}/recibos', [usersController::class, 'recibos'])
+        ->name('users.recibos');
+
 //Route::put('user/{id?}', [usersController::class, 'update'])
 //       ->name('user.update');
 //------------------PDF----------------------
@@ -145,6 +149,8 @@ Route::get('recibos', [PdfController::class, 'indexRecibo'])
 
 Route::get('recibos/{recibo}', [PdfController::class, 'geraPdfRecibo'])
 ->name('pdf.recibo');
+
+
 
 
 

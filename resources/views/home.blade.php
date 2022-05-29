@@ -48,7 +48,11 @@
                                     <a class="dropdown-item" href="{{ route('users.index', $userid=Auth::user()->id ) }}">
                                             Dados Cliente 
                                             {{-- {{ route('user.index', $userid=Auth::user()->id ) }} --}}
-                                        </a>    
+                                        </a>
+                                    <a class="dropdown-item" href="{{ route('users.recibos', $userid=Auth::user()->id) }}">
+                                            Historico de Recibos 
+                                            {{-- {{ route('users.recibos') }} --}}
+                                        </a>     
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">

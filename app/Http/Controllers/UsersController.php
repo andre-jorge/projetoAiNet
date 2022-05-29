@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Recibo;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,6 +17,7 @@ class UsersController extends Controller
                      //dd($dadosClientes);
                      return view('users.index')->with('clientes', $cliente);
       }
+   
    public function index_admin()
       {
          $dadosClientes = DB::table('users')
@@ -24,6 +26,14 @@ class UsersController extends Controller
                      ->paginate(20);  
                      //dd($dadosClientes);
                      return view('users.admin')->with('Clientes', $dadosClientes);   
+      }
+
+   public function recibos(Request $request, $id)
+      {
+         $user = auth()->user();
+         $recibos = Recibo::where('cliente_id',$id)->paginate(8);
+         //dd($recibos);
+         return view('users.recibos', compact('recibos'));
       }
 
 //   public function create()
