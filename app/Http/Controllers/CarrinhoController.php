@@ -108,7 +108,7 @@ class CarrinhoController extends Controller
 
 
         $carro = $request->session()->get('carrinho');
-        dd($carro);
+        dd($request);
         // AQUIIIIII
         //$data = $request->session()->all(); // ver tudo da sessao
         // dd(

@@ -91,11 +91,8 @@
 
   <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
 
-    <!-- HIDDEN PREHEADER TEXT -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-      Descrição
-    </div>
-    @foreach($bilhetes as $bilhete)
+  @foreach($bilhetes as $bilhete)
+  <div style="border: 2px solid black">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                     <td align="left" style="padding-top: 20px;">
                       <table cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -132,7 +129,9 @@
                         </tr>
                       </table>
                     </td>
-                    </table>                      
+                    </table>  
+                    </div>                    
                       @endforeach
+                      </div>
   </body>
 </html>

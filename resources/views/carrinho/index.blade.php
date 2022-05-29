@@ -67,66 +67,67 @@
     <div class="col-md-6 order-md-1">
         <hr class="mb-4">
         <h4 class="mb-3">Pagamento</h4>
-        <form action="{{ route('carrinho.store', $row['id']) }}" method="POST">
-        @csrf
-        <div class="d-block my-3">
-          <div class="custom-control custom-radio">
-            <input id="credit" name="paymentMethod" type="radio" value="credit" class="custom-control-input" checked="" required="">
-            <label class="custom-control-label" for="credit">Cartao Crédito</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input id="debit" name="paymentMethod" type="radio" value="mbway" class="custom-control-input" required="">
-            <label class="custom-control-label" for="debit">MBWAY</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="custom-control-input" required="">
-            <label class="custom-control-label" for="paypal">PayPal</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="cc-name">Nome Cartão Credito</label>
-            <input type="text" class="form-control" name="cc-name" id="cc-name" placeholder="" required="">
-            <small class="text-muted">Nome completo</small>
-            <div class="invalid-feedback">
-              Nome do cartão obrigatorio
+        <form action="{{ route('carrinho.store') }}" method="POST">
+          @csrf
+          <div class="d-block my-3">
+            <div class="custom-control custom-radio">
+              <input id="credit" name="paymentMethod" type="radio" value="credit" class="custom-control-input" checked="" required="">
+              <label class="custom-control-label" for="credit">Cartao Crédito</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="debit" name="paymentMethod" type="radio" value="mbway" class="custom-control-input" required="">
+              <label class="custom-control-label" for="debit">MBWAY</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="custom-control-input" required="">
+              <label class="custom-control-label" for="paypal">PayPal</label>
             </div>
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="cc-number">Numero Cartão Credito</label>
-            <input type="text" class="form-control" name="cc-number" id="cc-number" placeholder="" required="">
-            <div class="invalid-feedback">
-              Numero do cartão obrigatorio
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="cc-name">Nome Cartão Credito</label>
+              <input type="text" class="form-control" name="cc-name" id="cc-name" placeholder="" required="">
+              <small class="text-muted">Nome completo</small>
+              <div class="invalid-feedback">
+                Nome do cartão obrigatorio
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="cc-number">Numero Cartão Credito</label>
+              <input type="text" class="form-control" name="cc-number" id="cc-number" placeholder="" required="">
+              <div class="invalid-feedback">
+                Numero do cartão obrigatorio
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <label for="cc-expiration">Expiration</label>
-            <input type="text" class="form-control" name="cc-expiration" id="cc-expiration" placeholder="" required="">
-            <div class="invalid-feedback">
-              Data de Expiração obrigatoria
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <label for="cc-expiration">Expiration</label>
+              <input type="text" class="form-control" name="cc-expiration" id="cc-expiration" placeholder="" required="">
+              <div class="invalid-feedback">
+                Data de Expiração obrigatoria
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="cc-cvv">CVV</label>
+              <input type="text" class="form-control" name="cc-cvv" id="cc-cvv" placeholder="" required="">
+              <div class="invalid-feedback">
+                CVV obrigatorio
+              </div>
             </div>
           </div>
-          <div class="col-md-3 mb-3">
-            <label for="cc-cvv">CVV</label>
-            <input type="text" class="form-control" name="cc-cvv" id="cc-cvv" placeholder="" required="">
-            <div class="invalid-feedback">
-              CVV obrigatorio
+          <hr class="mb-10">
+          <div class="row">
+            <div class="col-md-3 mb-3">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
+              </form>
             </div>
-          </div>
-        </div>
-        <hr class="mb-10">
-        <div class="row">
-          <div class="col-md-3 mb-3">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
+            <div class="col-md-5 mb-3">
+            <form action="{{ route('carrinho.destroy') }}" method="POST">
+                @csrf
+                @method("DELETE")
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Remover Tudo</button>
             </form>
-          </div>
-          <div class="col-md-5 mb-3">
-          <form action="{{ route('carrinho.destroy') }}" method="POST">
-              @csrf
-              @method("DELETE")
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Remover Tudo</button>
           </form>
         </div>
     </div>

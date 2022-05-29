@@ -4,172 +4,254 @@
 <html>
 
 <head>
-  <title>Your invoice for HealthPlanG purchase</title>
+  <title>Compra Bilhetes CineMagic</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <style type="text/css">
-    /* CLIENT-SPECIFIC STYLES */
-    body,
-    table,
-    td,
-    a {
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+    body{margin-top:20px;
+    color: #2e323c;
+    background: #f5f6fa;
+    position: relative;
+    height: 100%;
+}
+.invoice-container {
+    padding: 1rem;
+}
+.invoice-container .invoice-header .invoice-logo {
+    margin: 0.8rem 0 0 0;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #2e323c;
+}
+.invoice-container .invoice-header .invoice-logo img {
+    max-width: 130px;
+}
+.invoice-container .invoice-header address {
+    font-size: 0.8rem;
+    color: #9fa8b9;
+    margin: 0;
+}
+.invoice-container .invoice-details {
+    margin: 1rem 0 0 0;
+    padding: 1rem;
+    line-height: 180%;
+    background: #f5f6fa;
+}
+.invoice-container .invoice-details .invoice-num {
+    text-align: right;
+    font-size: 0.8rem;
+}
+.invoice-container .invoice-body {
+    padding: 1rem 0 0 0;
+}
+.invoice-container .invoice-footer {
+    text-align: center;
+    font-size: 0.7rem;
+    margin: 5px 0 0 0;
+}
+
+.invoice-status {
+    text-align: center;
+    padding: 1rem;
+    background: #ffffff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+.invoice-status h2.status {
+    margin: 0 0 0.8rem 0;
+}
+.invoice-status h5.status-title {
+    margin: 0 0 0.8rem 0;
+    color: #9fa8b9;
+}
+.invoice-status p.status-type {
+    margin: 0.5rem 0 0 0;
+    padding: 0;
+    line-height: 150%;
+}
+.invoice-status i {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    display: inline-block;
+    padding: 1rem;
+    background: #f5f6fa;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+.invoice-status .badge {
+    text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+    .invoice-container {
+        padding: 1rem;
     }
-    table,
-    td {
-      mso-table-lspace: 0pt;
-      mso-table-rspace: 0pt;
-    }
-    img {
-      -ms-interpolation-mode: bicubic;
-    }
-    
-    /* RESET STYLES */
-    img {
-      border: 0;
-      height: auto;
-      line-height: 100%;
-      outline: none;
-      text-decoration: none;
-    }
-    table {
-      border-collapse: collapse !important;
-    }
-    body {
-      height: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 100% !important;
-    }
-    
-    /* iOS BLUE LINKS */
-    a[x-apple-data-detectors] {
-      color: inherit !important;
-      text-decoration: none !important;
-      font-size: inherit !important;
-      font-family: inherit !important;
-      font-weight: inherit !important;
-      line-height: inherit !important;
-    }
-    
-    /* MEDIA QUERIES */
-    @media screen and (max-width: 480px) {
-      .mobile-hide {
-        display: none !important;
-      }
-      .mobile-center {
-        text-align: center !important;
-      }
-      .align-center {
-        max-width: initial !important;
-      }
-      h1 {
-        display: inline-block;
-        margin-right: auto !important;
-        margin-left: auto !important;
-      }
-    }
-    @media screen and (min-width: 480px) {
-      .mw-50 {
-        max-width: 50%;
-      }
-    }
-    /* ANDROID CENTER FIX */
-    div[style*="margin: 16px 0;"] {
-      margin: 0 !important;
-    }
-    :root {
-      --purple: #5a3aa5;
-      --pink: #1b6fb9;
-      --blue: #2cbaef;
-      --green: #23c467;
-    }
+}
+
+.custom-table {
+    border: 1px solid #e0e3ec;
+}
+.custom-table thead {
+    background: #007ae1;
+}
+.custom-table thead th {
+    border: 0;
+    color: #ffffff;
+}
+.custom-table > tbody tr:hover {
+    background: #fafafa;
+}
+.custom-table > tbody tr:nth-of-type(even) {
+    background-color: #ffffff;
+}
+.custom-table > tbody td {
+    border: 1px solid #e6e9f0;
+}
+
+
+.card {
+    background: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+
+.text-success {
+    color: #00bb42 !important;
+}
+
+.text-muted {
+    color: #9fa8b9 !important;
+}
+
+.custom-actions-btns {
+    margin: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.custom-actions-btns .btn {
+    margin: .3rem 0 .3rem .3rem;
+}
   </style>
   </head>
 
   <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
-
-    <!-- HIDDEN PREHEADER TEXT -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-      Descrição
-    </div>
-
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                    <td align="left" style="padding-top: 20px;">
-                      <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                        <tr>
-                          <td width="75%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                            Recibo nº{{$recibo->id}}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="45%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
-                            Data Recibo
-                          </td>
-                          <td width="55%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 15px 10px 5px 10px;">
-                          {{$recibo->data}}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                            Nome Cliente
-                          </td>
-                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 5px 10px;">
-                          {{$recibo->nome_cliente}}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="75%" align="left" style="border-bottom: 2px solid #eeeeee; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px 20px 10px;">
-                            Tipo Pagamento
-                          </td>
-                          <td width="25%" align="left" style="border-bottom: 2px solid #eeeeee; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 5px 10px 20px 10px;">
-                          {{$recibo->tipo_pagamento}}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="75%" align="left" style="border-bottom: 2px solid #eeeeee; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px 20px 10px;">
-                            Ref. Documento
-                          </td>
-                          <td width="25%" align="left" style="border-bottom: 2px solid #eeeeee; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 5px 10px 20px 10px;">
-                          {{$recibo->ref_pagamento}}
-                          </td>
-                        </tr>
+  <div style="border: 2px solid black">
+<div class="container">
+<div class="row gutters">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="card">
+				<div class="card-body p-0">
+					<div class="invoice-container">
+						<div class="invoice-header">
+							<!-- Row start -->
+							<div class="row gutters">
+								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+									<a href="index.html" class="invoice-logo">
+										CineMagic.pt
+									</a>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6">
+									<address class="text-right">
+										IPLeira, Eng Infomatica<br>
+										Inet<br>
+									</address>
+								</div>
+							</div>
+							<!-- Row end -->
+							<!-- Row start -->
+							<div class="row gutters">
+								<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+									<div class="invoice-details">
+										<address>
+                      {{$recibo->nome_cliente}}<br>
+											{{$recibo->nif}}
+										</address>
+									</div>
+								</div>
+								<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+									<div class="invoice-details">
+										<div class="invoice-num">
+											<div>Fatura-Recibo - #{{$recibo->id}}</div>
+											<div>{{$recibo->data}}</div>
+                      <div>Tipo Pagamento:{{$recibo->tipo_pagamento}}</div>
+                      <div>Ref. Pgamento: {{$recibo->ref_pagamento}}</div>
+										</div>
+									</div>													
+								</div>
+							</div>
+							<!-- Row end -->
+						</div>
+						<div class="invoice-body">
+							<!-- Row start -->
+							<div class="row gutters">
+								<div class="col-lg-12 col-md-12 col-sm-12">
+									<div class="table-responsive">
+										<table class="table custom-table m-0">
+											<thead>
+												<tr>
+													<th>Filme</th>
+													<th>Data</th>
+													<th>Hora</th>
+													<th>Sub Total</th>
+												</tr>
+											</thead>
+											<tbody>
                         @foreach($sessoes as $sessao)
-                        <tr>
-                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; line-height: 24px; padding: 20px 10px 5px 10px;">
-                            <span style="font-style: italic;">Bilhete {{$sessao->id}} </span>
-                          </td>
-                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 20px 10px 5px 10px;">
-                          <h7>Filme: {{$sessao->Sessao->Filmes->titulo}}</h7> 
-                          <p>Sala: {{$sessao->Sessao->Salas->nome}} | Hora: {{$sessao->Sessao->horario_inicio}}</p>
-                          <p>Fila: {{$sessao->Lugar->fila}} | Lugar: {{$sessao->Lugar->posicao}}</p>
-                          </td>
-                        </tr>
-                        @endforeach
-                        <tr>
-                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                            Total Iva
-                          </td>
-                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 5px 10px;">
-                          {{$recibo->iva}}
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td align="left" style="padding-top: 20px;">
-                      <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                        <tr>
-                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 2px solid #eeeeee; border-bottom: 2px solid #eeeeee;">
-                            TOTAL
-                          </td>
-                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 2px solid #eeeeee; border-bottom: 2px solid #eeeeee;">
-                          {{$recibo->preco_total_com_iva}}
-                          </td>
-                        </tr>
-                      </table>
-  </body>
+												<tr>
+													<td>
+                          {{$sessao->Sessao->Filmes->titulo}}
+														<p class="m-0 text-muted">
+                              Bilhete #{{$sessao->id}}, Sala: {{$sessao->Sessao->Salas->nome}}<br>
+                              Fila: {{$sessao->Lugar->fila}} | Lugar: {{$sessao->Lugar->posicao}}<br>
+                              Guarde este bilhete, serve como prova de compra do bilhete, apresentar na caixa
+														</p>
+													</td>
+													<td>{{$sessao->Sessao->horario_inicio}}</td>
+													<td>{{$sessao->Sessao->data}}</td>
+													<td>8.85€</td>
+												</tr>
+												@endforeach
+												<tr>
+													<td>&nbsp;</td>
+													<td colspan="2">
+														<p>
+															IVA<br>
+														</p>
+														<h5 class="text-success"><strong>Total</strong></h5>
+													</td>			
+													<td>
+														<p>
+                            {{$recibo->iva}}<br>
+														</p>
+														<h5 class="text-success"><strong> {{$recibo->preco_total_com_iva}}</strong></h5>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!-- Row end -->
+						</div>
+						<div class="invoice-footer">
+							Thank you for your Business.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+                      
+  </body></div>
+  
 </html>
