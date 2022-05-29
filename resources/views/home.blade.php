@@ -19,6 +19,11 @@
 
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                            <a id="cart-link" href="{{ route('carrinho.index') }}" class="trsn nav-link" title="View/Edit Cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="nav-bar-cart"><span class="cart-size">{{$quantidade}}</span> Bilhete(s) | €{{ $total }}</span>
+                            </a></li>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -88,7 +93,6 @@
                                 <a class="nav-link" href="{{route('salas.index')}}">Salas</a>
                                 <a class="nav-link" href="{{route('users.admin')}}">Clientes</a>
                                 <a class="nav-link" href="{{route('pdf.indexRecibo')}}">Recibos</a>
-                                <a class="nav-link" href="{{ route('carrinho.index') }}">Recibos</a>
                                     
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                         Outros

@@ -8,15 +8,6 @@ $idmatches = $matches[1];
 $width = '800px';
 $height = '450px'; ?>
 
-<div class="float-right">
-<a class="btn btn-success" href="{{route('sessoes.index', $filme->id)}}">
-<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-</svg>
-    <span id="items-in-cart">0</span> items in cart
-</a>
-</div>
-
   <div class="card h-300">
     <div class="text-center">
       <div class="card flex-md-row mb-4 box-shadow h-md-250">
@@ -64,49 +55,8 @@ $height = '450px'; ?>
                     </td>
                     </tr>
                   @endforeach
-              </tbody>
-              
-      </div>
-                  
+              </tbody>            
+    </div>              
   </div>
-    </div>
-
-@endsection
-@section('footer-scripts')
-<script>
-    $(document).ready(function() {
-
-        window.cart = <?php echo json_encode($cart) ?>;
-
-        updateCartButton();
-
-        $('.add-to-cart').on('click', function(event){
-
-            var cart = window.cart || [];
-            cart.push({'id':$(this)data('id'), 'name':$(this).data('name'), 'price':$(this).data('price'), 'qty':$(this).prev('input').val()});
-            window.cart = cart;
-
-            $.ajax('/store/add-to-cart', {
-                type: 'POST',
-                data: {"_token": "{{ csrf_token() }}", "cart":cart},
-                success: function (data, status, xhr) {
-
-                }
-            });
-
-            updateCartButton();
-        });
-    })
-
-    function updateCartButton() {
-
-        var count = 0;
-        window.cart.forEach(function (item, i) {
-
-            count += Number(item.qty);
-        });
-
-        $('#items-in-cart').html(count);
-    }
-</script>
+</div>
 @endsection

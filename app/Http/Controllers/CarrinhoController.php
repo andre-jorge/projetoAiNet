@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Configuracao;
 use App\Models\Sessao;
 use Illuminate\Http\Request;
 
@@ -19,12 +20,16 @@ class CarrinhoController extends Controller
     {
         $carrinho = $request->session()->get('carrinho', []);
         $qtd = ($carrinho[$sessao->id]['qtd'] ?? 0) + 1;
+        $precoBilhete = Configuracao::find(1);
+        //dd($precoBilhete->preco_bilhete_sem_iva);
         $carrinho[$sessao->id] = [
             'id' => $sessao->id,
+            'filme' => $sessao->Filmes->titulo,
             'qtd' => $qtd,
             'data' => $sessao->data,
             'horario_inicio' => $sessao->horario_inicio,
-            'sala_id' => $sessao->sala_id,
+            'sala_id' => $sessao->Salas->nome,
+            'preco' => $precoBilhete->preco_bilhete_sem_iva,
         ];
         $request->session()->put('carrinho', $carrinho);
         return back()
@@ -37,21 +42,25 @@ class CarrinhoController extends Controller
         $carrinho = $request->session()->get('carrinho', []);
         $qtd = $carrinho[$sessao->id]['qtd'] ?? 0;
         $qtd += $request->quantidade;
+        $precoBilhete = Configuracao::find(1);
+        //dd($precoTotalSessao);
         if ($request->quantidade < 0) {
             $msg = 'Foram removidas ';
         } elseif ($request->quantidade > 0) {
             $msg = 'Foram adicionadas ';
         }
         if ($qtd <= 0) {
-            unset($carrinho[$disciplina->id]);
+            unset($carrinho[$sessao->id]);
             $msg = 'Foram removidas todas as sessões';
         } else {
             $carrinho[$sessao->id] = [
                 'id' => $sessao->id,
+                'filme' => $sessao->Filmes->titulo,
                 'qtd' => $qtd,
                 'data' => $sessao->data,
                 'horario_inicio' => $sessao->horario_inicio,
-                'sala_id' => $sessao->sala_id,
+                'sala_id' => $sessao->Salas->nome,
+                'preco' => $precoBilhete->preco_bilhete_sem_iva,
             ];
         }
         $request->session()->put('carrinho', $carrinho);
@@ -77,10 +86,27 @@ class CarrinhoController extends Controller
 
     public function store(Request $request)
     {
+        $currentTime = Carbon::now();
+        $currentTime = $currentTime->toDateString();
         dd(
             'Place code to store the shopping cart / transform the cart into a sale',
             $request->session()->get('carrinho')
         );
+    //     $nameFile = $request->titulo . '.' . $request->cartaz_url->extension(); 
+    //   $bilhete = [
+    //     'cliente_id' => $sessao->id,
+    //     'data' => $currentTime,
+    //     'preço' => $qtd,
+    //     'data' => $sessao->data,
+    //     'horario_inicio' => $sessao->horario_inicio,
+    //     'sala_id' => $sessao->sala_id,
+    // ];
+    //   $newFilme = Filme::create($validatedData);
+    //   $newFilme->cartaz_url = $nameFile;
+    //   $newFilme->save();
+    //   return redirect()->route('filmes.admin')
+    //         ->with('alert-msg', 'Filme inserido com sucesso')
+    //         ->with('alert-type', 'success');
     }
 
     public function destroy(Request $request)
