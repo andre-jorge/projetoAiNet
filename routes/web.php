@@ -135,13 +135,6 @@ Route::get('admin/users', [usersController::class, 'index_admin'])
 
 //Route::put('user/{id?}', [usersController::class, 'update'])
 //       ->name('user.update');
-
-
-// Route::get('sessoes/{id?}', [SessoesController::class, 'index'])
-// ->name('sessoes.index');
-// // Route::get('carrinho', [App\Http\Controllers\SessoesController::class, 'addToCart'])
-// // ->name('sessoes.index');
-
 //------------------PDF----------------------
 
 Route::get('recibos/bilhete/{recibo}', [PdfController::class, 'geraPdfBilhete'])

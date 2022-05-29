@@ -47,16 +47,17 @@ class FilmesController extends Controller
              compact('filmes','filmesAtuais', 'listaGeneros'));
       }
 
-  public function create()
-      {
-         $filmes = Filme::paginate(8); 
-         $listaGeneros = Genero::pluck('code', 'nome');
-         return view(
-         'filmes.create',
-         compact('filmes', 'listaGeneros'));
-   }
+   // create JA OK
+   public function create()
+         {
+            $filmes = Filme::paginate(8); 
+            $listaGeneros = Genero::pluck('code', 'nome');
+            return view(
+            'filmes.create',
+            compact('filmes', 'listaGeneros'));
+      }
 
-
+   // edit JA OK
    public function edit(Request $request,$id)
       {
          $filme = Filme::where('id', $id)->first();
@@ -65,6 +66,7 @@ class FilmesController extends Controller
                                    ->with('Generos', $listaGeneros);
       }
 
+   //revalidar esta funcao
    public function update(Filme $filme)
    {
       dd($filme);

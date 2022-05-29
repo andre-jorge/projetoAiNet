@@ -74,8 +74,7 @@ class SalasController extends Controller
         'custom' => 'required|numeric|between:40,120'
       ]);
         //dd($validatedData);
-          DB::table('salas')
-              ->where('id', $id)
+        Salas::where('id', $id)
               ->update(['nome' => $validatedData['nome'],'custom' => $validatedData['custom']]);//seleciona apenas o valor nome no array que é a ediçao
         return redirect()->route('salas.index')
             ->with('alert-msg', 'Sala foi alterada com sucesso!')
@@ -107,16 +106,6 @@ class SalasController extends Controller
         return redirect()->route('salas.index')
             ->with('alert-msg', 'Sala e Lugares apagados com sucesso!')
             ->with('alert-type', 'success');
-
-
-        
-        // $oldName = $curso->nome;
-        // DB::table('salas')
-        //       ->where('id', $id)
-        //       ->delete();
-        //     return redirect()->route('salas.index')
-        //         ->with('alert-msg', 'Curso foi apagado com sucesso!')
-        //         ->with('alert-type', 'success');
     }
 }
 

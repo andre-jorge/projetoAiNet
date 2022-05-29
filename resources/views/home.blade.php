@@ -11,6 +11,7 @@
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body>
+    
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="\">CineDEI</a>
@@ -22,7 +23,7 @@
             <li class="nav-item">
                             <a id="cart-link" href="{{ route('carrinho.index') }}" class="trsn nav-link" title="View/Edit Cart">
                             <i class="fas fa-shopping-cart"></i>
-                            <span id="nav-bar-cart"><span class="cart-size">{{$quantidade}}</span> Bilhete(s) | €{{ $total }}</span>
+                            <span id="nav-bar-cart"><span class="cart-size">{{$quantidade ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span>
                             </a></li>
                         <!-- Authentication Links -->
                         @guest
