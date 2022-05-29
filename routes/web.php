@@ -10,7 +10,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RecibosController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CarrinhoController;
-
+use App\Http\Controllers\ConfiguracoesController;
 
 
 /*
@@ -88,6 +88,17 @@ Route::put('admin/salas/{id?}', [SalasController::class, 'update'])
 
 Route::delete('admin/salas/{id?}', [SalasController::class, 'destroy'])
         ->name('salas.destroy');
+//-----------------------------------------------------------------------------
+
+//---------------------Configuracoes-------------------------------------------------
+Route::get('admin/configs', [ConfiguracoesController::class, 'index'])
+        ->name('configuracao.index');//bilhetes preços
+
+Route::get('admin/configs/{id?}', [ConfiguracoesController::class, 'edit'])
+        ->name('configuracao.edit'); // editar preços
+
+Route::put('admin/configs/{id?}', [ConfiguracoesController::class, 'update'])
+        ->name('configuracao.update');
 //-----------------------------------------------------------------------------
 
 

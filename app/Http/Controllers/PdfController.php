@@ -12,11 +12,11 @@ class PdfController extends Controller
     public function geraPdfBilhete(Recibo $recibo)
     {
         //dd($recibo);
-        $bilhete = Bilhetes::where('recibo_id',$recibo->id);
-        //dd($bilhete);
-        $pdf = PDF::loadView('pdf.bilhete', compact('bilhete'));
+        $bilhetes = Bilhetes::where('recibo_id',$recibo->id)->get();
+        //dd($bilhetes);
+        $pdf = PDF::loadView('pdf.bilhete', compact('bilhetes'));
         //dd($pdf);
-        return $pdf->setPaper('a6')->stream('bilhete.pdf');
+        return $pdf->setPaper('A4')->stream('bilhete.pdf');
     }
 
     public function geraPdfRecibo(Recibo $recibo)

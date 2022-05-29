@@ -26,6 +26,9 @@ $height = '450px'; ?>
             frameborder="0" allowfullscreen></iframe> 
       </div>
       <div class="text-center">
+      <br><br><br>
+      <h3 class="mb-0"><strong><h1 class="card-title">Sessoes Disponiveis</h1></strong></h3>
+      <br>
           <table class="table table-striped">
               <thead>
                   <tr>
@@ -33,8 +36,9 @@ $height = '450px'; ?>
                     <th scope="col">Hora</th>
                     <th scope="col">Sala</th>
                     <th scope="col">Lugares Ocupados</th>
+                    <th scope="col">Lugares Livres</th>
                     <th scope="col">Total Capacidade Sala</th>
-                    <th scope="col">Comprar</th>
+                    <th scope="col"></th>
                   </tr>
               </thead>
               <tbody>
@@ -46,11 +50,14 @@ $height = '450px'; ?>
                     <td> 
                     @php echo App\Http\Controllers\SessoesController::ContaBilhetes($filme->id,$sessao->data,$sessao->horario_inicio);  @endphp
                     </td>
+                    <td> 
+                    @php echo ($sessao->Salas->custom)-(App\Http\Controllers\SessoesController::ContaBilhetes($filme->id,$sessao->data,$sessao->horario_inicio));  @endphp
+                    </td>
                     <td><?= $sessao->Salas->custom ?></td>
                     <td>
                       <form action="{{route('carrinho.store_sessao', $sessao)}}" method="POST">
                           @csrf
-                          <input type="submit" value="Add">
+                          <input type="submit" value="Adicinar ao Carrinho">
                       </form>
                     </td>
                     </tr>

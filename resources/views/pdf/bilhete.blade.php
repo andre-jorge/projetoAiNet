@@ -1,8 +1,10 @@
+<!-- THIS EMAIL WAS BUILT AND TESTED WITH LITMUS http://litmus.com -->
+<!-- IT WAS RELEASED UNDER THE MIT LICENSE https://opensource.org/licenses/MIT -->
 <!DOCTYPE html>
 <html>
 
 <head>
-  <title>Recibo</title>
+  <title>Your invoice for HealthPlanG purchase</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -89,37 +91,48 @@
 
   <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
 
+    <!-- HIDDEN PREHEADER TEXT -->
+    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+      Descrição
+    </div>
+    @foreach($bilhetes as $bilhete)
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                     <td align="left" style="padding-top: 20px;">
                       <table cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
-                          <td width="75%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                            Recibo nº{{$recibo->id}}
+                          <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                            Bilhete nº{{$bilhete->id}}
+                          </td>
+                          <td width="60%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                          Cliente: {{$bilhete->Recibo->nome_cliente}}
                           </td>
                         </tr>
-                        @endforeach
                         <tr>
-                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                            Total Iva
+                          <td width="45%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
+                            Filme: {{$bilhete->Sessao->Filmes->titulo}}
                           </td>
-                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 5px 10px;">
-                          {{$recibo->iva}}
+                          <td width="55%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
+                          Sala: {{$bilhete->Sessao->Salas->nome}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td width="45%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
+                            ___Data___|     Hora <br>
+                            {{$bilhete->Sessao->data}} | {{$bilhete->Sessao->horario_inicio}}
+                          </td>
+                          <td width="55%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
+                          Fila | Posição <br>
+                          {{$bilhete->Lugar->fila}} - {{$bilhete->Lugar->posicao}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td width="100%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; padding: 15px 10px 5px 10px;">
+                            Estado: {{$bilhete->estado}}
                           </td>
                         </tr>
                       </table>
                     </td>
-                  </tr>
-                  <tr>
-                    <td align="left" style="padding-top: 20px;">
-                      <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                        <tr>
-                          <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 2px solid #eeeeee; border-bottom: 2px solid #eeeeee;">
-                            TOTAL
-                          </td>
-                          <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 2px solid #eeeeee; border-bottom: 2px solid #eeeeee;">
-                          {{$recibo->preco_total_com_iva}}
-                          </td>
-                        </tr>
-                      </table>
+                    </table>                      
+                      @endforeach
   </body>
 </html>

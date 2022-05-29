@@ -13,7 +13,8 @@
             <th scope="col">Nome Cliente</th>
             <th scope="col">Tipo Pagamento</th>
             <th scope="col">Ref Pagamento</th>
-            <th scope="col">Recibo</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -29,8 +30,9 @@
             <td>{{$recibo->nome_cliente}}</td>
             <td>{{$recibo->tipo_pagamento}}</td>
             <td>{{$recibo->ref_pagamento}}</td>
-            <td>
-            <a href="{{ route('pdf.recibo', $recibo->id ) }}" name="recibo" value='{{$recibo}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Ver Recibo</a>
+            <td><a href="{{ route('pdf.recibo', $recibo->id ) }}" name="recibo" value='{{$recibo}}' class="btn btn-info" role="button" aria-pressed="true">Recibo</a>
+            </td>
+            <td><a href="{{ route('pdf.bilhete', $recibo->id ) }}" name="bilhetes" value='{{$recibo}}' class="btn btn-info" role="button" aria-pressed="true">Bilhete(s)</a>
             </td>
         </tr>
         @endforeach

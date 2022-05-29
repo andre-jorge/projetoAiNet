@@ -26,8 +26,9 @@
                 <td>{{$dados->NIF}}</td>
                 <td>{{$dados->tipo_pagamento}}</td>
                 <td>{{$dados->ref_pagamento}}</td>
-                <td>
-                    <a href="{{ route('pdf.recibo', $dados->id ) }}" name="recibo" value='{{$dados}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Ver Recibo</a>
+                <td><a href="{{ route('pdf.recibo', $dados->id ) }}" name="recibo" value='{{$dados}}' class="btn btn-info" role="button" aria-pressed="true">Ver Recibo</a>
+                </td>
+                <td><a href="{{ route('pdf.bilhete', $dados->id ) }}" name="bilhete" value='{{$dados}}' class="btn btn-info" role="button" aria-pressed="true">Bilhete(s)</a>
                 </td>
             </tr>
             @endforeach

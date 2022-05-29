@@ -78,51 +78,34 @@
                                 Estatisticas
                             </a> -->
                             <div class="sb-sidenav-menu-heading">Admin</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            <a class="nav-link" href="{{route('filmes.admin')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Filmes
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+                            <a class="nav-link" href="{{route('salas.index')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Salas
+                            </a>
+                            <a class="nav-link" href="{{route('configuracao.index')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Preço Bilhetes
+                            </a>
+                            <a class="nav-link" href="{{route('users.admin')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Clientes
+                            </a>
+                            <a class="nav-link" href="{{route('pdf.indexRecibo')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Recibos Clientes
+                            </a>
+                            
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{{route('filmes.admin')}}">Filmes</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                ADMIN STUFF
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link" href="{{route('salas.index')}}">Salas</a>
-                                <a class="nav-link" href="{{route('users.admin')}}">Clientes</a>
-                                <a class="nav-link" href="{{route('pdf.indexRecibo')}}">Recibos</a>
-                                    
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Outros
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="#">Outros</a>
-                                            <a class="nav-link" href="#">Outros Sala</a>
-                                        </nav>
-                                    </div>
-                                    
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
+                            
+                            
                             <div class="sb-sidenav-menu-heading">Funcionarios</div>
                             <a class="nav-link" href="{{route('sessoes.sessoes')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
