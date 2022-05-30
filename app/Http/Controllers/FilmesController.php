@@ -25,26 +25,41 @@ class FilmesController extends Controller
       {
          $currentTime = Carbon::now();
          $currentTime = $currentTime->toDateString();
-         $filmesAtuais = Sessao::where('data','>', $currentTime)
-                     ->orderby('data','asc')
+         $filmesAtuais = DB::table('filmes')
+                     ->leftjoin('sessoes','sessoes.filme_id','=','filmes.id')
+                     ->where('sessoes.data','>', $currentTime)
+                     ->orderby('sessoes.data','asc')
+                     ->distinct('filmes.id')
                      ->paginate(8);  
+         if($request->genero){
+            $filmesAtuais = DB::table('filmes')
+                     ->leftjoin('sessoes','sessoes.filme_id','=','filmes.id')
+                     ->where('sessoes.data','>', $currentTime)
+                     ->where('filmes.genero_code',$request->genero)
+                     ->orderby('sessoes.data','asc')
+                     ->distinct()
+                     ->paginate(8); 
+
+         }
          
+
          // PROCURA POR NOME ou Sumario
-          $todosFilmes = Filme::where([
-             [function($query) use ($request){
-               if (($genero = $request->genero)){
-                  $query->Where('genero_code', $genero)->get();
-                  //$query->orWhere('sumario', 'LIKE', '%' . $sumario . '%')->get();
-                }
-             }]
-          ])
-          ->paginate(8);
+         //  $todosFilmes = Filme::where([
+         //     [function($query) use ($request){
+         //       if (($genero = $request->genero)){
+         //          $query->Where('genero_code', $genero)->get();
+         //          //$query->orWhere('sumario', 'LIKE', '%' . $sumario . '%')->get();
+         //        }
+         //     }]
+         //  ])
+         //  ->paginate(8);
+         //dd($filmesAtuais);
          $listaGeneros = Genero::all();
-         $filmes = $todosFilmes;
+         //$filmes = $todosFilmes;
          
          return view(
              'filmes.index',
-             compact('filmes','filmesAtuais', 'listaGeneros'));
+             compact('filmesAtuais', 'listaGeneros'));
       }
 
    // create JA OK

@@ -14,11 +14,11 @@ class SalasController extends Controller
 
     $alphabet = range('A', 'Z');
     for ($i = 0; $i < $arg1; $i++) {
-      for ($j = 0; $j < $arg2; $j++) {
+      for ($j = 1; $j <= $arg2; $j++) {
         $data = array(
           'sala_id' => $arg3,
           'fila' => $alphabet[$i], 
-          'posicao' => $arg2);
+          'posicao' => $j);
           $newLugar = Lugares::create($data);
       }
 
