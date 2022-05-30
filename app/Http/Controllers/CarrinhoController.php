@@ -19,11 +19,20 @@ class CarrinhoController extends Controller
 
     public function store_sessao(Request $request, Sessao $sessao)
     {
+        //dd($request);
+        
+        //dd($fila);
         $carrinho = $request->session()->get('carrinho', []);
         $qtd = ($carrinho[$sessao->id]['qtd'] ?? 0) + 1;
+        $fila = ($carrinho[$sessao->id]['fila']?? 0);
+        $lugar = ($carrinho[$sessao->id]['lugar']?? 0);
         $total = ($carrinho[$sessao->id]['total'] ?? 0);
         $precoBilhete = Configuracao::find(1);
         //dd($precoBilhete->percentagem_iva);
+        $fila=$request->fila;
+        $lugar=$request->lugar;
+
+        //dd($lugar);
         $total = $precoBilhete->preco_bilhete_sem_iva*$qtd;
         $carrinho[$sessao->id] = [
             'id' => $sessao->id,
@@ -34,8 +43,11 @@ class CarrinhoController extends Controller
             'sala_id' => $sessao->Salas->nome,
             'preco' => $precoBilhete->preco_bilhete_sem_iva,
             'iva' => $precoBilhete->percentagem_iva,
+            'fila' => $fila,
+            'lugar' => $lugar,
             'total' => $total,
         ];
+        //dd($carrinho);
         $request->session()->put('carrinho', $carrinho);
         return back()
             ->with('alert-msg', 'Foi adicionada uma nova sessão ao carrinho!')
@@ -44,6 +56,7 @@ class CarrinhoController extends Controller
 
     public function update_sessao(Request $request, Sessao $sessao)
     {
+        
         $carrinho = $request->session()->get('carrinho', []);
         $qtd = $carrinho[$sessao->id]['qtd'] ?? 0;
         $total = $carrinho[$sessao->id]['total'] ?? 0;

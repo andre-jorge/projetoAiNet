@@ -6,6 +6,7 @@ use App\Models\Sessao;
 use App\Models\Filme;
 use App\Models\Genero;
 use App\Models\Bilhetes;
+use App\Models\Lugares;
 use App\Models\Salas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,17 @@ class SessoesController extends Controller
         return $sessoesFilmeBilhetes;
     }
 
+    //FUNÇAO PARA CONTAR BILHETES E DIZER LOTAÇÃO
+    public static function LugaresDisponiveis($arg1){
+        $lugaresOcupados=DB::table('lugares')
+                        ->select('lugares.*')
+                        ->leftJoin('bilhetes', 'bilhetes.lugar_id', '=', 'lugares.id')
+                        ->leftJoin('sessoes', 'sessoes.id', '=', 'bilhetes.sessao_id')
+                        ->where('sessoes.id', $arg1)
+                        ->get();
+        return $lugaresOcupados;
+    }
+
     //INDEX JÁ OK
     public function index(Filme $filme)
     {
@@ -38,16 +50,14 @@ class SessoesController extends Controller
         $sessoesFilme = Sessao::where('filme_id', $filme->id)
                                     ->where('data','>', $currentTime)
                                     ->get();
-        //Carinho
-        $cart = session()->get('cart');
-        if ($cart == null)
-            $cart = [];
+                                    //dd($sessoesFilme);
+        //$lugaresOcupados = LugaresDisponiveis 
+        //$teste = SessoesController::LugaresDisponiveis($sessoesFilme->id);
         return view('sessoes.index')
                     ->with('filme', $filme)
-                    ->with('sessoesFilme', $sessoesFilme)
-                    ->with('cart', $cart);
+                    //->with('teste', $teste)
+                    ->with('sessoesFilme', $sessoesFilme);
     }
-
 
     public function addToCart(Request $request)
         {

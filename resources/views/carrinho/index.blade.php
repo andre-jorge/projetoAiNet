@@ -23,11 +23,16 @@
       
         <li class="list-group-item d-flex justify-content-between lh-condensed">
           <div>
-            <h6 class="my-0">{{ \Illuminate\Support\Str::limit($row['filme'], 12, $end='...') }}</h6>
+            <h6 class="my-0">{{ \Illuminate\Support\Str::limit($row['filme'], 15, $end='...') }}</h6>
+            <h8 class="my-0">Lugar: {{ $row['lugar'] }} | </h8>
+            <h8 class="my-0"> Fila:{{ $row['fila'] }}</h8>
+            <br>
             <small class="text-muted">{{ $row['data'] }}</small>
             <small class="text-muted">{{ $row['horario_inicio'] }}</small>
             <br>
             <small class="text-muted">{{ $row['sala_id'] }}</small>
+            <br>
+            
           </div>
           <span class="text-muted">{{ $row['qtd'] }}</span>
           <span class="text-muted">{{ $row['preco'] }}</span>
