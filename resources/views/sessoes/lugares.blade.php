@@ -6,16 +6,12 @@
 @csrf    
 
 <div class="search-item">
-            <!-- GENERO -->
-            <select name="fila">
+            <!-- FILA -->
+            <select name="idlugar">
             @foreach ($lugares as $lugar)
-                <option value="{{ $lugar->fila }}.{{$lugar->posicao}}">{{ $lugar->fila }}  {{$lugar->posicao}}</option>
-                <input type="hidden" name="posicao" value="{{$lugar->posicao}}" style="display:none">
+                <option value="{{ $lugar->id }}">{{ $lugar->fila }} - {{$lugar->posicao}}</option>
             @endforeach
-            
-            
-            </select>
-           
+            </select>   
         <button class="btn btn-primary" type="submit">teste</button>
     </div>
 </form>

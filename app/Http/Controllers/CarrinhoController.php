@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Configuracao;
 use App\Models\Sessao;
+use App\Models\Lugares;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -19,7 +20,9 @@ class CarrinhoController extends Controller
 
     public function store_sessao(Request $request, Sessao $sessao)
     {
-        dd($request);
+        $idlugar = $request->idlugar;
+        
+        
         
         //dd($fila);
         $carrinho = $request->session()->get('carrinho', []);
@@ -29,8 +32,9 @@ class CarrinhoController extends Controller
         $total = ($carrinho[$sessao->id]['total'] ?? 0);
         $precoBilhete = Configuracao::find(1);
         //dd($precoBilhete->percentagem_iva);
-        dd($fila=$request->fila);
-        $lugar=$request->lugar;
+        $fila=Lugares::where('id',$idlugar)->pluck('fila');
+        $posicao=Lugares::where('id',$idlugar)->pluck('posicao');
+        
         //dd($lugar=$sessao->Filmes);
 
         //dd($lugar);
@@ -44,8 +48,8 @@ class CarrinhoController extends Controller
             'sala_id' => $sessao->Salas->nome,
             'preco' => $precoBilhete->preco_bilhete_sem_iva,
             'iva' => $precoBilhete->percentagem_iva,
-            'fila' => $fila,
-            'lugar' => $lugar,
+            'fila' => $fila[0],
+            'lugar' => $posicao[0],
             'total' => $total,
         ];
         //dd($carrinho);
