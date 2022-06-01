@@ -15,7 +15,7 @@
     
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="\">CineDEI</a>
+            <a class="navbar-brand ps-3" href="/home">CineDEI</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 
@@ -46,11 +46,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('users.index', $userid=Auth::user()->id ) }}">
+                                    <a class="dropdown-item" href="{{ route('users.index' ) }}">
                                             Dados Cliente 
                                             {{-- {{ route('user.index', $userid=Auth::user()->id ) }} --}}
                                         </a>
-                                    <a class="dropdown-item" href="{{ route('users.recibos', $userid=Auth::user()->id) }}">
+                                    <a class="dropdown-item" href="{{ route('users.recibos') }}">
                                             Historico de Recibos 
                                             {{-- {{ route('users.recibos') }} --}}
                                         </a>     

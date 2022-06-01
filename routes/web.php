@@ -139,13 +139,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
 
 //------------------USERS----------------------
 
-Route::get('user/{id?}', [usersController::class, 'index'])
+Route::get('user', [usersController::class, 'index'])
          ->name('users.index');// admin filmes
 
 Route::get('admin/users', [usersController::class, 'index_admin'])
         ->name('users.admin');
 
-Route::get('user/{id?}/recibos', [usersController::class, 'recibos'])
+Route::get('user/recibos', [usersController::class, 'recibos'])
         ->name('users.recibos');
 
 //Route::put('user/{id?}', [usersController::class, 'update'])
