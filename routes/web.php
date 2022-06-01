@@ -39,6 +39,9 @@ Route::get('/', [FilmesController::class, 'index'])
 Route::get('sessoes/{filme}', [SessoesController::class, 'index'])
         ->name('sessoes.index');//sessoes
 
+Route::get('sessoes/lugares/{sessao}', [SessoesController::class, 'lugares'])
+        ->name('sessoes.lugares');//lugares sessoes
+
 Route::get('funcionario/sessoes', [SessoesController::class, 'sessoes'])
         ->name('sessoes.sessoes');//sessoes
 

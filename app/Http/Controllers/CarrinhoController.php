@@ -19,7 +19,7 @@ class CarrinhoController extends Controller
 
     public function store_sessao(Request $request, Sessao $sessao)
     {
-        //dd($request);
+        dd($request);
         
         //dd($fila);
         $carrinho = $request->session()->get('carrinho', []);
@@ -29,8 +29,9 @@ class CarrinhoController extends Controller
         $total = ($carrinho[$sessao->id]['total'] ?? 0);
         $precoBilhete = Configuracao::find(1);
         //dd($precoBilhete->percentagem_iva);
-        $fila=$request->fila;
+        dd($fila=$request->fila);
         $lugar=$request->lugar;
+        //dd($lugar=$sessao->Filmes);
 
         //dd($lugar);
         $total = $precoBilhete->preco_bilhete_sem_iva*$qtd;

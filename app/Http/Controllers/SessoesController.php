@@ -30,16 +30,23 @@ class SessoesController extends Controller
         return $sessoesFilmeBilhetes;
     }
 
-    //FUNÇAO PARA CONTAR BILHETES E DIZER LOTAÇÃO
-    public static function LugaresDisponiveis($arg1){
+    public function lugares(Sessao $sessao)
+    {
         $lugaresOcupados=DB::table('lugares')
-                        ->select('lugares.*')
-                        ->leftJoin('bilhetes', 'bilhetes.lugar_id', '=', 'lugares.id')
-                        ->leftJoin('sessoes', 'sessoes.id', '=', 'bilhetes.sessao_id')
-                        ->where('sessoes.id', $arg1)
-                        ->get();
-        return $lugaresOcupados;
+                         ->select('lugares.id')
+                         ->leftJoin('bilhetes', 'bilhetes.lugar_id', '=', 'lugares.id')
+                         ->where('sessao_id', $sessao->id)
+                         ->get();
+
+        $lugares=$sessao->Salas->Lugares->whereNotIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
+        //dd($lugares);
+       
+        return view('sessoes.lugares')
+                    ->with('sessao', $sessao)
+                    ->with('lugares', $lugares);
     }
+
+
 
     //INDEX JÁ OK
     public function index(Filme $filme)

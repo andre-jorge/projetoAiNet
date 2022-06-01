@@ -22,4 +22,9 @@ class Salas extends Model
         return $this->hasMany(Sessao::class,'sala_id','id');
     }
 
+    public function Lugares()
+    {
+    return $this->hasMany(Lugares::class,'sala_id','id');
+    }
+
 }

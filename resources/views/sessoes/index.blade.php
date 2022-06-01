@@ -55,45 +55,10 @@ $height = '450px'; ?>
                   </td>
                   <td><?= $sessao->Salas->custom ?></td>
                   <td>
-                    <form action="{{route('carrinho.store_sessao', $sessao)}}" id="form" method="POST">
+                    <form action="{{route('sessoes.lugares', $sessao)}}" id="form" method="GET">
                         @csrf
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="open">Reservar</button>
-                        <!-- Modal -->
-                        <div class="modal" tabindex="-1" role="dialog" id="myModal">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="alert alert-danger" style="display:none"></div>
-                            <div class="modal-header">
-                              <h5 class="modal-title">Escolha de Lugares</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                             
-                                <div class="row">
-                                  <div class="form-group col-md-4">
-                                    <!-- Lugar -->
-                                    <div class="search-item">
-                                      <select name="fila" id="fila">
-                                      <label for="fila">Lugar:</label>
-                                      <!-- <option value="ALL">Todos</option> -->
-                                      
-                                      {{--@foreach ($teste as $tt)
-                                          <option value="{{$tt->fila, $tt->posicao}}">
-                                              {{$tt->fila}} - {{$tt->posicao}}
-                                          </option>
-                                      @endforeach--}}
-                                    <!-- Lugar -->
-                                      </select>
-                                  </div>
-                                </div>
-                              </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                              <button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="open">Reservar</button>
-                            </div>
-                            </div>
+                        <button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="open">Reservar</button>
+                        
                           </form>
                         </td>
                       </tr>

@@ -22,6 +22,13 @@ class Sessao extends Model
     return $this->belongsTo(Salas::class,'sala_id','id');
     }
 
+    public function Bilhetes()
+    {
+    return $this->hasMany(Bilhetes::class,'sessao_id','id');
+    }
+
+
+
 
     protected $fillable = [
         'filme_id', 'sala_id', 'data', 'horario_inicio'];

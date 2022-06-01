@@ -25,10 +25,11 @@ class Bilhetes extends Model
         return $this->belongsTo(Sessao::class, 'sessao_id', 'id');
     }
 
-    public function Lugar()
+    public function Lugares()
     {
         return $this->belongsTo(Lugares::class, 'lugar_id', 'id');
     }
+
     
     protected $fillable = [
         'estado'];

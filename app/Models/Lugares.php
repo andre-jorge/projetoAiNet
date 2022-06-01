@@ -14,4 +14,15 @@ class Lugares extends Model
     protected $fillable = [
         'sala_id','fila','posicao'];
 
+    public function Salas()
+    {
+    return $this->belongsTo(Salas::class,'sala_id','id');
+    }
+
+    public function Bilhetes()
+    {
+    return $this->hasMany(Bilhetes::class,'lugar_id','id');
+    }
+
+
 }
