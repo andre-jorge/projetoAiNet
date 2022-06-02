@@ -36,7 +36,7 @@
           </div>
           <span class="text-muted">{{ $row['qtd'] }}</span>
           <span class="text-muted">{{ $row['preco'] }}</span>
-          <span class="text-muted">
+          {{--<span class="text-muted">
           <form action="{{route('carrinho.update_sessao', $row['id'])}}" method="POST">
                 @csrf
                 @method('put')
@@ -51,7 +51,7 @@
                 <input type="hidden" name="quantidade" value="-1">
                 <input class="rounded" type="submit" value="-1">
             </form>
-          </span>
+          </span>--}}
           <span class="text-muted">
           <form action="{{route('carrinho.destroy_sessao', $row['id'])}}" method="POST">
                 @csrf

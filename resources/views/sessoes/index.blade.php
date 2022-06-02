@@ -4,7 +4,7 @@
 <?php
 $url = $filme->trailer_url;
 preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches);
-$idmatches = $matches[1];
+$idmatches = $matches[1] ?? 'sem imagem';
 $width = '800px';
 $height = '450px'; ?>
 

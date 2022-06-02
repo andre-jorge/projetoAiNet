@@ -32,6 +32,7 @@ class SessoesController extends Controller
 
     public function lugares(Sessao $sessao)
     {
+        
         $lugaresOcupados=DB::table('lugares')
                          ->select('lugares.id')
                          ->leftJoin('bilhetes', 'bilhetes.lugar_id', '=', 'lugares.id')
@@ -40,8 +41,31 @@ class SessoesController extends Controller
 
         $lugares=$sessao->Salas->Lugares->whereNotIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
         //dd($lugares);
-       
+        $lugaresOcupados=$sessao->Salas->Lugares->whereIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
+        //$fila = $lugaresOcupados->pluck('fila');
+        //$posicao = $lugaresOcupados->pluck('posicao');
+        $totalLugaresDisponiveis = $lugaresOcupados->count();
+        //dd($totalLugaresDisponiveis);
+        // dd($lugaresOcupados);
+        for ($i = 0; $i < $totalLugaresDisponiveis; $i++) {
+                $data = array(
+                'fila' => $lugaresOcupados->pluck('fila'), 
+                'posicao' => $lugaresOcupados->pluck('posicao'));
+                //$newLugar = Lugares::create($data);
+        }
+        //dd($data);
+        for ($i=0; $i < $totalLugaresDisponiveis; $i++) { 
+            echo $data['fila'][$i];
+            echo $data['posicao'][$i];
+            $array1[$i] = array($data['fila'][$i] => $data['posicao'][$i]);
+        }
+        //dd($array1[0]);
+        
+
+
+
         return view('sessoes.lugares')
+                    ->with('lugaresOcupados', $array1)
                     ->with('sessao', $sessao)
                     ->with('lugares', $lugares);
     }
@@ -49,7 +73,7 @@ class SessoesController extends Controller
 
 
     //INDEX JÁ OK
-    public function index(Filme $filme)
+    public function index(Request $request, Filme $filme)
     {
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();

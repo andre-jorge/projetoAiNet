@@ -24,8 +24,11 @@
             <li class="nav-item">
                             <a id="cart-link" href="{{ route('carrinho.index') }}" class="trsn nav-link" title="View/Edit Cart">
                             <i class="fas fa-shopping-cart"></i>
+                            @csrf
+                            
                             <span id="nav-bar-cart"><span class="cart-size">{{$quantidade ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span>
                             </a></li>
+                            
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -134,7 +137,6 @@
                                 <span>{{ session('alert-msg') }}</span>
                             </div>
                         @endif
-                
                 
                 @yield('content')
                 
