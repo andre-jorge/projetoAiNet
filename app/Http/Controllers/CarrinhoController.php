@@ -21,15 +21,14 @@ class CarrinhoController extends Controller
     public function store_sessao(Request $request, Sessao $sessao)
     {
         $idlugar = $request->idlugar;
-        
-        
-        
-        //dd($fila);
+
+        $idCarrinho = $request->session()->increment('count');
         $carrinho = $request->session()->get('carrinho', []);
-        $qtd = ($carrinho[$sessao->id]['qtd'] ?? 0) + 1;
-        $fila = ($carrinho[$sessao->id]['fila']?? 0);
-        $lugar = ($carrinho[$sessao->id]['lugar']?? 0);
-        $total = ($carrinho[$sessao->id]['total'] ?? 0);
+
+        $qtd = $idCarrinho;
+        $fila = ($carrinho[$idCarrinho]['fila']?? 0);
+        $lugar = ($carrinho[$idCarrinho]['lugar']?? 0);
+        $total = ($carrinho[$idCarrinho]['total'] ?? 0);
         $precoBilhete = Configuracao::find(1);
         //dd($precoBilhete->percentagem_iva);
         $fila=Lugares::where('id',$idlugar)->pluck('fila');
@@ -39,7 +38,7 @@ class CarrinhoController extends Controller
 
         //dd($lugar);
         $total = $precoBilhete->preco_bilhete_sem_iva*$qtd;
-        $carrinho[$sessao->id] = [
+        $carrinho[$idCarrinho] = [
             'id' => $sessao->id,
             'filme' => $sessao->Filmes->titulo,
             'qtd' => $qtd,
@@ -54,57 +53,60 @@ class CarrinhoController extends Controller
         ];
         //dd($carrinho);
         $request->session()->put('carrinho', $carrinho);
+        $request->session()->increment('count', $incrementBy = 1);//incrementa 1 no [] do carrinho
         return back()
             ->with('alert-msg', 'Foi adicionada uma nova sessão ao carrinho!')
             ->with('alert-type', 'success');
     }
 
-    public function update_sessao(Request $request, Sessao $sessao)
-    {
+    // public function update_sessao(Request $request, Sessao $sessao)
+    // {
         
-        $carrinho = $request->session()->get('carrinho', []);
-        $qtd = $carrinho[$sessao->id]['qtd'] ?? 0;
-        $total = $carrinho[$sessao->id]['total'] ?? 0;
-        $qtd += $request->quantidade;
-        $precoBilhete = Configuracao::find(1);
-        //dd($precoTotalSessao);
-        $total = $precoBilhete->preco_bilhete_sem_iva*$qtd;
-        if ($request->quantidade < 0) {
-            $msg = 'Foram removidas ';
-        } elseif ($request->quantidade > 0) {
-            $msg = 'Foram adicionadas ';
-        }
-        if ($qtd <= 0) {
-            unset($carrinho[$sessao->id]);
-            $msg = 'Foram removidas todas as sessões';
-        } else {
-            $carrinho[$sessao->id] = [
-                'id' => $sessao->id,
-                'filme' => $sessao->Filmes->titulo,
-                'qtd' => $qtd,
-                'data' => $sessao->data,
-                'horario_inicio' => $sessao->horario_inicio,
-                'sala_id' => $sessao->Salas->nome,
-                'preco' => $precoBilhete->preco_bilhete_sem_iva,
-                'iva' => $precoBilhete->percentagem_iva,
-                'total' => $total,
+    //     $carrinho = $request->session()->get('carrinho', []);
+    //     $qtd = $carrinho[$sessao->id]['qtd'] ?? 0;
+    //     $total = $carrinho[$sessao->id]['total'] ?? 0;
+    //     $qtd += $request->quantidade;
+    //     $precoBilhete = Configuracao::find(1);
+    //     //dd($precoTotalSessao);
+    //     $total = $precoBilhete->preco_bilhete_sem_iva*$qtd;
+    //     if ($request->quantidade < 0) {
+    //         $msg = 'Foram removidas ';
+    //     } elseif ($request->quantidade > 0) {
+    //         $msg = 'Foram adicionadas ';
+    //     }
+    //     if ($qtd <= 0) {
+    //         unset($carrinho[$sessao->id]);
+    //         $msg = 'Foram removidas todas as sessões';
+    //     } else {
+    //         $carrinho[$sessao->id] = [
+    //             'id' => $sessao->id,
+    //             'filme' => $sessao->Filmes->titulo,
+    //             'qtd' => $qtd,
+    //             'data' => $sessao->data,
+    //             'horario_inicio' => $sessao->horario_inicio,
+    //             'sala_id' => $sessao->Salas->nome,
+    //             'preco' => $precoBilhete->preco_bilhete_sem_iva,
+    //             'iva' => $precoBilhete->percentagem_iva,
+    //             'total' => $total,
 
-            ];
-        }
-        $request->session()->put('carrinho', $carrinho);
-        return back()
-            ->with('alert-msg', $msg)
-            ->with('alert-type', 'success');
-    }
+    //         ];
+    //     }
+    //     $request->session()->put('carrinho', $carrinho);
+    //     return back()
+    //         ->with('alert-msg', $msg)
+    //         ->with('alert-type', 'success');
+    // }
 
     public function destroy_sessao(Request $request, Sessao $sessao)
     {
+        //$idCarrinho = $request->session()->increment('count');
+        //dd($request->eleminar);
         $carrinho = $request->session()->get('carrinho', []);
-        if (array_key_exists($sessao->id, $carrinho)) {
-            unset($carrinho[$sessao->id]);
+        if (array_key_exists($request->eleminar, $carrinho)) {
+            unset($carrinho[$request->eleminar]);
             $request->session()->put('carrinho', $carrinho);
             return back()
-                ->with('alert-msg', 'Foram removidas todas as Sessaões')
+                ->with('alert-msg', 'Foram removida a Sessão')
                 ->with('alert-type', 'success');
         }
         return back()
@@ -117,9 +119,10 @@ class CarrinhoController extends Controller
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
         $user = auth()->user();
-        //dd($request);
+        dd($request);
         //dd($currentTime);
         //dd($user->id);
+
 
         $dataForm = $request->session()->get('carrinho');
         //dd($dataForm);
