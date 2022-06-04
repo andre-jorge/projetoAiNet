@@ -44,6 +44,17 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="row mb-0">
+                <div class="col-md-8 offset-md-4">
+                    @if (Route::has('password.request'))
+                        <a class="btn btn-primary" href="{{ route('password.request') }}">
+                            {{ __('Alterar Password') }}
+                        </a>
+                    @endif
+                </div>
+            </div>
+            
             {{-- 
             <!-- <div class="row mb-3">
                 <div class="col-md-6">
@@ -80,6 +91,8 @@
                 @enderror
                 <label for="idTrailer_url">Trailer URL</label>
             </div> -->
+            
+            
             <div class="mt-4 mb-0">
                 <div class="d-grid">
                     <button class="btn btn-primary btn-block" type="submit">Gravar alterações</button>

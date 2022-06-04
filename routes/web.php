@@ -148,7 +148,7 @@ Route::delete('admin/filmes/{filme}', [FilmesController::class, 'destroy'])
 
 //-----------------------------------------------------------------------------
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
         ->name('home');
     
@@ -158,16 +158,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
 //------------------USERS----------------------
 
 Route::get('user', [usersController::class, 'index'])
-        ->middleware('auth')->name('users.index')
-        ->middleware('can:viewAny,App\Models\Cliente');// admin filmes
+        ->middleware('auth')->name('users.index');
+        //->middleware('can:viewAny,App\Models\Cliente');// admin filmes
 
 Route::get('admin/users', [usersController::class, 'index_admin'])
         ->middleware('auth')->name('users.admin')
         ->middleware('can:viewAny,App\Models\Cliente');
 
 Route::get('user/recibos', [usersController::class, 'recibos'])
-        ->middleware('auth')->name('users.recibos')
-        ->middleware('can:viewAny,App\Models\Cliente');
+        ->middleware('auth')->name('users.recibos');
+        //->middleware('can:viewAny,App\Models\Cliente');
 
 //Route::put('user/{id?}', [usersController::class, 'update'])
 //       ->name('user.update');
@@ -212,3 +212,7 @@ Route::delete('carrinho', [CarrinhoController::class, 'destroy'])->name('carrinh
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
