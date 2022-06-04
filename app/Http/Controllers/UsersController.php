@@ -38,6 +38,9 @@ class UsersController extends Controller
          return view('users.recibos', compact('recibos'));
       }
 
+     
+      
+
 //   public function create()
 //       {
 //          $filmes = DB::table('filmes')
