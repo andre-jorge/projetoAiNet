@@ -73,6 +73,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
+						@can('viewAny', App\Models\Filme::class)							
                             <!-- <div class="sb-sidenav-menu-heading">Estatisticas</div>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -105,6 +106,7 @@
                                     <a class="nav-link" href="{{route('filmes.admin')}}">Filmes</a>
                                 </nav>
                             </div>
+							@endcan
                             
                             
                             <div class="sb-sidenav-menu-heading">Funcionarios</div>
