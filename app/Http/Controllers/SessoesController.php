@@ -60,17 +60,11 @@ class SessoesController extends Controller
             $array1[$i] = array($data['fila'][$i] => $data['posicao'][$i]);
         }
         //dd($array1[0]);
-        
-
-
-
         return view('sessoes.lugares')
                     ->with('lugaresOcupados', $array1)
                     ->with('sessao', $sessao)
                     ->with('lugares', $lugares);
     }
-
-
 
     //INDEX JÁ OK
     public function index(Request $request, Filme $filme)
@@ -88,17 +82,7 @@ class SessoesController extends Controller
                     ->with('filme', $filme)
                     //->with('teste', $teste)
                     ->with('sessoesFilme', $sessoesFilme);
-    }
-
-    public function addToCart(Request $request)
-        {
-            session()->put('cart', $request->post('cart'));
-
-            return response()->json([
-                'status' => 'added'
-            ]);
-        }
-        
+    }        
 
     public function edit(Request $request, $id){
         $todasSessoes=DB::table('bilhetes')

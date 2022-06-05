@@ -25,8 +25,9 @@
                             <a id="cart-link" href="{{ route('carrinho.index') }}" class="trsn nav-link" title="View/Edit Cart">
                             <i class="fas fa-shopping-cart"></i>
                             @csrf
+                           
                             
-                            <span id="nav-bar-cart"><span class="cart-size">{{$quantidade ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span>
+                            <span id="nav-bar-cart"><span class="cart-size">{{ $_SESSION['count'] ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span>
                             </a></li>
                             
                         <!-- Authentication Links -->

@@ -4,6 +4,7 @@
 <input type="hidden" name="quantidade" value="{{$quantidade=0}}">
 
 
+
 <body class="bg-light" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
 <div class="container">
   <div class="py-5 text-center">
@@ -38,7 +39,7 @@
           <span class="text-muted">{{ $row['preco'] }}</span>
           
           <span class="text-muted">
-          <form action="{{route('carrinho.destroy_sessao', $row['qtd'])}}" method="POST">
+          <form action="{{route('carrinho.destroy_sessao', $row['id'])}}" method="POST">
                 @csrf
                 @method('delete')
                 <input type="hidden" name="eleminar" id="eleminar" value="{{$row['qtd']}}" value="Remover">
@@ -60,24 +61,25 @@
         <h4 class="mb-3">Pagamento</h4>
         <form action="{{ route('carrinho.store') }}" method="POST">
           @csrf
-          <div class="d-block my-3">
+          
+          <div data-toggle="collapse" class="d-block my-3">
             <div class="custom-control custom-radio">
-              <input id="credit" name="paymentMethod" type="radio" value="credit" class="custom-control-input" checked="" required="">
-              <label class="custom-control-label" for="credit">Cartao Crédito</label>
+              <input id="VISA" name="paymentMethod" type="radio" value="VISA" class="custom-control-input" checked="" required="">
+              <label class="custom-control-label" for="VISA">Cartao Crédito</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="debit" name="paymentMethod" type="radio" value="mbway" class="custom-control-input" required="">
-              <label class="custom-control-label" for="debit">MBWAY</label>
+              <input id="MBWAY" name="paymentMethod" type="radio" value="MBWAY" class="custom-control-input" required="">
+              <label class="custom-control-label" for="MBWAY">MBWAY</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="custom-control-input" required="">
-              <label class="custom-control-label" for="paypal">PayPal</label>
+              <input id="PAYPAL" name="paymentMethod" type="radio" value="PAYPAL" class="custom-control-input" required="">
+              <label class="custom-control-label" for="PAYPAL">PayPal</label>
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="cc-name">Nome Cartão Credito</label>
-              <input type="text" class="form-control" name="cc-name" id="cc-name" placeholder="" required="">
+              <input type="text" class="form-control" name="ccname" id="cc-name" placeholder="Nome Completo" required="">
               <small class="text-muted">Nome completo</small>
               <div class="invalid-feedback">
                 Nome do cartão obrigatorio
@@ -85,7 +87,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="cc-number">Numero Cartão Credito</label>
-              <input type="text" class="form-control" name="cc-number" id="cc-number" placeholder="" required="">
+              <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Numero Cartão" required="">
               <div class="invalid-feedback">
                 Numero do cartão obrigatorio
               </div>
@@ -94,16 +96,23 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="cc-expiration">Expiration</label>
-              <input type="text" class="form-control" name="cc-expiration" id="cc-expiration" placeholder="" required="">
+              <input type="text" class="form-control" name="ccexpiration" id="cc-expiration" placeholder="xx/xx" required="">
               <div class="invalid-feedback">
                 Data de Expiração obrigatoria
               </div>
             </div>
             <div class="col-md-3 mb-3">
               <label for="cc-cvv">CVV</label>
-              <input type="text" class="form-control" name="cc-cvv" id="cc-cvv" placeholder="" required="">
+              <input type="text" class="form-control" name="cccvv" id="cc-cvv" placeholder="xxx" required="">
               <div class="invalid-feedback">
                 CVV obrigatorio
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="nif">NIF</label>
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" required="">
+              <div class="invalid-feedback">
+                NIF
               </div>
             </div>
           </div>
@@ -248,6 +257,7 @@
     </tbody>
 </table>
 --}}
+
 @endsection
 
 

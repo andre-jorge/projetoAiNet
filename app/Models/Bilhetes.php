@@ -31,6 +31,6 @@ class Bilhetes extends Model
     }
 
     
-    protected $fillable = [
+    protected $fillable = [ 'recibo_id','cliente_id', 'sessao_id','lugar_id','preco_sem_iva',
         'estado'];
 }

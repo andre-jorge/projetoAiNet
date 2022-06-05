@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Configuracao;
 use App\Models\Sessao;
 use App\Models\Lugares;
+use App\Models\Recibo;
+use App\Models\Bilhetes;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -23,13 +25,14 @@ class CarrinhoController extends Controller
         $idlugar = $request->idlugar;
 
         $idCarrinho = $request->session()->increment('count');
+        //dd( $idCarrinho);
         $carrinho = $request->session()->get('carrinho', []);
 
         $qtd = $idCarrinho;
         $fila = ($carrinho[$idCarrinho]['fila']?? 0);
         $lugar = ($carrinho[$idCarrinho]['lugar']?? 0);
-        $total = ($carrinho[$idCarrinho]['total'] ?? 0);
         $precoBilhete = Configuracao::find(1);
+        $total = $qtd*($precoBilhete->preco_bilhete_sem_iva);
         //dd($precoBilhete->percentagem_iva);
         $fila=Lugares::where('id',$idlugar)->pluck('fila');
         $posicao=Lugares::where('id',$idlugar)->pluck('posicao');
@@ -47,13 +50,14 @@ class CarrinhoController extends Controller
             'sala_id' => $sessao->Salas->nome,
             'preco' => $precoBilhete->preco_bilhete_sem_iva,
             'iva' => $precoBilhete->percentagem_iva,
+            'idLugar' => $idlugar,
             'fila' => $fila[0],
             'lugar' => $posicao[0],
             'total' => $total,
         ];
         //dd($carrinho);
         $request->session()->put('carrinho', $carrinho);
-        $request->session()->increment('count', $incrementBy = 1);//incrementa 1 no [] do carrinho
+        //$request->session()->increment('count', $incrementBy = 1);//incrementa 1 no [] do carrinho
         return back()
             ->with('alert-msg', 'Foi adicionada uma nova sessão ao carrinho!')
             ->with('alert-type', 'success');
@@ -99,8 +103,7 @@ class CarrinhoController extends Controller
 
     public function destroy_sessao(Request $request, Sessao $sessao)
     {
-        //$idCarrinho = $request->session()->increment('count');
-        //dd($request->eleminar);
+        $idCarrinho = $request->session()->decrement('count');
         $carrinho = $request->session()->get('carrinho', []);
         if (array_key_exists($request->eleminar, $carrinho)) {
             unset($carrinho[$request->eleminar]);
@@ -118,63 +121,63 @@ class CarrinhoController extends Controller
     {
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
-        $user = auth()->user();
-        dd($request);
+        $userInfo = auth()->user();
+        //dd($user->id);
+        //dd($request);
         //dd($currentTime);
         //dd($user->id);
+        // a funcar
+        $metodoPagamento = $request->paymentMethod;
+        //dd($metodoPagamento);
+        $nomeCartao = $request->ccname;
+        $numeroCartao = $request->ccnumber;
+        $expirationCartao = $request->ccexpiration;
+        $cvvCartao = $request->cccvv;
+        $nif = $request->nif;
+        $precoBilhete = Configuracao::where('id', 1)->pluck('preco_bilhete_sem_iva');
+        $ivaBilhete = Configuracao::where('id', 1)->pluck('percentagem_iva'); 
+        $carro = $request->session()->get('carrinho');  
+        $quantidadeCarrinho = count($carro); 
+        $precoTotalBilhetesSemIva = ($precoBilhete[0]*$quantidadeCarrinho);     
+        $data = $request->session()->all(); // ver tudo da sessao   
 
 
-        $dataForm = $request->session()->get('carrinho');
-        //dd($dataForm);
+        //---------------------Emitir Recibo--------------------
+        $newRecibo = ([
+            'cliente_id' => $userInfo->id,
+            'data' => $currentTime,
+            'preco_total_sem_iva' => $precoTotalBilhetesSemIva,
+            'iva' => $ivaBilhete[0],
+            'preco_total_com_iva' => round($precoTotalBilhetesSemIva*($ivaBilhete[0]/100 + 1),2),
+            'nif' => $nif,
+            'nome_cliente' => $userInfo->name,
+            'tipo_pagamento' => $metodoPagamento,
+            'ref_pagamento' => $request->ccnumber,
+        ]);
+        $Recibo = Recibo::create($newRecibo);
+        //------------------------------------------------------
+        //------------------------------------------------------
+        //---------------------Emitir Bilhetes--------------------
+        $ultimoRecibo = Recibo::orderBy('id','desc')->first();
+        $ultimoIdRecibo = $ultimoRecibo->id;
+        for ($i=1; $i <= $quantidadeCarrinho ; $i++) { 
+            $newBilhete = ([
+                'recibo_id' => $ultimoIdRecibo,
+                'cliente_id' => $userInfo->id,
+                'sessao_id' => $carro[$i]['id'],
+                'lugar_id' => $carro[$i]['idLugar'],
+                'preco_sem_iva' => $precoBilhete[0],
+                'estado' => 'não usado',
+            ]);
+            $Bilhete = Bilhetes::create($newBilhete);
+        }
+        //-----------------------------------------------------
 
-
-        $carro = $request->session()->get('carrinho');
-        dd($request);
-        // AQUIIIIII
-        //$data = $request->session()->all(); // ver tudo da sessao
-        // dd(
-        //     'Place code to store the shopping cart / transform the cart into a sale',
-        //     $carro->filme // aqui esta a info do carrinho
-        //     //$user = auth()->user() // aqui esta a info do user
-        // );
-        // aqui adiconar as coisa
-        // A FAZER: Quando a Compra é bem sucedida
-        // Criar um Recibo e Gerar os bilhetes relativos à compra, 
-        // Limpar o carrinho de compras
-        // $newRecibo = ([
-        //     'cliente_id' => $user->id,
-        //     'data' => $currentTime,
-        //     'preco_total_sem_iva' => 'required',
-        //     'iva' => 'required',
-        //     'preco_total_com_iva' => 'required',
-        //     'nif' => 'required',
-        //     'nome_cliente' => 'required',
-        //     'tipo_pagamento' => 'required',
-        //     'ref_pagamento' => 'required',
-        // ]);
-
-        $validatedDataCartao = $request->validate([
-            'paymentMethod' => 'required',
-            'data' => 'required|max:60',
-            'cc-number' => 'required',
-            'cc-expiration' => 'required',
-            'cc-cvv' => 'required',
-         ]);
-
-         $newRecibo = new Recibo();
-         $newRecibo->cliente_id = $user->id;
-         $newRecibo->data = $currentTime;
-         $newRecibo->preco_total_sem_iva = $nameFile;
-         $newRecibo->iva = $nameFile;
-         $newRecibo->preco_total_com_iva = $nameFile;
-         $newRecibo->nif = $nameFile;
-         $newRecibo->nome_cliente = $nameFile;
-         $newRecibo->tipo_pagamento = $nameFile;
-         $newRecibo->ref_pagamento = $nameFile;
-         $newRecibo->save();
-         return redirect()->route('filmes.admin')
-               ->with('alert-msg', 'Filme inserido com sucesso')
-               ->with('alert-type', 'success');
+        $request->session()->forget('count');
+        $request->session()->forget('carrinho');
+        return redirect()->route('carrinho.index')
+                         ->with('alert-msg', 'Compra efetuado com Sucesso')
+                         ->with('alert-type', 'success');
 
 
     //     $nameFile = $request->titulo . '.' . $request->cartaz_url->extension(); 
@@ -186,16 +189,11 @@ class CarrinhoController extends Controller
     //     'horario_inicio' => $sessao->horario_inicio,
     //     'sala_id' => $sessao->sala_id,
     // ];
-    //   $newFilme = Filme::create($validatedData);
-    //   $newFilme->cartaz_url = $nameFile;
-    //   $newFilme->save();
-    //   return redirect()->route('filmes.admin')
-    //         ->with('alert-msg', 'Filme inserido com sucesso')
-    //         ->with('alert-type', 'success');
     }
 
     public function destroy(Request $request)
     {
+        $request->session()->forget('count');
         $request->session()->forget('carrinho');
         return back()
             ->with('alert-msg', 'Carrinho foi limpo!')
