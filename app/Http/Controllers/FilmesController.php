@@ -23,6 +23,7 @@ class FilmesController extends Controller
    // INDEX JA OK
    public function index(Request $request)
       {
+         //dd($request);
          $currentTime = Carbon::now();
          $currentTime = $currentTime->toDateString();
          $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
@@ -30,43 +31,33 @@ class FilmesController extends Controller
                         ->distinct('filme_id')
                         ->paginate(8);
                         //dd($filmesAtuais);
-
-         // $filmesAtuais = DB::table('filmes')
-         //             ->leftjoin('sessoes','sessoes.filme_id','=','filmes.id')
-         //             ->where('sessoes.data','>', $currentTime)
-         //             ->orderby('sessoes.data','asc')
-         //             ->distinct('filmes.id')
-         //             ->paginate(8);  
-         // if($request->genero){
-         //    $filmesAtuais = DB::table('filmes')
-         //             ->leftjoin('sessoes','sessoes.filme_id','=','filmes.id')
-         //             ->where('sessoes.data','>', $currentTime)
-         //             ->where('filmes.genero_code',$request->genero)
-         //             ->orderby('sessoes.data','asc')
-         //             ->distinct()
-         //             ->paginate(8); 
-
-         // }
+         if($request->genero){
+            $filmesGenero = Filme::where('genero_code', $request->genero)->pluck('id');
+            //dd($filmesGenero);
+            $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
+                        ->whereIn('filme_id',$filmesGenero)
+                        ->with('filmes')
+                        ->distinct('filme_id')
+                        ->paginate(8);        
+                  }
+                  //dd($filmesAtuais);
+         if($request->string){
+            $filmeString = Filme::where('sumario', 'like', '%' . $request->string . '%')->pluck('id');
+            //dd($filmesGenero);
+            $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
+                        ->whereIn('filme_id',$filmeString)
+                        ->with('filmes')
+                        ->distinct('filme_id')
+                        ->paginate(8);        
+                  }
+                  //dd($filmesAtuais);
          
-
-         // PROCURA POR NOME ou Sumario
-         //  $todosFilmes = Filme::where([
-         //     [function($query) use ($request){
-         //       if (($genero = $request->genero)){
-         //          $query->Where('genero_code', $genero)->get();
-         //          //$query->orWhere('sumario', 'LIKE', '%' . $sumario . '%')->get();
-         //        }
-         //     }]
-         //  ])
-         //  ->paginate(8);
-         //dd($filmesAtuais);
-         $listaGeneros = Genero::all();
-         //$filmes = $todosFilmes;
-         
+         $listaGeneros = Genero::all();         
          return view(
              'filmes.index',
              compact('filmesAtuais', 'listaGeneros'));
       }
+      
 
    // create JA OK
    public function create()

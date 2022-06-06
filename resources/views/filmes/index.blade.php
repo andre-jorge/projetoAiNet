@@ -6,23 +6,30 @@
 <p></p>
 <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="/" method="GET">
     <div class="search-item">
-            <!-- GENERO -->
-            <label for="genfilme">Genero:</label>
+        <!-- GENERO -->
+        <label for="genfilme">Genero:</label>
             <select name="genero" id="genfilme">
-            <!-- <option value="ALL">Todos</option> -->
+            <option selected value="ALL">Todos</option>
             @foreach ($listaGeneros as $gen)
                 <option value="{{$gen->code}}" {{$gen->nome == $gen->nome ?  : 'Todos'}}>
                     {{$gen->nome}}
                 </option>
             @endforeach
-            <!-- GENERO -->
-        </select>
-        <button class="btn btn-primary" id="btn-filter" value="btnNavbarSearch" type="submit" href="#!"><i class="fas fa-search">aaa</i></button>
+            </select>
+    <button class="btn btn-primary" id="btn-filter" value="btnNavbarSearch" type="submit" href="#!"><i class="fas fa-search">aaa</i></button>
+    <!-- GENERO -->
     </div>
+    <!-- STRING -->
+    <div class="input-group">
+        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-primary">search</button>
+    </div>
+    <!-- STRING -->
+    
 </form>
-
 <p></p>
 </div>
+
 <!-- FILMES -->
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
     @foreach ($filmesAtuais as $filme) 
@@ -47,11 +54,8 @@
         </div>
         </div>
     @endforeach
-    </div>
-    <div>
     {{ $filmesAtuais->links() }}
-</div>
-
+    
 @endsection
 
 
