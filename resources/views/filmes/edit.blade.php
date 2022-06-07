@@ -1,7 +1,7 @@
 @extends('home')
 
 @section('content')
-<form action="{{ route('filmes.update') }}" id="filmes-form" method="POST">
+<form action="{{ route('filmes.update',$filme ) }}" enctype="multipart/form-data" id="filmes-form" method="POST">
     
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Editar Filme</h3></div>
        
@@ -11,6 +11,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
+                    <input class="form-control" name="id" id="id" type="hidden" value="{{$filme->id}}">
                         <input class="form-control" name="titulo" id="idTitulo" type="select" value="{{$filme->titulo}}" placeholder="Insira o Nome do Filme">
                         @error('titulo')
                             <div class="error">{{ $message }}</div>
@@ -36,7 +37,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="cartaz_url" id="cartaz_url" type="text" value="{{$filme->cartaz_url}}" placeholder="imagem.jpg"> 
+                        <input class="form-control" name="cartaz_url" id="cartaz_url" type="file" value="{{$filme->cartaz_url}}" placeholder="imagem.jpg"> 
                         @error('cartaz_url')
                             <div class="error">{{ $message }}</div>
                         @enderror
@@ -62,7 +63,7 @@
                 <label for="idSumario">Sumario</label>
             </div>
             <div class="form-floating mb-3">
-                <input class="form-control" id="idTrailer_url" name="trailer_url" type="text" value="{{$filme->cartaz_url}}" placeholder="Sumario"> 
+                <input class="form-control" id="idTrailer_url" name="trailer_url" type="text" value="{{$filme->trailer_url}}" placeholder="Trailer URL"> 
                 @error('trailer_url')
                     <div class="error">{{ $message }}</div>
                 @enderror

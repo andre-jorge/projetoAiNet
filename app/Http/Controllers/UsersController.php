@@ -8,6 +8,8 @@ use App\Models\Cliente;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 
 class UsersController extends Controller
@@ -29,6 +31,21 @@ class UsersController extends Controller
                      return view('users.admin')->with('Clientes', $dadosClientes);   
       }
 
+   public function funcionarios(Request $request)
+      {
+         $user = auth()->user();
+         $id = auth()->user()->id;
+         $dadosFuncionarios = User::where('tipo','=','F')
+                     ->paginate(5, ['*'], 'funcionario');  
+                     //dd($dadosFuncionarios);
+         $dadosAdmin = User::where('tipo','=','A')
+                     ->where('id','<>',$id)
+                     ->paginate(5, ['*'], 'administrador');
+                     return view('users.funcionarios.index')
+                                 ->with('Admins', $dadosAdmin)
+                                 ->with('Funcionarios', $dadosFuncionarios);   
+      }
+
    public function recibos(Request $request)
       {
          $user = auth()->user();
@@ -38,84 +55,114 @@ class UsersController extends Controller
          return view('users.recibos', compact('recibos'));
       }
 
-     
-      
+   
+   
+   
 
-//   public function create()
-//       {
-//          $filmes = DB::table('filmes')
-//                      ->select('*')
-//                      ->leftjoin('generos','generos.code','=','filmes.genero_code')
-//                      ->paginate(8); 
-//                      $listaGeneros = Genero::pluck('code', 'nome');
-//          return view(
-//          'filmes.create',
-//          compact('filmes', 'listaGeneros'));
-//    }
+   //----------------------------------------------------------------
+   //-----------------------FUNCIONARIO------------------------------
+   public function funcionario_create()
+      {
+         $dadosFuncionarios = User::where('tipo','=','F')->get();
+         //dd($dadosFuncionarios);
+         return view('users.funcionarios.create')->with('funcionario', $dadosFuncionarios);
+      }
 
+   public function funcionario_store(Request $request, User $user)
+   {
+      $hashedPassword = Hash::make($request->password);
+      $lastId = User::latest('id')->first()->id+1;
+      $random = Str::random(10);
+      $nameFile = $lastId . '_'. $random . '.' . $request->foto_url->extension(); 
+      $request->foto_url->move(public_path('storage/fotos'), $nameFile);
+      $validatedData = $request->validate([
+         'name' => 'required|max:50',
+         'email' => 'required',
+         'foto_url' => 'nullable',
+         'bloqueado' => 'max:1',
+         'tipo' => 'max:1',
+         'password' => 'required',
+       ]);
+        $newUser = User::create($validatedData);
+        $newUser->password = $hashedPassword;
+        $newUser->bloqueado = 0;
+        $newUser->tipo = $request->tipo;
+        $newUser->foto_url = $nameFile;
+        $newUser->save();
+                    
+        //DB::table('filmes')->insert($validatedData);
+        return redirect()->route('users.funcionarios.index')
+              ->with('alert-msg', 'User inserido com Sucesso')
+              ->with('alert-type', 'success');
+    }
 
-//    public function edit(Request $request,$id)
-//       {
-//          $filme = Filme::where('id', $id)->first();
-//          $listaGeneros = Genero::pluck('code', 'nome');
-//          return view('filmes.edit')->withFilme($filme)
-//                                    ->with('Generos', $listaGeneros);
-//       }
+    public function funcionario_edit(Request $request, User $user)
+      {
+         //dd($user->id);
+         $funcionario = User::where('id', $user->id)->first();
+         //$listaFuncs = User::pluck('id');
+         return view('users.funcionarios.edit')->with('funcionario', $funcionario)
+                                   ;
+      }
+   
+   public function funcionario_inativar(Request $request, User $user)
+      {
+         if($user->bloqueado == 0){
+          User::where('id', $user->id)
+                ->update(['bloqueado' => '1',
+              ]);
+          return redirect()->route('users.funcionarios.index')
+              ->with('alert-msg', 'User Bloqueado com sucesso!')
+              ->with('alert-type', 'success');
+            }
 
-//    public function update(Request $request, $id)
-//    {
-//       $validatedData = $request->validate([
-//          'titulo' => 'required|max:50',
-//          'genero_code' => 'required|max:20',
-//          'ano' => 'required|numeric|between:1950,2100',
-//          'cartaz_url' => 'required|max:200',
-//          'sumario' => 'required|max:255',
-//          'trailer_url' => 'required|max:200'
-//       ]);
-//          //dd($validatedData);
-//          DB::table('filmes')
-//                ->where('id', $id)
-//                ->update(['titulo' => $validatedData['titulo'],
-//                'genero_code' => $validatedData['genero_code'],
-//                'ano' => $validatedData['ano'],
-//                'cartaz_url' => $validatedData['cartaz_url'],
-//                'sumario' => $validatedData['sumario'],
-//                'trailer_url' => $validatedData['trailer_url']]);
-//          //seleciona apenas o valor nome no array que é a ediçao
-//          return redirect()->route('filmes.admin')
-//             ->with('alert-msg', 'Filme alterado com sucesso!')
-//             ->with('alert-type', 'success');
-//    }
+            if($user->bloqueado == 1){
+               User::where('id', $user->id)
+                     ->update(['bloqueado' => '0',
+                   ]);
+               return redirect()->route('users.funcionarios.index')
+                   ->with('alert-msg', 'User Desbloqueado com sucesso!')
+                   ->with('alert-type', 'success');
+                 }
+      }
 
+   public function funcionario_update(Request $request, User $user)
+    {
+      if(is_null($request->foto_url)){
+         $request->foto_url = $user->foto_url;
+      }else{
+         $random = Str::random(10);
+         $nameFile = $user->id . '_'. $random . '.' . $request->foto_url->extension(); 
+         $request->foto_url->move(public_path('storage/fotos'), $nameFile);
+         $request->foto_url =$nameFile;
+      }
+      //dd($request);
+      $validatedData = $request->validate([
+        'name' => 'required|max:50',
+        'email' => 'required',
+        'foto_url' => 'nullable',
+        'bloqueado' => 'required|numeric|between:0,1'
+      ]);
+        //dd($user->id);
 
+        User::where('id', $user->id)
+              ->update(['name' => $validatedData['name'],
+              'email' => $validatedData['email'],
+              'foto_url' => $request->foto_url,
+              'bloqueado' => $validatedData['bloqueado'],
+            ]);
+        return redirect()->route('users.funcionarios.index')
+            ->with('alert-msg', 'Funcionario alterado com sucesso!')
+            ->with('alert-type', 'success');
+    }
 
-
-//    public function store(Request $request)
-//    {
-//       $validatedData = $request->validate([
-//          'titulo' => 'required|max:50',
-//          'genero_code' => 'required|max:20',
-//          'ano' => 'required|numeric|between:1950,2100',
-//          'cartaz_url' => 'required|max:200',
-//          'sumario' => 'required|max:255',
-//          'trailer_url' => 'required|max:200'
-//       ]);
-//       //dd($validatedData);
-//       $newFilme = Filme::create($validatedData);
-//       //DB::table('filmes')->insert($validatedData);
-//       return redirect()->route('filmes.admin')
-//             ->with('alert-msg', 'Filme inserido com sucesso')
-//             ->with('alert-type', 'success');
-//     }
-
-//     public function destroy(Request $request, $id)
-//     {
-//       $filmeApagar = Filme::find($id);
-//       $filmeApagar->delete();
-//       //$deleted = DB::table('salas')->select('*')->where('id', $id)->delete();
-//         return redirect()->route('filmes.admin')
-//             ->with('alert-msg', 'Filme foi eliminado com sucesso!')
-//             ->with('alert-type', 'success');
-//     }
+    public function funcionario_destroy(Request $request, User $user)
+    {
+      $userApagar = User::find($user->id);
+      $userApagar->delete();
+      return redirect()->route('users.funcionarios.index')
+            ->with('alert-msg', 'User eleminado com sucesso!')
+            ->with('alert-type', 'success');
+    }
 }
 

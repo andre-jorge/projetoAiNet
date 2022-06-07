@@ -22,6 +22,7 @@ class CarrinhoController extends Controller
 
     public function store_sessao(Request $request, Sessao $sessao)
     {
+        
         $idlugar = $request->idlugar;
 
         $idCarrinho = $request->session()->increment('count');
@@ -122,6 +123,18 @@ class CarrinhoController extends Controller
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
         $userInfo = auth()->user();
+
+        //dd($userInfo);
+        if (auth()->user() === null) {
+            return redirect()->route('carrinho.index')
+            ->with('alert-msg', 'Sem Sessão iniciado, por favor, tente novamente')
+            ->with('alert-type', 'danger');
+        }
+        if ($request->session()->get('carrinho') === []) {
+            return redirect()->route('carrinho.index')
+            ->with('alert-msg', 'Carrinho vazio, por favor, adicione uma sessão')
+            ->with('alert-type', 'danger');
+        }
         //dd($user->id);
         //dd($request);
         //dd($currentTime);
@@ -177,7 +190,7 @@ class CarrinhoController extends Controller
         $request->session()->forget('carrinho');
         return redirect()->route('carrinho.index')
                          ->with('alert-msg', 'Compra efetuado com Sucesso')
-                         ->with('alert-type', 'success');
+                         ->with('alert-type', 'Success');
 
 
     //     $nameFile = $request->titulo . '.' . $request->cartaz_url->extension(); 
@@ -197,6 +210,6 @@ class CarrinhoController extends Controller
         $request->session()->forget('carrinho');
         return back()
             ->with('alert-msg', 'Carrinho foi limpo!')
-            ->with('alert-type', 'danger');
+            ->with('alert-type', 'Sucess');
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 
 class FilmesController extends Controller
@@ -31,7 +32,7 @@ class FilmesController extends Controller
                         ->distinct('filme_id')
                         ->paginate(8);
                         //dd($filmesAtuais);
-         if($request->genero){
+         if($request->genero && $request->genero != 'ALL' && $request->genero != null ){
             $filmesGenero = Filme::where('genero_code', $request->genero)->pluck('id');
             //dd($filmesGenero);
             $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
@@ -41,7 +42,7 @@ class FilmesController extends Controller
                         ->paginate(8);        
                   }
                   //dd($filmesAtuais);
-         if($request->string){
+         if($request->string && $request->string != null){
             $filmeString = Filme::where('sumario', 'like', '%' . $request->string . '%')->pluck('id');
             //dd($filmesGenero);
             $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
@@ -79,24 +80,32 @@ class FilmesController extends Controller
       }
 
    //revalidar esta funcao
-   public function update(Filme $filme)
+   public function update(Request $request,Filme $filme)
    {
-      dd($filme);
+      if(is_null($request->cartaz_url)){
+         $request->cartaz_url = $filme->cartaz_url;
+      }else{
+         $random = Str::random(10);
+         $nameFile = $filme->id . '_'. $random . '.' . $request->cartaz_url->extension(); 
+         $request->cartaz_url->move(public_path('storage/cartazes'), $nameFile);
+         $request->cartaz_url =$nameFile;
+      }
+      //dd($request->cartaz_url);
       $validatedData = $request->validate([
          'titulo' => 'required|max:50',
          'genero_code' => 'required|max:20',
          'ano' => 'required|numeric|between:1950,2100',
-         'cartaz_url' => 'required|max:200',
+         'cartaz_url' => 'nullable',
          'sumario' => 'required|max:255',
          'trailer_url' => 'required|max:200'
       ]);
          //dd($validatedData);
          DB::table('filmes')
-               ->where('id', $id)
+               ->where('id', $request->id)
                ->update(['titulo' => $validatedData['titulo'],
                'genero_code' => $validatedData['genero_code'],
                'ano' => $validatedData['ano'],
-               'cartaz_url' => $validatedData['cartaz_url'],
+               'cartaz_url' => $request->cartaz_url,
                'sumario' => $validatedData['sumario'],
                'trailer_url' => $validatedData['trailer_url']]);
          //seleciona apenas o valor nome no array que é a ediçao
@@ -110,19 +119,20 @@ class FilmesController extends Controller
    //STORE OK------------
    public function store(Request $request)
    {
-      $nameFile = $request->titulo . '.' . $request->cartaz_url->extension(); 
-      if ( ! $nameFile ) {
-         unset( $this->styles[ $key ] );
-         $request->file('cartaz_url')->storeAS('storage/cartazes', $nameFile );
-      }
+      $lastId = Filme::latest('id')->first()->id+1;
+      $random = Str::random(10);
+      $nameFile = $lastId . '_'. $random . '.' . $request->cartaz_url->extension(); 
+      $request->cartaz_url->move(public_path('storage/cartazes'), $nameFile);
+      
       $validatedData = $request->validate([
          'titulo' => 'required|max:50',
          'genero_code' => 'required|max:20',
          'ano' => 'required|numeric|between:1950,2100',
-         'cartaz_url' => 'required',
+         'cartaz_url' => 'nullable',
          'sumario' => 'required|max:255',
          'trailer_url' => 'required|max:200'
       ]);
+      //dd($validatedData);
       $newFilme = Filme::create($validatedData);
       $newFilme->cartaz_url = $nameFile;
       $newFilme->save();

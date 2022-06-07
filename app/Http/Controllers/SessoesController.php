@@ -71,16 +71,12 @@ class SessoesController extends Controller
     {
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
-
         $sessoesFilme = Sessao::where('filme_id', $filme->id)
                                     ->where('data','>', $currentTime)
-                                    ->get();
+                                    ->paginate(5);
                                     //dd($sessoesFilme);
-        //$lugaresOcupados = LugaresDisponiveis 
-        //$teste = SessoesController::LugaresDisponiveis($sessoesFilme->id);
         return view('sessoes.index')
                     ->with('filme', $filme)
-                    //->with('teste', $teste)
                     ->with('sessoesFilme', $sessoesFilme);
     }        
 

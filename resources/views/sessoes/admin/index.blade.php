@@ -24,7 +24,7 @@
                     <form method="post" action="{{ route('sessoes.admin.destroy', $sessao->id) }}">
                         @method('DELETE')
                         @csrf
-                        <input type="submit" class="btn btn-danger btn-sm" value="Eliminar">
+                        <input type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Pretende eleminar?')" value="Eliminar">
                     </form>
                     </td>
                 </tr>

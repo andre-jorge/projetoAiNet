@@ -23,54 +23,67 @@
             <ul class="navbar-nav ms-auto">
             <li class="nav-item">
                             <a id="cart-link" href="{{ route('carrinho.index') }}" class="trsn nav-link" title="View/Edit Cart">
-                            <i class="fas fa-shopping-cart"></i>
-                            @csrf
-                           
-                            
-                            <span id="nav-bar-cart"><span class="cart-size">{{ $_SESSION['count'] ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span>
-                            </a></li>
-                            
+                            @csrf                            
                         <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+                                @guest
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span id="nav-bar-cart"><span class="cart-size">{{ $_SESSION['count'] ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span>
+                                        </a></li>
+                                    @if (Route::has('login'))
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                        </li>
+                                    @endif
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('users.index' ) }}">
-                                            Dados Cliente 
-                                            {{-- {{ route('user.index', $userid=Auth::user()->id ) }} --}}
+                                    @if (Route::has('register'))
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        </li>
+                                    @endif
+                                @else
+                                @if( Auth::user()->tipo <> 'A') 
+                                    @if(Auth::user()->tipo <> 'F' )
+                                    <li>
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span id="nav-bar-cart"><span class="cart-size">{{ $_SESSION['count'] ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span></a>
+                                        </li>
+                                        @endif
+                                    @endif
+                                
+                                    <li class="nav-item dropdown">
+                                        
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name }}
+                                            
+                                            <img class="rounded" style="max-height: 25px; max-width: 25px;" src="/storage/fotos/{{ Auth::user()->foto_url }}" alt="..." />
+                                            
                                         </a>
-                                    <a class="dropdown-item" href="{{ route('users.recibos') }}">
-                                            Historico de Recibos 
-                                            {{-- {{ route('users.recibos') }} --}}
-                                        </a>     
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
+                                        
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        @if(Auth::user()->tipo <> 'F' )
+                                            <a class="dropdown-item" href="{{ route('users.index' ) }}">
+                                                    Dados Cliente 
+                                                    {{-- {{ route('user.index', $userid=Auth::user()->id ) }} --}}
+                                                </a>
+                                            <a class="dropdown-item" href="{{ route('users.recibos') }}">
+                                                    Historico de Recibos 
+                                                    {{-- {{ route('users.recibos') }} --}}
+                                                </a> 
+                                        @endif    
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                @endguest
+                            </ul>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -99,6 +112,10 @@
                             <a class="nav-link" href="{{route('users.admin')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Clientes
+                            </a>
+                            <a class="nav-link" href="{{route('users.funcionarios.index')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Funcionarios
                             </a>
                             <a class="nav-link" href="{{route('pdf.indexRecibo')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>

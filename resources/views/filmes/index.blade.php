@@ -54,7 +54,9 @@
         </div>
         </div>
     @endforeach
-    {{ $filmesAtuais->links() }}
+    <div class="d-flex justify-content-center">
+            {!! $filmesAtuais->links() !!}
+        </div>          
     
 @endsection
 
