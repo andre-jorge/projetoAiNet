@@ -182,27 +182,27 @@ Route::get('admin/funcionarios', [usersController::class, 'funcionarios'])
 
 Route::get('admin/funcionarios/criar', [usersController::class, 'funcionario_create'])
         ->middleware('auth')->name('users.funcionarios.create')
-        ->middleware('can:viewAny,App\Models\Sala'); 
+        ->middleware('can:viewAny,App\Models\User'); 
         
 Route::post('admin/funcionarios', [usersController::class, 'funcionario_store'])
         ->middleware('auth')->name('users.funcionarios.store')
-        ->middleware('can:viewAny,App\Models\Sala');  
+        ->middleware('can:viewAny,App\Models\User');  
 
 Route::get('admin/funcionarios/{user}/inativar', [usersController::class, 'funcionario_inativar'])
         ->middleware('auth')->name('users.funcionarios.inativar')
-        ->middleware('can:viewAny,App\Models\Sala'); 
+        ->middleware('can:viewAny,App\Models\User'); 
 
 Route::get('admin/funcionarios/{user}', [usersController::class, 'funcionario_edit'])
         ->middleware('auth')->name('users.funcionarios.edit')
-        ->middleware('can:viewAny,App\Models\Sala');  
+        ->middleware('can:viewAny,App\Models\User');  
         
 Route::put('admin/funcionarios/{user}', [usersController::class, 'funcionario_update'])
         ->middleware('auth')->name('users.funcionarios.update')
-        ->middleware('can:viewAny,App\Models\Sala'); 
+        ->middleware('can:viewAny,App\Models\User'); 
         
 Route::delete('admin/funcionarios/{user}', [usersController::class, 'funcionario_destroy'])
         ->middleware('auth')->name('users.funcionarios.destroy')
-        ->middleware('can:viewAny,App\Models\Sala');
+        ->middleware('can:viewAny,App\Models\User');
         
         
 //---------------------------------------------------------

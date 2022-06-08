@@ -25,7 +25,7 @@ class RecibosPolicy
     
      public function viewAny(User $user)
     {
-        return $user->tipo == 'C';
+        return ($user->tipo == 'C') || ($user->tipo == 'A');
     }
 
     /**
