@@ -162,7 +162,7 @@ class UsersController extends Controller
       $userApagar = User::find($user->id);
       $userApagar->delete();
       return redirect()->route('users.funcionarios.index')
-            ->with('alert-msg', 'Utilizador '.$user->name.' eleminado com sucesso!')
+            ->with('alert-msg', 'Utilizador '.$user->name.' eliminado com sucesso!')
             ->with('alert-type', 'success');
     }
 }
