@@ -19,12 +19,12 @@
                     <td></td>
                     <td></td>
                     <td></td>                    
-                    <td><a href="{{ route('sessoes.admin.edit', $sessao->id) }}" name="sessaoid" value='{{$sessao->id}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Alterar</a></td>
+                    <td><a href="{{ route('sessoes.admin.edit', $sessao) }}" name="sessao" value='{{$sessao}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Alterar</a></td>
                     <td>
-                    <form method="post" action="{{ route('sessoes.admin.destroy', $sessao->id) }}">
+                    <form method="post" action="{{ route('sessoes.admin.destroy', $sessao) }}">
                         @method('DELETE')
                         @csrf
-                        <input type="submit" class="btn btn-danger btn-sm" value="Eliminar">
+                        <input type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Pretende eleminar?')" value="Eliminar">
                     </form>
                     </td>
                 </tr>

@@ -15,6 +15,6 @@ class Recibo extends Model
     }
     protected $fillable = [
         'cliente_id', 'data', 'preco_total_sem_iva', 'iva', 'preco_total_com_iva',
-        'nif','tipo_pagamento','ref_pagamento'];
+        'nif','nome_cliente','tipo_pagamento','ref_pagamento'];
 
 }

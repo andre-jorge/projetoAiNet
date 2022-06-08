@@ -14,12 +14,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class RecibosController extends Controller
 {
    // ADMIN_INDEX JA OK
-   // public function index(Request $request)
-   //    {
-   //       $user = auth()->user();
-   //       $recibos = Recibo::where('cliente_id',$user)->paginate(8);
-   //       dd($recibos);
-   //       return view('users.recibos', compact('recibos'));
-   //    }
+   public function index(Request $request)
+      {
+         $user = auth()->user();
+         $recibos = Recibo::where('cliente_id',$user)->paginate(8);
+         //dd($recibos);
+         return view('users.recibos', compact('recibos'));
+      }
+
+   
 }
 

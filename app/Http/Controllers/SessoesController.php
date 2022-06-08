@@ -60,45 +60,25 @@ class SessoesController extends Controller
             $array1[$i] = array($data['fila'][$i] => $data['posicao'][$i]);
         }
         //dd($array1[0]);
-        
-
-
-
         return view('sessoes.lugares')
                     ->with('lugaresOcupados', $array1)
                     ->with('sessao', $sessao)
                     ->with('lugares', $lugares);
     }
 
-
-
     //INDEX JÁ OK
     public function index(Request $request, Filme $filme)
     {
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
-
         $sessoesFilme = Sessao::where('filme_id', $filme->id)
                                     ->where('data','>', $currentTime)
-                                    ->get();
+                                    ->paginate(5);
                                     //dd($sessoesFilme);
-        //$lugaresOcupados = LugaresDisponiveis 
-        //$teste = SessoesController::LugaresDisponiveis($sessoesFilme->id);
         return view('sessoes.index')
                     ->with('filme', $filme)
-                    //->with('teste', $teste)
                     ->with('sessoesFilme', $sessoesFilme);
-    }
-
-    public function addToCart(Request $request)
-        {
-            session()->put('cart', $request->post('cart'));
-
-            return response()->json([
-                'status' => 'added'
-            ]);
-        }
-        
+    }        
 
     public function edit(Request $request, $id){
         $todasSessoes=DB::table('bilhetes')
@@ -175,14 +155,22 @@ class SessoesController extends Controller
     //ADMIN EDIT OK
     public function admin_edit(Sessao $sessao)
       {
+        //dd($sessao);
+        if (is_null(Bilhetes::where('sessao_id', $sessao->id)->first())) {
          $editarSessao = Sessao::where('id', $sessao->id)->first();
          $listaSalas = Salas::pluck('id', 'nome');
          return view('sessoes.admin.edit')
                     ->with('listaSalas', $listaSalas)
                     ->with('sessao', $editarSessao);
+        }
+        else{
+            return redirect()->back()
+            ->with('alert-msg', 'Sessao com Bilhetes já vendidos impossivel alterar!')
+            ->with('alert-type', 'danger');        
+        } 
       }
 
-    public function admin_update(Request $request, $id)
+    public function admin_update(Request $request, Sessao $sessao)
     {
         $validatedData = $request->validate([
             'sala_id' => 'required|max:2',
@@ -190,7 +178,7 @@ class SessoesController extends Controller
             'horario_inicio' => 'required|date_format:H:i:s']);
             //dd($validatedData);
             DB::table('sessoes')
-                ->where('id', $id)
+                ->where('id', $sessao->id)
                 ->update(['sala_id' => $validatedData['sala_id'],
                 'data' => $validatedData['data'],
                 'horario_inicio' => $validatedData['horario_inicio']]);
@@ -199,14 +187,23 @@ class SessoesController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function admin_destroy(Request $request, $id)
+    public function admin_destroy(Request $request, Sessao $sessao)
     {
-      $sessaoApagar = Sessao::find($id);
-      $sessaoApagar->delete();
-      //$deleted = DB::table('salas')->select('*')->where('id', $id)->delete();
-        return redirect()->route('sessoes.admin.index')
+        //dd($sessao);
+        $filme = Filme::where('id',$sessao->filme_id)->get();
+        //dd(is_null(Bilhetes::where('sessao_id', $sessao->id)->first()));
+        //CASO NAO EXISTA BILHETES ASSOCIADOS A ESTA SESSAO É PERMITIDO ELEMINAR
+        if (is_null(Bilhetes::where('sessao_id', $sessao->id)->first())) {
+            $sessaoApagar = Sessao::find($sessao->id);
+            $sessaoApagar->delete();
+            return redirect()->back()
             ->with('alert-msg', 'Sessao foi apagada com sucesso!')
-            ->with('alert-type', 'success');  
+            ->with('alert-type', 'success'); 
+        }else{
+            return redirect()->back()
+            ->with('alert-msg', 'Sessao com Bilhetes já vendidos!')
+            ->with('alert-type', 'danger');        
+        } 
     }
 }
 

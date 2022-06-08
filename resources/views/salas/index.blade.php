@@ -1,23 +1,19 @@
 @extends('home')
 @section('content')
 <form method="get" action="{{route('salas.create')}}">
-    <button style="float: right;" class="btn btn-secondary btn-lg" href="{{route('salas.store')}}">Nova Sala</button>
+    <button style="float: left;" class="btn btn-primary btn-block" href="{{route('salas.store')}}">Nova Sala</button>
 </form> 
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Foto</th>
-                <th scope="col">Numero Sala</th>
                 <th scope="col">Sala</th>
-                <th scope="col">Lotação Maxima</th>
+                <th scope="col">Lotação</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($todassalas as $sala)
             <tr>
-                <td></td>
-                <td>{{$sala->id}}</td>
                 <td>{{$sala->nome}}</td>
                 <td>{{$sala->custom}}</td>
                 <td>
@@ -26,7 +22,7 @@
                     <form method="post" action="{{ route('salas.destroy', $sala->id) }}">
                         @method('DELETE')
                         @csrf
-                        <input type="submit" class="btn btn-danger btn-sm" value="Eliminar">
+                        <input type="submit" onclick="return confirm('Pretende eleminar?')" class="btn btn-danger btn-sm" value="Eliminar">
                     </form> 
                 </tr>
             @endforeach

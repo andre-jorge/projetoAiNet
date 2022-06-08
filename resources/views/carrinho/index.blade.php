@@ -3,6 +3,7 @@
 <input type="hidden" name="quantidade" value="{{$total=0}}">
 <input type="hidden" name="quantidade" value="{{$quantidade=0}}">
 
+
 <body class="bg-light" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
 <div class="container">
   <div class="py-5 text-center">
@@ -37,7 +38,7 @@
           <span class="text-muted">{{ $row['preco'] }}</span>
           
           <span class="text-muted">
-          <form action="{{route('carrinho.destroy_sessao', $row['qtd'])}}" method="POST">
+          <form action="{{route('carrinho.destroy_sessao', $row['id'])}}" method="POST">
                 @csrf
                 @method('delete')
                 <input type="hidden" name="eleminar" id="eleminar" value="{{$row['qtd']}}" value="Remover">
@@ -57,71 +58,13 @@
     <div class="col-md-6 order-md-1">
         <hr class="mb-4">
         <h4 class="mb-3">Pagamento</h4>
-
-        <script>
-            function show1(){
-              document.getElementById('credit').style.display ='show;';
-              document.getElementById('mbway').style.display ='none;';
-              document.getElementById('paypal').style.display ='none;';
-            }
-            document.getElementById("paymentMethod").addEventListener("click", credit);
-        </script>
-
-        <!-- ESCOLHER METODO DE PAGAMENTO -->
-        <div class="d-block my-3"> 
-            <div class="custom-control custom-radio">
-              <!-- <input type="radio" id="credit" name="paymentMethod"  value="credit" checked > -->
-              <input type="radio" id="paymentMethod" name="paymentMethod" value="credit" onclick="show1(this)">
-              <label class="custom-control-label" for="credit">Cartao Crédito</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="paymentMethod" name="paymentMethod" value="mbway"  >
-              <label class="custom-control-label" for="debit">MBWAY</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="paymentMethod" name="paymentMethod" value="paypal"  >
-              <label class="custom-control-label" for="paypal">PayPal</label>
-            </div>
-        </div>
-        <!-- FIM ESCOLHER METODO DE PAGAMENTO -->
-        
-        
-       
-        <form action="{{ route('carrinho.store') }}" method="POST">
-          @csrf
-          
-          <div id="credit">
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="cc-name">Nome Cartão Credito</label>
-                <input type="text" class="form-control" name="cc-name" id="cc-name" placeholder="" required="">
-                <small class="text-muted">Nome completo</small>
-                <div class="invalid-feedback">
-                  Nome do cartão obrigatorio
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="cc-number">Numero Cartão Credito</label>
-                <input type="text" class="form-control" name="cc-number" id="cc-number" placeholder="" required="">
-                <div class="invalid-feedback">
-                  Numero do cartão obrigatorio
-                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3 mb-3">
-                <label for="cc-expiration">Expiration</label>
-                <input type="text" class="form-control" name="cc-expiration" id="cc-expiration" placeholder="" required="">
-                <div class="invalid-feedback">
-                  Data de Expiração obrigatoria
-                </div>
-              </div>
-              <div class="col-md-3 mb-3">
-                <label for="cc-cvv">CVV</label>
-                <input type="text" class="form-control" name="cc-cvv" id="cc-cvv" placeholder="" required="">
-                <div class="invalid-feedback">
-                  CVV obrigatorio
-                </div>
+            <div class="col-md-6 mb-3">
+              <label for="nif">NIF</label>
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" required="">
+              <div class="invalid-feedback">
+                NIF
               </div>
             </div>
           </div>
@@ -273,6 +216,7 @@
     </tbody>
 </table>
 --}}
+
 @endsection
 
 
