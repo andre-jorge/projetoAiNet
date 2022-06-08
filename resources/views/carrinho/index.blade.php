@@ -4,7 +4,6 @@
 <input type="hidden" name="quantidade" value="{{$quantidade=0}}">
 
 
-
 <body class="bg-light" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
 <div class="container">
   <div class="py-5 text-center">
@@ -59,53 +58,6 @@
     <div class="col-md-6 order-md-1">
         <hr class="mb-4">
         <h4 class="mb-3">Pagamento</h4>
-        <form action="{{ route('carrinho.store') }}" method="POST">
-          @csrf
-          
-          <div data-toggle="collapse" class="d-block my-3">
-            <div class="custom-control custom-radio">
-              <input id="VISA" name="paymentMethod" type="radio" value="VISA" class="custom-control-input" checked="" required="">
-              <label class="custom-control-label" for="VISA">Cartao Crédito</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input id="MBWAY" name="paymentMethod" type="radio" value="MBWAY" class="custom-control-input" required="">
-              <label class="custom-control-label" for="MBWAY">MBWAY</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input id="PAYPAL" name="paymentMethod" type="radio" value="PAYPAL" class="custom-control-input" required="">
-              <label class="custom-control-label" for="PAYPAL">PayPal</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="cc-name">Nome Cartão Credito</label>
-              <input type="text" class="form-control" name="ccname" id="cc-name" placeholder="Nome Completo" required="">
-              <small class="text-muted">Nome completo</small>
-              <div class="invalid-feedback">
-                Nome do cartão obrigatorio
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="cc-number">Numero Cartão Credito</label>
-              <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Numero Cartão" required="">
-              <div class="invalid-feedback">
-                Numero do cartão obrigatorio
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 mb-3">
-              <label for="cc-expiration">Expiration</label>
-              <input type="text" class="form-control" name="ccexpiration" id="cc-expiration" placeholder="xx/xx" required="">
-              <div class="invalid-feedback">
-                Data de Expiração obrigatoria
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="cc-cvv">CVV</label>
-              <input type="text" class="form-control" name="cccvv" id="cc-cvv" placeholder="xxx" required="">
-              <div class="invalid-feedback">
-                CVV obrigatorio
               </div>
             </div>
             <div class="col-md-6 mb-3">
@@ -116,6 +68,23 @@
               </div>
             </div>
           </div>
+          
+
+          <div id="mbway">
+            <p> CAMPO MBWAY</p>
+          </div>
+          
+          <div id="paypal">
+            <p> CAMPO PAYPAL</p>
+          </div>
+
+         
+
+           
+
+          
+          
+         
           <hr class="mb-10">
           <div class="row">
             <div class="col-md-3 mb-3">
@@ -129,6 +98,9 @@
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Remover Tudo</button>
             </form>
           </form>
+
+          
+
         </div>
     </div>
   </div>
@@ -144,7 +116,9 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        <script src="form-validation.js"></script>
+<script src="form-validation.js"></script>
+
+        
 
 </body>
 
@@ -167,21 +141,6 @@
                 <input class="rounded" type="submit" value="-1">
             </form>
           </span>--}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

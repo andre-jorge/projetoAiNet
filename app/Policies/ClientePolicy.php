@@ -25,9 +25,10 @@ class ClientePolicy
     
      public function viewAny(User $user)
     {
-        return $user->tipo == 'A';
+        return  ($user->tipo == 'F') || ($user->tipo == 'A');
     }
 
+   
     /**
      * Determine whether the user can view the model.
      *
