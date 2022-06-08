@@ -43,7 +43,9 @@ class FilmesController extends Controller
                   }
                   //dd($filmesAtuais);
          if($request->string && $request->string != null){
-            $filmeString = Filme::where('sumario', 'like', '%' . $request->string . '%')->pluck('id');
+            $filmeString = Filme::where('sumario', 'like', '%' . $request->string . '%')
+                                 ->orWhere('titulo', 'like', '%' . $request->string . '%')
+                                 ->pluck('id');
             //dd($filmesGenero);
             $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
                         ->whereIn('filme_id',$filmeString)
@@ -145,6 +147,7 @@ class FilmesController extends Controller
    //DESTROY OK------------
    public function destroy(Filme $filme)
    {
+
       if (is_null(Sessao::where('filme_id', $filme->id)->first())) {
       $filmeApagar = Filme::find($filme->id);
       $filmeApagar->delete();
