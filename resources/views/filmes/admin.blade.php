@@ -11,7 +11,7 @@
             <button class="btn btn-primary btn-block" href="{{route('sessoes.admin.store')}}">Nova Sessão</button>
         </form> 
     </div>
-</div>  
+</div> 
 <div>
     <table class="table table-striped">
         <thead>
@@ -30,7 +30,7 @@
         <tbody>
             @foreach ($filmes as $filme)
             <tr>
-                <td><img class="img-thumbnail" src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." /></td>
+                <td><img class="rounded" style="max-height: 100px; max-width: 100px;" src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." /></td>
                 <td>{{$filme->titulo}}</td>
                 <!-- <td>{{$filme->genero_code}}</td>
                 <td>{{$filme->ano}}</td> -->

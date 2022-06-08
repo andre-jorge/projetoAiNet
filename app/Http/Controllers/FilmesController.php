@@ -145,11 +145,18 @@ class FilmesController extends Controller
    //DESTROY OK------------
    public function destroy(Filme $filme)
    {
+      if (is_null(Sessao::where('filme_id', $filme->id)->first())) {
       $filmeApagar = Filme::find($filme->id);
       $filmeApagar->delete();
       return redirect()->route('filmes.admin')
             ->with('alert-msg', 'Filme foi eliminado com sucesso!')
             ->with('alert-type', 'success');
+   }else{
+      return redirect()->back()
+      ->with('alert-msg', 'Filme com sessões impossivel apagar!')
+      ->with('alert-type', 'danger');        
+   } 
+   
    }
 }
 

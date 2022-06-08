@@ -15,7 +15,7 @@
                 <th scope="col">Foto</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Email</th>
-                <th scope="col">Bloqueado?</th>
+                <th scope="col">Estado</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 </tr>

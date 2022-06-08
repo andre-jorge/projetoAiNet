@@ -65,10 +65,10 @@ Route::post('adminsessoes', [SessoesController::class, 'admin_store'])
 Route::get('admin/adminsessoes/editar/{sessao}', [SessoesController::class, 'admin_edit'])
 ->middleware('auth')->name('sessoes.admin.edit'); 
 
-Route::put('admin/adminsessoes/editar/{id?}', [SessoesController::class, 'admin_update'])
+Route::put('admin/adminsessoes/editar/{sessao}', [SessoesController::class, 'admin_update'])
 ->middleware('auth')->name('sessoes.admin.update');
 
-Route::delete('admin/adminsessoes/{id?}', [SessoesController::class, 'admin_destroy'])
+Route::delete('admin/adminsessoes/{sessao}', [SessoesController::class, 'admin_destroy'])
 ->middleware('auth')->name('sessoes.admin.destroy');
 
 

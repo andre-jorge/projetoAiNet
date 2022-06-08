@@ -112,7 +112,7 @@ class UsersController extends Controller
                 ->update(['bloqueado' => '1',
               ]);
           return redirect()->route('users.funcionarios.index')
-              ->with('alert-msg', 'User Bloqueado com sucesso!')
+              ->with('alert-msg', 'Utilizador '.$user->name. ' Inativado')
               ->with('alert-type', 'success');
             }
 
@@ -121,15 +121,16 @@ class UsersController extends Controller
                      ->update(['bloqueado' => '0',
                    ]);
                return redirect()->route('users.funcionarios.index')
-                   ->with('alert-msg', 'User Desbloqueado com sucesso!')
+                   ->with('alert-msg', 'Utilizador '.$user->name.' Ativado')
                    ->with('alert-type', 'success');
                  }
       }
 
    public function funcionario_update(Request $request, User $user)
     {
+       //dd($request->foto_url);
       if(is_null($request->foto_url)){
-         $request->foto_url = $user->foto_url;
+         $nameFile = $user->foto_url;
       }else{
          $random = Str::random(10);
          $nameFile = $user->id . '_'. $random . '.' . $request->foto_url->extension(); 
@@ -141,18 +142,18 @@ class UsersController extends Controller
         'name' => 'required|max:50',
         'email' => 'required',
         'foto_url' => 'nullable',
-        'bloqueado' => 'required|numeric|between:0,1'
+        'tipo' => 'nullable',
       ]);
-        //dd($user->id);
+        //dd($nameFile);
 
         User::where('id', $user->id)
               ->update(['name' => $validatedData['name'],
               'email' => $validatedData['email'],
-              'foto_url' => $request->foto_url,
-              'bloqueado' => $validatedData['bloqueado'],
+              'foto_url' => $nameFile,
+              'tipo' => $request->tipo,
             ]);
         return redirect()->route('users.funcionarios.index')
-            ->with('alert-msg', 'Funcionario alterado com sucesso!')
+            ->with('alert-msg', 'Utilizador '.$validatedData['name'].' atualizado com sucesso!')
             ->with('alert-type', 'success');
     }
 
@@ -161,7 +162,7 @@ class UsersController extends Controller
       $userApagar = User::find($user->id);
       $userApagar->delete();
       return redirect()->route('users.funcionarios.index')
-            ->with('alert-msg', 'User eleminado com sucesso!')
+            ->with('alert-msg', 'Utilizador '.$user->name.' eleminado com sucesso!')
             ->with('alert-type', 'success');
     }
 }

@@ -211,7 +211,7 @@
                           {{$sessao->Sessao->Filmes->titulo}}
 														<p class="m-0 text-muted">
                               Bilhete #{{$sessao->id}}, Sala: {{$sessao->Sessao->Salas->nome}}<br>
-                              Fila: {{$sessao->Lugar->fila}} | Lugar: {{$sessao->Lugar->posicao}}<br>
+                              Fila: {{$sessao->Lugares->fila}} | Lugar: {{$sessao->Lugares->posicao}}<br>
                               Guarde este bilhete, serve como prova de compra do bilhete, apresentar na caixa
 														</p>
 													</td>

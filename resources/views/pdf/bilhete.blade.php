@@ -119,7 +119,7 @@
                           </td>
                           <td width="55%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
                           Fila | Posição <br>
-                          {{$bilhete->Lugar->fila}} - {{$bilhete->Lugar->posicao}}
+                          {{$bilhete->Lugares->fila}} - {{$bilhete->Lugares->posicao}}
                           </td>
                         </tr>
                         <tr>

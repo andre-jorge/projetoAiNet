@@ -3,7 +3,17 @@
 @section('content')
 <form action="{{ route('filmes.update',$filme ) }}" enctype="multipart/form-data" id="filmes-form" method="POST">
     
-    <div class="card-header"><h3 class="text-center font-weight-light my-4">Editar Filme</h3></div>
+<div class="card-header">
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="rounded" style="max-height: 120px; max-width: 120px;" src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." />
+            </div>
+            <div class="col-sm-4">
+                <h3 class="text-center font-weight-light my-4">Editar Filme</h3>
+                <h3 class="text-center font-weight-light my-4">{{  $filme->titulo}} </h3>
+            </div>
+        </div>  
+    </div>
        
     <div class="card-body">
     @csrf

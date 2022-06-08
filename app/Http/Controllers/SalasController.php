@@ -31,6 +31,7 @@ class SalasController extends Controller
       //dd($todassalas);
       return view('salas.index')->with('todassalas', $todassalas);
     }
+
     public function create()
       {
         $todassalas = Salas::pluck('id', 'nome');
