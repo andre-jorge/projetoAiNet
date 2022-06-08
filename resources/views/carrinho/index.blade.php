@@ -64,19 +64,43 @@
           
           <div data-toggle="collapse" class="d-block my-3">
             <div class="custom-control custom-radio">
-              <input id="VISA" name="paymentMethod" type="radio" value="VISA" class="custom-control-input" checked="" required="">
+              <input id="BTNVISA" name="paymentMethod" type="radio" value="VISA" class="custom-control-input" checked="" required="" onclick="mostraVISA()"> 
               <label class="custom-control-label" for="VISA">Cartao Crédito</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="MBWAY" name="paymentMethod" type="radio" value="MBWAY" class="custom-control-input" required="">
+              <input id="BTNMBWAY" name="paymentMethod" type="radio" value="MBWAY" class="custom-control-input" required="" onclick="mostraMBWAY()">
               <label class="custom-control-label" for="MBWAY">MBWAY</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="PAYPAL" name="paymentMethod" type="radio" value="PAYPAL" class="custom-control-input" required="">
+              <input id="BTNPAYPAL" name="paymentMethod" type="radio" value="PAYPAL" class="custom-control-input" required="" onclick="mostraPAYPAL()">
               <label class="custom-control-label" for="PAYPAL">PayPal</label>
             </div>
+
+            <!--SCRIPTS -->
+            <script>
+                function mostraVISA(){
+                  document.getElementById("VISA").style.display = "block"
+                  document.getElementById("MBWAY").style.display = "none"
+                  document.getElementById("PAYPAL").style.display = "none"
+                }
+              
+                function mostraMBWAY(){
+                  document.getElementById("VISA").style.display = "none"
+                  document.getElementById("MBWAY").style.display = "block"
+                  document.getElementById("PAYPAL").style.display = "none"
+                }
+              
+                function mostraPAYPAL(){
+                  document.getElementById("VISA").style.display = "none"
+                  document.getElementById("MBWAY").style.display = "none"
+                  document.getElementById("PAYPAL").style.display = "block"
+                }
+              </script> 
+
           </div>
-          <div class="row">
+
+          <!-- CARTAO CREDITO -->
+          <div id="VISA" class="row">
             <div class="col-md-6 mb-3">
               <label for="cc-name">Nome Cartão Credito</label>
               <input type="text" class="form-control" name="ccname" id="cc-name" placeholder="Nome Completo" required="">
@@ -92,7 +116,7 @@
                 Numero do cartão obrigatorio
               </div>
             </div>
-          </div>
+      
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="cc-expiration">Expiration</label>
@@ -116,6 +140,31 @@
               </div>
             </div>
           </div>
+          </div>
+
+          <!-- MBWAY -->
+          <div id="MBWAY" class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cc-number">Numero de Telémovel</label>
+                <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Numero Telemóvel" required="">
+                <div class="invalid-feedback">
+                  Numero obrigatório
+                </div>
+              </div>
+          </div>
+
+          <!-- PAYPAL -->
+          <div id="PAYPAL" class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cc-number">Email</label>
+                <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Email" required="">
+                <div class="invalid-feedback">
+                  Email obrigatório
+                </div>
+              </div>
+          </div>
+
+
           <hr class="mb-10">
           <div class="row">
             <div class="col-md-3 mb-3">
@@ -147,6 +196,8 @@
         <script src="form-validation.js"></script>
 
 </body>
+
+
 
 
 
