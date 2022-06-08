@@ -16,13 +16,13 @@
                 </option>
             @endforeach
             </select>
-    <button class="btn btn-primary" id="btn-filter" value="btnNavbarSearch" type="submit" href="#!"><i class="fas fa-search">aaa</i></button>
+    <button class="btn btn-primary" id="btn-filter" value="btnNavbarSearch" type="submit" href="#!"><i class="fas fa-search"></i> Pesquisar</button>
     <!-- GENERO -->
     </div>
     <!-- STRING -->
     <div class="input-group">
         <input type="search" name="string" id="string" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-        <button type="submit" class="btn btn-outline-primary">search</button>
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
     </div>
     <!-- STRING -->
     
@@ -54,9 +54,8 @@
         </div>
         </div>
     @endforeach
-    <div class="d-flex justify-content-center">
-            {!! $filmesAtuais->links() !!}
-        </div>          
+    
+           
     
 @endsection
 

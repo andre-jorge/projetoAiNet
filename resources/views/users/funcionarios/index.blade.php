@@ -1,10 +1,20 @@
 @extends('home')
 
 @section('content')
- 
-<form method="get" action="{{route('users.funcionarios.create')}}">
+<form  action="{{route('users.funcionarios.index')}}" method="GET">
+    <!-- STRING -->
+    <div class="input-group" >
+        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+    
+    <!-- STRING -->  
+    <form method="get" action="{{route('users.funcionarios.create')}}">
     <button style="float: right;" class="btn btn-secondary btn-lg" href="{{route('users.funcionarios.store')}}">Novo</button>
-</form> 
+</form>
+</div> 
+</form>
+ 
+ 
 <div class="container text-center">
 <h3 class="align-middle"><strong><h1 class="align-middle">Funcionarios</h1></strong></h3>
 </div>
@@ -68,7 +78,7 @@
                 <th scope="col">Foto</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Email</th>
-                <th scope="col">Bloqueado?</th>
+                <th scope="col">Estado</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 </tr>

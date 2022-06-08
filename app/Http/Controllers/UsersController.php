@@ -23,24 +23,40 @@ class UsersController extends Controller
    
    public function index_admin()
       {
-         $dadosClientes = DB::table('users')
-                     ->select('*')
-                     ->leftjoin('clientes','clientes.id','=','users.id')
-                     ->paginate(20);  
+         
+         $dadosClientes = User::where('tipo','=','C')
+                                 ->paginate(5, ['*'], 'ativos');
+         $dadosClientesDeleted = User::withTrashed()
+                                 ->whereNotNull('deleted_at')
+                                 ->paginate(5, ['*'], 'inativos');
+                                 //->where('tipo','=','C')
+                                 //->paginate(5, ['*'], 'inativos');    
                      //dd($dadosClientes);
-                     return view('users.admin')->with('Clientes', $dadosClientes);   
+                     //dd($dadosClientesDeleted);
+                     return view('users.admin')
+                                 ->with('dadosClientesDeleted', $dadosClientesDeleted)
+                                 ->with('dadosClientes', $dadosClientes);   
       }
 
    public function funcionarios(Request $request)
       {
          $user = auth()->user();
          $id = auth()->user()->id;
+         if($request->string && $request->string != null){
+            $dadosFuncionarios = User::where('tipo','=','F')->where('name', 'like', '%' . $request->string . '%')
+                     ->paginate(5, ['*'], 'funcionario');  
+                     //dd($dadosFuncionarios);
+            $dadosAdmin = User::where('tipo','=','A')->where('name', 'like', '%' . $request->string . '%')
+                     ->where('id','<>',$id)
+                     ->paginate(5, ['*'], 'administrador');
+         }else{         
          $dadosFuncionarios = User::where('tipo','=','F')
                      ->paginate(5, ['*'], 'funcionario');  
                      //dd($dadosFuncionarios);
          $dadosAdmin = User::where('tipo','=','A')
                      ->where('id','<>',$id)
                      ->paginate(5, ['*'], 'administrador');
+         }
                      return view('users.funcionarios.index')
                                  ->with('Admins', $dadosAdmin)
                                  ->with('Funcionarios', $dadosFuncionarios);   
@@ -111,20 +127,32 @@ class UsersController extends Controller
           User::where('id', $user->id)
                 ->update(['bloqueado' => '1',
               ]);
-          return redirect()->route('users.funcionarios.index')
-              ->with('alert-msg', 'Utilizador '.$user->name. ' Inativado')
-              ->with('alert-type', 'success');
-            }
-
-            if($user->bloqueado == 1){
-               User::where('id', $user->id)
-                     ->update(['bloqueado' => '0',
-                   ]);
+              if ($user->tipo == 'C') {
+                  return redirect()->route('users.admin')
+                  ->with('alert-msg', 'Cliente '.$user->name. ' Inativado')
+                  ->with('alert-type', 'success');
+            }else{
                return redirect()->route('users.funcionarios.index')
-                   ->with('alert-msg', 'Utilizador '.$user->name.' Ativado')
-                   ->with('alert-type', 'success');
-                 }
+                  ->with('alert-msg', 'Utilizador '.$user->name. ' Inativado')
+                  ->with('alert-type', 'success');
+            }
+         }
+
+         if($user->bloqueado == 1){
+            User::where('id', $user->id)
+                  ->update(['bloqueado' => '0',
+                  ]);
+               if ($user->tipo == 'C') {
+                     return redirect()->route('users.admin')
+                     ->with('alert-msg', 'Cliente '.$user->name. ' Ativado')
+                     ->with('alert-type', 'success');
+               }else{
+                  return redirect()->route('users.funcionarios.index')
+                     ->with('alert-msg', 'Utilizador '.$user->name. ' Ativado')
+                     ->with('alert-type', 'success');
+               }
       }
+   }
 
    public function funcionario_update(Request $request, User $user)
     {
@@ -161,9 +189,38 @@ class UsersController extends Controller
     {
       $userApagar = User::find($user->id);
       $userApagar->delete();
+      if ($user->tipo == 'C') {
+         $clienteApagar = Cliente::find($user->id);
+         $clienteApagar->delete();
+         return redirect()->route('users.admin')
+            ->with('alert-msg', 'Cliente '.$user->name.' eliminado com sucesso!')
+            ->with('alert-type', 'success');
+      }
       return redirect()->route('users.funcionarios.index')
             ->with('alert-msg', 'Utilizador '.$user->name.' eliminado com sucesso!')
             ->with('alert-type', 'success');
     }
+
+    public function funcionario_recuperar(Request $request)
+    {
+      $userRecuperar = User::withTrashed()->find($request->user);
+      //dd($userRecuperar);
+      if ($userRecuperar->tipo == 'C') {
+         $clienteRecuperar = Cliente::withTrashed()->find($request->user);
+         $userRecuperar->restore();
+         $clienteRecuperar->restore();
+         return redirect()->route('users.admin')
+            ->with('alert-msg', 'Cliente '.$userRecuperar->name.' recuperado com sucesso!')
+            ->with('alert-type', 'success');
+      }
+      $userRecuperar->restore();
+      return redirect()->route('users.funcionarios.index')
+            ->with('alert-msg', 'Utilizador '.$userRecuperar->name.' recuperado com sucesso!')
+            ->with('alert-type', 'success');
+    }
+
+
+
+    
 }
 

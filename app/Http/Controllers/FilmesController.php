@@ -27,11 +27,8 @@ class FilmesController extends Controller
          //dd($request);
          $currentTime = Carbon::now();
          $currentTime = $currentTime->toDateString();
-         $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
-                        ->distinct('filme_id')
-                        ->paginate(10);
+         $filmesAtuais = Sessao::where('data','>', $currentTime)->get()->unique('filme_id');
 
-                       
 
                         //dd($filmesAtuais);
          if($request->genero && $request->genero != 'ALL' && $request->genero != null ){

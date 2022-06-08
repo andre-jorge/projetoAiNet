@@ -166,15 +166,18 @@ Route::get('user', [usersController::class, 'index'])
         ->middleware('auth')->name('users.index');
         //->middleware('can:viewAny,App\Models\Cliente');// admin filmes
 
-Route::get('admin/users', [usersController::class, 'index_admin'])
-        ->middleware('auth')->name('users.admin')
-        ->middleware('can:viewAny,App\Models\Cliente');
+Route::get('admin/clientes', [usersController::class, 'index_admin'])
+        ->middleware('auth')->name('users.admin');
+        //->middleware('can:viewAny,App\Models\User');
 
 Route::get('user/recibos', [usersController::class, 'recibos'])
         ->middleware('auth')->name('users.recibos');
         //->middleware('can:viewAny,App\Models\Cliente');
 
 //------------------------FUNCSS-------------------------------------
+Route::get('admin/recuperar/funcionarios/{user}', [usersController::class, 'funcionario_recuperar'])
+        ->middleware('auth')->name('users.funcionarios.recuperar');
+
 
 Route::get('admin/funcionarios', [usersController::class, 'funcionarios'])
         ->middleware('auth')->name('users.funcionarios.index')
@@ -189,8 +192,8 @@ Route::post('admin/funcionarios', [usersController::class, 'funcionario_store'])
         ->middleware('can:viewAny,App\Models\User');  
 
 Route::get('admin/funcionarios/{user}/inativar', [usersController::class, 'funcionario_inativar'])
-        ->middleware('auth')->name('users.funcionarios.inativar')
-        ->middleware('can:viewAny,App\Models\User'); 
+        ->middleware('auth')->name('users.funcionarios.inativar');
+        //->middleware('can:viewAny,App\Models\User'); 
 
 Route::get('admin/funcionarios/{user}', [usersController::class, 'funcionario_edit'])
         ->middleware('auth')->name('users.funcionarios.edit')
@@ -201,8 +204,11 @@ Route::put('admin/funcionarios/{user}', [usersController::class, 'funcionario_up
         ->middleware('can:viewAny,App\Models\User'); 
         
 Route::delete('admin/funcionarios/{user}', [usersController::class, 'funcionario_destroy'])
-        ->middleware('auth')->name('users.funcionarios.destroy')
-        ->middleware('can:viewAny,App\Models\User');
+        ->middleware('auth')->name('users.funcionarios.destroy');
+        //->middleware('can:viewAny,App\Models\User');
+
+
+        //->middleware('can:viewAny,App\Models\User'); 
         
         
 //---------------------------------------------------------
