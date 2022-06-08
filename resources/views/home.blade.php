@@ -76,6 +76,11 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Em Exibição</div>
+                                <a class="nav-link" href="/">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    Filmes em Exibição
+                                </a>
 						@can('viewAny', App\Models\Filme::class)							
                             <!-- <div class="sb-sidenav-menu-heading">Estatisticas</div>
                             <a class="nav-link" href="index.html">
@@ -111,7 +116,7 @@
                             </div>
 							@endcan
                             
-                            
+                            @can('viewFuncionario', App\Models\Filme::class)		
                             <div class="sb-sidenav-menu-heading">Funcionarios</div>
                             <a class="nav-link" href="{{route('sessoes.sessoes')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -121,13 +126,13 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Sessões Validadas
                             </a>
+                            @endcan
+
                         </div>
                     </div>
-                    <!-- <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Sobre Nós</div>
                     </div>
-                    -->
                 </nav>
             </div>
             <div id="layoutSidenav_content">

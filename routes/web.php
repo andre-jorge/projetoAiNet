@@ -42,14 +42,19 @@ Route::get('sessoes/{filme}', [SessoesController::class, 'index'])
 Route::get('sessoes/lugares/{sessao}', [SessoesController::class, 'lugares'])
         ->name('sessoes.lugares');//lugares sessoes
 
+
+//--------------------------FUNCIONARIOS--------------------------------------        
 Route::get('funcionario/sessoes', [SessoesController::class, 'sessoes'])
-->middleware('auth')->name('sessoes.sessoes');//sessoes
+->middleware('auth')->name('sessoes.sessoes')
+->middleware('can:viewFuncionario,App\Models\User'); //sessoes
 
 Route::get('funcionario/sessoes/{id?}', [SessoesController::class, 'edit'])
-->middleware('auth')->name('sessoes.edit');//sessoes
+->middleware('auth')->name('sessoes.edit')
+->middleware('can:viewFuncionario,App\Models\User');//sessoes
 
 Route::put('funcionario/sessoes/{id?}', [SessoesController::class, 'update'])
-->middleware('auth')->name('sessoes.update');
+->middleware('auth')->name('sessoes.update')
+->middleware('can:viewFuncionario,App\Models\User');
 
 
 //---------------------------Sessoes ADMIN-------------------------------------

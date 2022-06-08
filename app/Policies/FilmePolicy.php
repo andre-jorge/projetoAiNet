@@ -29,6 +29,11 @@ class FilmePolicy
         return $user->tipo == 'A';
     }
 
+    public function viewFuncionario(User $user)
+    {
+        return ($user->tipo == 'F') || ($user->tipo == 'A');    
+    }
+
     /**
      * Determine whether the user can view the model.
      *
