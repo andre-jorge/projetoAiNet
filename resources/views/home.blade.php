@@ -55,7 +55,7 @@
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                             {{ Auth::user()->name }}
                                             
-                                            <img class="rounded" style="max-height: 25px; max-width: 25px;" src="/storage/fotos/{{ Auth::user()->foto_url }}" alt="..." />
+                                            <img class="rounded" style="max-height: 25px; max-width: 25px;" src="/storage/fotos/{{ Auth::user()->foto_url ?? 'default-profile.png'}}" alt="..." />
                                             
                                         </a>
                                         

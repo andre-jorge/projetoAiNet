@@ -5,41 +5,48 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">id</th>
-                <th scope="col">name</th>
-                <th scope="col">email</th>
-                <th scope="col">tipo</th>
-                <th scope="col">nif</th>
-                <th scope="col">tipo_pagamento</th>
-                <th scope="col">ref_pagamento</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">NIF</th>
+                <th scope="col">Tipo Pagamento</th>
+                <th scope="col">Ref. Pagamento</th>             
+                <th scope="col"></th>
+                <th scope="col"></th>
                 </tr>
         </thead>
         <tbody>
             @foreach ($dadosClientes as $user)
             <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
+                <td><img class="rounded" style="max-height: 50px; max-width: 50px;" src="/storage/fotos/{{$user->foto_url ?? 'default-profile.png'}}" alt="..." /></td>
+                <td><?php 
+                    $string = explode(' ', $user->name);
+                    $first_word = $string[0];
+                    $last_word  = $string[count($string)-1];
+                    echo $first_word. ' '.$last_word; ?>
+                </td>
                 <td>{{$user->email}}</td>
-                <td>{{$user->tipo}}</td>
                 <td>{{$user->nif}}</td>
                 <td>{{$user->Cliente->tipo_pagamento ?? ' '}} </td>
                 <td>{{$user->Cliente->ref_pagamento ?? ' '}}</td>
-                @if($user->bloqueado == 1)
+                @if($user->bloqueado == 0)
                 <td>
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Ativar</a>
+                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">&nbsp&nbsp&nbspBloquear&nbsp&nbsp&nbsp</a>
                 </td>
                 @else
                 <td>
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Inativar</a>
+                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">Desbloquear</a>
                 </td>
                 @endif
-                <td>
-                    <form method="post" action="{{ route('users.funcionarios.destroy', $user) }}">
-                        @method('DELETE')
-                        @csrf
-                        <input type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Pretende eleminar?')" value="Eliminar">
-                    </form> 
+                @if(is_null($user->deleted_at))  
+                <td>  
+                <a href="{{  route('users.funcionarios.recuperar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">Desativar</a>
                 </td>
+                @else
+                <td>
+                <a href="{{  route('users.funcionarios.recuperar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbspAtivar&nbsp&nbsp&nbsp</a>
+                </td>
+                @endif
                 </tr>
             </tr>
             @endforeach
@@ -51,43 +58,5 @@
     </div>
 </div> 
 
-
-
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">name</th>
-                <th scope="col">email</th>
-                <th scope="col">tipo</th>
-                <th scope="col">nif</th>
-                <th scope="col">tipo_pagamento</th>
-                <th scope="col">ref_pagamento</th>
-                </tr>
-        </thead>
-        <tbody>
-            @foreach ($dadosClientesDeleted as $user)
-            <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->tipo}}</td>
-                <td>{{$user->nif}}</td>
-                <td>{{$user->Cliente->tipo_pagamento ?? ' '}} </td>
-                <td>{{$user->Cliente->ref_pagamento ?? ' '}}</td>
-                <td>
-                <a href="{{  route('users.funcionarios.recuperar', $user) }}" name="user" value='{{$user}}' class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Inativar</a>
-                </td>
-                </tr>
-            </tr>
-            @endforeach
-        </tbody>
-        
-    </table>
-    <div class="d-flex justify-content-center">
-            {!! $dadosClientesDeleted->links() !!}
-    </div>
-</div> 
 
 @endsection
