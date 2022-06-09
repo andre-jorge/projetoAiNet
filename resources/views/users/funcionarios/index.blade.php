@@ -1,31 +1,35 @@
 @extends('home')
 
 @section('content')
-<form  action="{{route('users.funcionarios.index')}}" method="GET">
-    <!-- STRING -->
-    <div class="input-group" >
-        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Pesquisar por Nome ou Email" aria-label="Search" aria-describedby="search-addon" />
-        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
-    <!-- STRING -->     
-    </div>
-    <div class="input-group" name="tipo">
-    <select class="custom-select" name="tipo" id="inputGroupSelect04">
-        <option value="" selected>Tipo</option>
-        <option value="F">Funcionarios</option>
-        <option value="A">Administradores</option>
-    </select>
-    <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
-    </div>
-    </div>
-</form>
- 
-<br>
 <div class="container text-center"
 <h3 class="align-middle"><strong><h1 class="align-middle">Funcionarios e Administradores</h1></strong></h3>
 </div>
+<br>
+<br>
+<form  action="{{route('users.funcionarios.index')}}" method="GET">
+<div class="row mb-2">
+    <div class="col-sm-5 col-md-5">
+        <!-- STRING -->
+        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Pesquisar por Nome ou Email" aria-label="Search" aria-describedby="search-addon" />    
+        <!-- STRING --> 
+    </div>
+    <div class="col-sm-5 col-md-5">
+        <!-- Tipo -->
+        <select class="form-select" name="tipo" id="inputGroupSelect04">
+            <option value="Todos" selected>Todos</option>
+            <option value="F">Funcionarios</option>
+            <option value="A">Administradores</option>
+        </select>
+        <!-- Tipo -->
+    </div>  
+    <div class="col-sm-5 col-md-2 .ml-md-auto" >
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+    </div>
+</div>
+</form>
+<br>
 <div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Foto</th>
@@ -40,7 +44,7 @@
                     <button style="float: right;" class="btn btn-outline-dark" href="{{route('users.funcionarios.store')}}">&nbspNovo&nbsp&nbsp</button>
                 </form>
                 </th>
-                </tr>
+            </tr>
         </thead>
         <tbody>
             @foreach ($Funcionarios as $user)
@@ -52,7 +56,10 @@
                     @else Inativo
                     @endif
                 </td>
-                <td>@if($user->tipo == 'A') Administrador @else Funcionario @endif </td>
+                <td>@if($user->tipo == 'A') Administrador 
+                    @else Funcionario 
+                    @endif 
+                </td>
                 @if($user->bloqueado == 1)
                 <td>
                 <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbspAtivar&nbsp&nbsp</a>
@@ -73,8 +80,7 @@
                 @endif
                 <td>
                 <a href="{{ route('users.funcionarios.edit', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-dark" role="button" aria-pressed="true">Alterar</a>
-                </td>
-                </tr>
+                </td> 
             </tr>
             @endforeach
         </tbody>

@@ -21,11 +21,42 @@ class UsersController extends Controller
                      return view('users.index')->with('clientes', $cliente);
       }
    
-   public function index_admin()//Pagina clientes
+   public function index_admin(Request $request)//Pagina clientes
       {
+         if(($request->string && $request->string != null ) && ($request->nif && $request->nif != null ) ){
+            $dadosClientes = User::withTrashed()
+                           ->where('tipo','=','C')
+                           ->Where('name', 'like', '%' . $request->string . '%')
+                           ->orWhere('email', 'like', '%' . $request->string . '%')
+                           ->orWhere('nif', 'like', '%' . $request->nif . '%')
+                           ->paginate(6, ['*'], 'ativos'); 
+                           //dd($dadosFuncionarios);
+                           return view('users.admin')
+                                 ->with('dadosClientes', $dadosClientes);  
+                        }
+                        //dd($request->string); 
+         //Se tiver String nome e email                  
+         if($request->string && $request->string != null ){
+            $dadosClientes = User::withTrashed()
+                           ->where('tipo','=','C')
+                           ->Where('name', 'like', '%' . $request->string . '%')
+                           ->orWhere('email', 'like', '%' . $request->string . '%')
+                           ->paginate(6, ['*'], 'ativos'); 
+                           return view('users.admin')
+                                 ->with('dadosClientes', $dadosClientes); 
+                        }
+         //Se tiver NIF               
+         if($request->nif && $request->nif != null ){
+            $dadosClientes = User::withTrashed()
+                           ->where('tipo','=','C')
+                           ->Where('nif', 'like', '%' . $request->nif . '%')
+                           ->paginate(6, ['*'], 'ativos'); 
+                           return view('users.admin')
+                                 ->with('dadosClientes', $dadosClientes); 
+                        }
          $dadosClientes = User::withTrashed()
-                                 ->where('tipo','=','C')
-                                 ->paginate(6, ['*'], 'ativos'); 
+                              ->where('tipo','=','C')
+                              ->paginate(6, ['*'], 'ativos'); 
                      //dd($dadosClientes);
                      return view('users.admin')
                                  ->with('dadosClientes', $dadosClientes);   
@@ -51,23 +82,49 @@ class UsersController extends Controller
       {
          $user = auth()->user();
          $id = auth()->user()->id;
-         if(($request->string or $request->tipo) && ($request->string != null or $request->string != null)){
-            
+         //dd($request->string);                          
+         //Se tiver String e Tipo                 
+         if(($request->string && $request->string != null) && ($request->tipo && $request->tipo != 'Todos' ) ){
             $dadosFuncionarios = User::withTrashed()
                            ->where('id','<>',$id)
                            ->where('tipo','<>','C')
-                           ->orWhere('name', 'like', '%' . $request->string . '%')
-                           ->orWhere('tipo', $request->tipo)
+                           ->Where('tipo', $request->tipo)
+                           ->Where('name', 'like', '%' . $request->string . '%')
                            ->orWhere('email', 'like', '%' . $request->string . '%')
-                           ->paginate(5, ['*'], 'funcionario');  
+                           ->paginate(10, ['*'], 'funcionario');  
                            //dd($dadosFuncionarios);
-         }else{         
+                           return view('users.funcionarios.index')
+                                 ->with('Funcionarios', $dadosFuncionarios);
+                        }
+                        //dd($request->string); 
+         //Se tiver String                  
+         if($request->string && $request->string != null ){
             $dadosFuncionarios = User::withTrashed()
                            ->where('id','<>',$id)
                            ->where('tipo','<>','C')
-                           ->paginate(5, ['*'], 'funcionario');  
+                           ->Where('name', 'like', '%' . $request->string . '%')
+                           ->Where('tipo', $request->tipo)
+                           ->orWhere('email', 'like', '%' . $request->string . '%')
+                           ->paginate(10, ['*'], 'funcionario');  
                            //dd($dadosFuncionarios);
-         }
+                           return view('users.funcionarios.index')
+                                 ->with('Funcionarios', $dadosFuncionarios);
+                        }
+         //dd($request->string && $request->string != null );
+         //Se tiver Tipo               
+         if ($request->tipo && $request->tipo != 'Todos' ) {
+            $dadosFuncionarios = User::withTrashed()
+                           ->where('id','<>',$id)
+                           ->where('tipo', $request->tipo)
+                           ->paginate(10, ['*'], 'funcionario');  
+                           return view('users.funcionarios.index')
+                                 ->with('Funcionarios', $dadosFuncionarios);
+                           //dd($dadosFuncionarios);
+            }
+         $dadosFuncionarios = User::withTrashed()
+         ->where('id','<>',$id)
+         ->where('tipo','<>','C')
+         ->paginate(10, ['*'], 'funcionario');
          return view('users.funcionarios.index')
                      ->with('Funcionarios', $dadosFuncionarios);   
       }
@@ -229,9 +286,7 @@ class UsersController extends Controller
          return redirect()->back()
                ->with('alert-msg', 'Utilizador '.$user->name.' recuperado com sucesso!')
                ->with('alert-type', 'success');
-      }
-      
-      
+      }    
     }
 
 

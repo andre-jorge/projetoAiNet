@@ -15,10 +15,22 @@ use Illuminate\Support\Str;
 class FilmesController extends Controller
 {
    // ADMIN_INDEX JA OK
-   public function admin_index()
+   public function admin_index(Request $request)
       {
          $filmes = Filme::paginate(8);
-         return view('filmes.admin', compact('filmes'));
+         if($request->genero && $request->genero != 'Genero'){
+            $filmes = Filme::where('genero_code',$request->genero)
+                        ->paginate(8);        
+                  }
+
+         if($request->string && $request->string != null){
+            $filmes = Filme::where('titulo', 'like', '%' . $request->string . '%')
+                        ->orWhere('sumario', 'like', '%' . $request->string . '%')
+                        ->paginate(8);        
+                  }
+                  //dd($filmesAtuais);
+         $listaGeneros = Genero::all();   
+         return view('filmes.admin', compact('filmes','listaGeneros'));
       }
 
    // INDEX JA OK
@@ -29,28 +41,19 @@ class FilmesController extends Controller
          $currentTime = $currentTime->toDateString();
          $filmesAtuais = Sessao::where('data','>', $currentTime)->get()->unique('filme_id');
 
-
-                        //dd($filmesAtuais);
          if($request->genero && $request->genero != 'ALL' && $request->genero != null ){
-            $filmesGenero = Filme::where('genero_code', $request->genero)->pluck('id');
-            //dd($filmesGenero);
-            $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
+            $filmesAtuais = Sessao::where('data','>', $currentTime)
                         ->whereIn('filme_id',$filmesGenero)
-                        ->with('filmes')
-                        ->distinct('filme_id')
-                        ->paginate(8);        
+                        ->get()
+                        ->unique('filme_id');        
                   }
                   //dd($filmesAtuais);
+
          if($request->string && $request->string != null){
-            $filmeString = Filme::where('sumario', 'like', '%' . $request->string . '%')
-                                 ->orWhere('titulo', 'like', '%' . $request->string . '%')
-                                 ->pluck('id');
-            //dd($filmesGenero);
             $filmesAtuais = Sessao::where('sessoes.data','>', $currentTime)
                         ->whereIn('filme_id',$filmeString)
-                        ->with('filmes')
-                        ->distinct('filme_id')
-                        ->paginate(8);        
+                        ->get()
+                        ->unique('filme_id');         
                   }
                   //dd($filmesAtuais);
          

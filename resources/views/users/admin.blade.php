@@ -1,8 +1,30 @@
 @extends('home')
 
-@section('content')  
+@section('content') 
+<div class="container text-center"
+<h3 class="align-middle"><strong><h1 class="align-middle">Clientes</h1></strong></h3>
+</div>
+<br>
+<br>
+<form  action="{{route('users.admin')}}" method="GET">
+<div class="row mb-2">
+    <div class="col-sm-5 col-md-5">
+        <!-- STRING -->
+        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Pesquisar por Nome ou Email" aria-label="Search" aria-describedby="search-addon" />    
+        <!-- STRING --> 
+    </div>
+    <div class="col-sm-5 col-md-5">
+        <!-- NIF -->
+        <input type="search" name="nif" id="nif" class="form-control rounded" placeholder="NIF" aria-label="Search" aria-describedby="search-addon" />    
+        <!-- NIF --> 
+    </div>  
+    <div class="col-sm-5 col-md-2 .ml-md-auto" >
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+    </div>
+</div>
+</form> 
 <div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Foto</th>

@@ -151,6 +151,13 @@
                   Numero obrigatório
                 </div>
               </div>
+              <div class="col-md-6 mb-3">
+              <label for="nif">NIF</label>
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" required="">
+              <div class="invalid-feedback">
+                NIF
+              </div>
+            </div>
           </div>
 
           <!-- PAYPAL -->
@@ -162,6 +169,13 @@
                   Email obrigatório
                 </div>
               </div>
+              <div class="col-md-6 mb-3">
+              <label for="nif">NIF</label>
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" required="">
+              <div class="invalid-feedback">
+                NIF
+              </div>
+            </div>
           </div>
 
 
