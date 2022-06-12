@@ -9,6 +9,7 @@ use App\Models\Recibo;
 use App\Models\Bilhetes;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Services\Payment;
 
 class CarrinhoController extends Controller
 {
@@ -141,7 +142,7 @@ class CarrinhoController extends Controller
         //dd($user->id);
         // a funcar
         $metodoPagamento = $request->paymentMethod;
-        //dd($metodoPagamento);
+        dd($request);
         $nomeCartao = $request->ccname;
         $numeroCartao = $request->ccnumber;
         $expirationCartao = $request->ccexpiration;
@@ -152,7 +153,11 @@ class CarrinhoController extends Controller
         $carro = $request->session()->get('carrinho');  
         $quantidadeCarrinho = count($carro); 
         $precoTotalBilhetesSemIva = ($precoBilhete[0]*$quantidadeCarrinho);     
-        $data = $request->session()->all(); // ver tudo da sessao   
+        $data = $request->session()->all(); // ver tudo da sessao 
+        
+        
+
+        //dd(\Services\Payment::payWithVisa($numeroCartao,$cvvCartao));
 
 
         //---------------------Emitir Recibo--------------------

@@ -59,21 +59,21 @@
     <div class="col-md-6 order-md-1">
         <hr class="mb-4">
         <h4 class="mb-3">Pagamento</h4>
-        <form action="{{ route('carrinho.store') }}" method="POST">
-          @csrf
+        
+        
           
           <div data-toggle="collapse" class="d-block my-3">
             <div class="custom-control custom-radio">
               <input id="BTNVISA" name="paymentMethod" type="radio" value="VISA" class="custom-control-input" checked="" required="" onclick="mostraVISA()"> 
-              <label class="custom-control-label" for="VISA">Cartao Crédito</label>
+              <label class="custom-control-label" for="paymentMethod">Cartao Crédito</label>
             </div>
             <div class="custom-control custom-radio">
               <input id="BTNMBWAY" name="paymentMethod" type="radio" value="MBWAY" class="custom-control-input" required="" onclick="mostraMBWAY()">
-              <label class="custom-control-label" for="MBWAY">MBWAY</label>
+              <label class="custom-control-label" for="paymentMethod">MBWAY</label>
             </div>
             <div class="custom-control custom-radio">
               <input id="BTNPAYPAL" name="paymentMethod" type="radio" value="PAYPAL" class="custom-control-input" required="" onclick="mostraPAYPAL()">
-              <label class="custom-control-label" for="PAYPAL">PayPal</label>
+              <label class="custom-control-label" for="paymentMethod">PayPal</label>
             </div>
 
             <!--SCRIPTS -->
@@ -98,6 +98,7 @@
               </script> 
 
           </div>
+          
 
           <!-- CARTAO CREDITO -->
           <div id="VISA" class="row">
@@ -182,6 +183,8 @@
           <hr class="mb-10">
           <div class="row">
             <div class="col-md-3 mb-3">
+            <form action="{{ route('carrinho.store') }}" method="POST">
+              @csrf
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
               </form>
             </div>
@@ -191,7 +194,7 @@
                 @method("DELETE")
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Remover Tudo</button>
             </form>
-          </form>
+          
         </div>
     </div>
   </div>

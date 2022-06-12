@@ -136,7 +136,7 @@
                             
                             @can('viewFuncionario', App\Models\Filme::class)		
                             <div class="sb-sidenav-menu-heading">Funcionarios</div>
-                            <a class="nav-link" href="{{route('sessoes.sessoes')}}">
+                            <a class="nav-link" href="{{route('sessoes.funcionario.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Validar Sessões
                             </a>

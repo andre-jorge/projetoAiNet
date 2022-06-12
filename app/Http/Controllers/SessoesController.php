@@ -8,6 +8,7 @@ use App\Models\Genero;
 use App\Models\Bilhetes;
 use App\Models\Lugares;
 use App\Models\Salas;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
@@ -18,6 +19,22 @@ use Carbon\Carbon;
 
 class SessoesController extends Controller
 {
+    public function index(Request $request, Filme $filme){
+        $currentTime = Carbon::now();
+        $currentTime = $currentTime->toDateString();
+        $sessoesFilme = Sessao::where('filme_id', $filme->id)
+                                    ->where('data','>', $currentTime)
+                                    ->paginate(5);
+                                    //dd($sessoesFilme);
+        return view('sessoes.index')
+                    ->with('filme', $filme)
+                    ->with('sessoesFilme', $sessoesFilme);
+    }
+
+
+
+
+
     //FUNÇAO PARA CONTAR BILHETES E DIZER LOTAÇÃO
     public static function ContaBilhetes($arg1,$arg2,$args3){
         $sessoesFilmeBilhetes=DB::table('sessoes')
@@ -66,51 +83,96 @@ class SessoesController extends Controller
                     ->with('lugares', $lugares);
     }
 
-    //INDEX JÁ OK
-    public function index(Request $request, Filme $filme)
+
+
+//----------------------------------------------------------------------------------
+//-----------------FUNCIONARIOS VALIDAR SESSOES-------------------------------------
+//----------------------------------------------------------------------------------
+    public function funcionarioSessoes(Request $request)
     {
+        //dd($request);
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
-        $sessoesFilme = Sessao::where('filme_id', $filme->id)
-                                    ->where('data','>', $currentTime)
-                                    ->paginate(5);
-                                    //dd($sessoesFilme);
-        return view('sessoes.index')
-                    ->with('filme', $filme)
-                    ->with('sessoesFilme', $sessoesFilme);
-    }        
-
-    public function edit(Request $request, $id){
-        $todasSessoes=DB::table('bilhetes')
-                        ->select('bilhetes.id as bil', 'bilhetes.*', 'sessoes.*', 'lugares.*', 'salas.*')
-                        ->leftJoin('sessoes', 'sessoes.id', '=', 'bilhetes.sessao_id')
-                        ->leftJoin('lugares', 'lugares.id', '=', 'bilhetes.lugar_id')
-                        ->leftJoin('salas', 'salas.id', '=', 'lugares.sala_id')
-                        ->where('bilhetes.sessao_id', $id)
-                        ->where('bilhetes.estado', '=','não usado')
-                        ->get();
-                        //dd($todasSessoes);
-        return view('sessoes.edit', compact('todasSessoes'));
+        $sessoesValidar = Sessao::where('data','>', $currentTime)->get();  
+        $sessoesPorFilme = Sessao::where('data','>', $currentTime)
+                                    ->where('filme_id', $request)
+                                    ->get();
+        return view('sessoes.funcionario.index')
+                ->with('sessoesValidar', $sessoesValidar);
     }
 
-    //SESSOES JÁ OK
-    public function sessoes(){
-        $todasSessoesFilmesHoje = Sessao::where('data','=', '2020-01-01')->get();
-        
-                                    //dd($todasSessoesFilmesHoje);                         
-        return view('sessoes.sessoes', compact('todasSessoesFilmesHoje'));
-    }
-    
-    
-    public function update(Request $request, $id)
+    public function funcionarioValidarSessoes(Request $request, Sessao $sessao)
     {
-        $testes= "nao usado";
-        //dd($testes);
-        Bilhetes::where('id',$id)->update(['estado'=>'usado']);
-        return redirect()->route('sessoes.edit')
-                ->with('alert-msg', 'Bilhete validado com sucesso!')
-                ->with('alert-type', 'success');
+        //dd($sessao);
+        $currentTime = Carbon::now();
+        $currentTime = $currentTime->toDateString();
+        $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
+                            ->where('estado','=','não usado')
+                            ->get();
+        $sessao = Sessao::where('id',$sessao->id)->first();
+        //dd($sessao);
+        return view('sessoes.funcionario.validarSessao')
+                ->with('sessao', $sessao)
+                ->with('todosBilhetes', $todosBilhetes);
     }
+
+    public function validaBilhete(Request $request, Bilhetes $bilhete)
+    {
+        //dd($request);
+        $currentTime = Carbon::now();
+        $currentTime = $currentTime->toDateString();
+        Bilhetes::where('id', $bilhete->id)
+                ->update(['estado' => 'usado']);
+        $sessaoBilhete = Bilhetes::where('id', $bilhete->id)->pluck('sessao_id');
+        $sessao = Sessao::where('id',$sessaoBilhete[0])->get();
+        //dd($sessao);
+        $user = User::where('id', $bilhete->cliente_id)->first();
+        //dd($user);
+        return view('sessoes.funcionario.validado')
+                ->with('sessao', $sessao)
+                ->with('user', $user)
+                ->with('successMsg', 'Bilhete '.$bilhete->id.' validado com sucesso!')
+                ->with('alert-type', 'danger');
+    }
+
+    public function validaBilhetePorId(Request $request, Sessao $sessao)
+    {
+        //dd($request->string);
+        $idBilhete = $request->string;
+        $sessao = Sessao::where('id',$sessao->id)->first();
+        $bilhete = Bilhetes::where('id',$idBilhete)->first();
+        $user = User::where('id', $bilhete->cliente_id)->first();
+
+        if ($bilhete->sessao_id == $sessao->id) {
+            if ($bilhete->estado == 'não usado') {
+                Bilhetes::where('id', $bilhete->id)
+                        ->update(['estado' => 'usado']);
+                return view('sessoes.funcionario.validado')
+                        ->with('sessao', $sessao)
+                        ->with('user', $user)
+                        ->with('alert-msg', 'Bilhete '.$bilhete->id.' validado com sucesso!')
+                        ->with('alert-type', 'success');
+            }else{
+                //dd($bilhete->estado);
+                return back()
+                        ->with('sessao', $sessao)
+                        ->with('user', $user)
+                        ->with('alert-msg', 'Bilhete '.$bilhete->id.' já validado!!')
+                        ->with('alert-type', 'danger');
+            }
+        }else{
+            $outroFilme = Filme::where('id',$sessao->filme_id)->first();
+            return back()
+                        ->with('sessao', $sessao)
+                        ->with('user', $user)
+                        ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme!!, mas sim ao filme '.$outroFilme->titulo.'.')
+                        ->with('alert-type', 'danger');
+        }
+    }
+//------------END--FUNCIONARIOS VALIDAR SESSOES----------END--------------------
+//------------END--FUNCIONARIOS VALIDAR SESSOES----------END--------------------
+//------------END--FUNCIONARIOS VALIDAR SESSOES----------END--------------------
+
 
 //-----------------------------------------------------------------------------------
 //------------------------------ADMIN------------------------------------------------
@@ -172,6 +234,8 @@ class SessoesController extends Controller
 
     public function admin_update(Request $request, Sessao $sessao)
     {
+        //dd($sessao);
+        $filme = Filme::where('id', $sessao->filme_id)->first();
         $validatedData = $request->validate([
             'sala_id' => 'required|max:2',
             'data' => 'required|date',
@@ -182,7 +246,7 @@ class SessoesController extends Controller
                 ->update(['sala_id' => $validatedData['sala_id'],
                 'data' => $validatedData['data'],
                 'horario_inicio' => $validatedData['horario_inicio']]);
-        return redirect()->route('filme.index')
+        return redirect()->route('sessoes.admin.index', $filme)
             ->with('alert-msg', 'Sessao foi alterada com sucesso!')
             ->with('alert-type', 'success');
     }

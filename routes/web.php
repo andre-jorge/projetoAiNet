@@ -11,6 +11,7 @@ use App\Http\Controllers\RecibosController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\ConfiguracoesController;
+use App\Services\Payment;
 
 
 /*
@@ -36,17 +37,35 @@ use App\Http\Controllers\ConfiguracoesController;
 Route::get('/', [FilmesController::class, 'index'])
         ->name('filme.index');
 
-Route::get('sessoes/{filme}', [SessoesController::class, 'index'])
+Route::get('sessoesFilme/{filme}', [SessoesController::class, 'index'])
         ->name('sessoes.index');//sessoes
 
 Route::get('sessoes/lugares/{sessao}', [SessoesController::class, 'lugares'])
         ->name('sessoes.lugares');//lugares sessoes
 
+//-----------------------------------------------------------------------------------------
+//--------------------------FUNCIONARIOS---------------------------------------------------        
+//----------------------------------------------------------------------------------------- 
+//--------------------FUNCIONARIOS VALIDA SESSOES------------------------------------------
+Route::get('funcionario/sessoes', [SessoesController::class, 'funcionarioSessoes'])
+->middleware('auth')->name('sessoes.funcionario.index')
+//->middleware('can:viewFuncionario,App\Models\User')
+; //sessoes
 
-//--------------------------FUNCIONARIOS--------------------------------------        
-Route::get('funcionario/sessoes', [SessoesController::class, 'sessoes'])
-->middleware('auth')->name('sessoes.sessoes')
-->middleware('can:viewFuncionario,App\Models\User'); //sessoes
+Route::get('funcionario/sessoes/{sessao}', [SessoesController::class, 'funcionarioValidarSessoes'])
+->middleware('auth')->name('sessoes.funcionario.validarSessao')
+//->middleware('can:viewFuncionario,App\Models\User')
+; 
+Route::get('funcionario/sessoes/validaBilhete/{bilhete}', [SessoesController::class, 'validaBilhete'])
+->middleware('auth')->name('sessoes.funcionario.validaBilhete')
+//->middleware('can:viewFuncionario,App\Models\User')
+; 
+Route::get('funcionario/sessoes/bilheteId/{sessao}', [SessoesController::class, 'validaBilhetePorId'])
+->middleware('auth')->name('sessoes.funcionario.validaBilhetePorId')
+//->middleware('can:viewFuncionario,App\Models\User')
+; 
+//----------END------------FUNCIONARIOS VALIDA SESSOES----------------END-----------------
+
 
 Route::get('funcionario/sessoes/{id?}', [SessoesController::class, 'edit'])
 ->middleware('auth')->name('sessoes.edit')
