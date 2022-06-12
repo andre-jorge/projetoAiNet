@@ -144,7 +144,7 @@
           </div>
 
           <!-- MBWAY -->
-          <div id="MBWAY" class="row">
+          <div id="MBWAY" class="row" style="display:  none">
               <div class="col-md-6 mb-3">
                 <label for="cc-number">Numero de Telémovel</label>
                 <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Numero Telemóvel" required="">
@@ -162,7 +162,7 @@
           </div>
 
           <!-- PAYPAL -->
-          <div id="PAYPAL" class="row">
+          <div id="PAYPAL" class="row" style="display:  none">
               <div class="col-md-6 mb-3">
                 <label for="cc-number">Email</label>
                 <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Email" required="">
