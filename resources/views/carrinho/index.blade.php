@@ -101,10 +101,11 @@
           
 
           <!-- CARTAO CREDITO -->
+          <form action="{{ route('carrinho.store') }}" method="POST">
           <div id="VISA" class="row">
             <div class="col-md-6 mb-3">
               <label for="cc-name">Nome Cartão Credito</label>
-              <input type="text" class="form-control" name="ccname" id="cc-name" placeholder="Nome Completo" required="">
+              <input type="text" class="form-control" name="ccnumber" id="cc-name" placeholder="" required="">
               <small class="text-muted">Nome completo</small>
               <div class="invalid-feedback">
                 Nome do cartão obrigatorio
@@ -112,7 +113,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="cc-number">Numero Cartão Credito</label>
-              <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Numero Cartão" required="">
+              <input type="text" class="form-control" name="ccnameccnumber" id="cc-number" placeholder="" required="">
               <div class="invalid-feedback">
                 Numero do cartão obrigatorio
               </div>
@@ -141,13 +142,30 @@
               </div>
             </div>
           </div>
+          <hr class="mb-10">
+          <div class="row">
+            <div class="col-md-3 mb-3">
+            
+              @csrf
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
+              </form>
+            </div>
+            <div class="col-md-5 mb-3">
+              <form action="{{ route('carrinho.destroy') }}" method="POST">
+                @csrf
+                @method("DELETE")
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Remover Tudo</button>
+              </form>
+            </div>
+          </div>
           </div>
 
           <!-- MBWAY -->
+          <form action="{{ route('carrinho.store') }}" method="POST">
           <div id="MBWAY" class="row" style="display:  none">
               <div class="col-md-6 mb-3">
-                <label for="cc-number">Numero de Telémovel</label>
-                <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Numero Telemóvel" required="">
+                <label for="numTel">Numero de Telémovel</label>
+                <input type="text" class="form-control" name="numTel" id="numTel" placeholder="" required="">
                 <div class="invalid-feedback">
                   Numero obrigatório
                 </div>
@@ -159,13 +177,30 @@
                 NIF
               </div>
             </div>
+            <hr class="mb-10">
+          <div class="row">
+            <div class="col-md-3 mb-3">
+            
+              @csrf
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
+              </form>
+            </div>
+            <div class="col-md-5 mb-3">
+              <form action="{{ route('carrinho.destroy') }}" method="POST">
+                @csrf
+                @method("DELETE")
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Remover Tudo</button>
+              </form>
+            </div>
+          </div>
           </div>
 
           <!-- PAYPAL -->
+          <form action="{{ route('carrinho.store') }}" method="POST">
           <div id="PAYPAL" class="row" style="display:  none">
               <div class="col-md-6 mb-3">
-                <label for="cc-number">Email</label>
-                <input type="text" class="form-control" name="ccnumber" id="cc-number" placeholder="Email" required="">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="" required="">
                 <div class="invalid-feedback">
                   Email obrigatório
                 </div>
@@ -177,25 +212,26 @@
                 NIF
               </div>
             </div>
-          </div>
-
-
-          <hr class="mb-10">
+            <hr class="mb-10">
           <div class="row">
             <div class="col-md-3 mb-3">
-            <form action="{{ route('carrinho.store') }}" method="POST">
+            
               @csrf
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
               </form>
             </div>
             <div class="col-md-5 mb-3">
-            <form action="{{ route('carrinho.destroy') }}" method="POST">
+              <form action="{{ route('carrinho.destroy') }}" method="POST">
                 @csrf
                 @method("DELETE")
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Remover Tudo</button>
-            </form>
-          
-        </div>
+              </form>
+            </div>
+          </div>
+          </div>
+
+
+        
     </div>
   </div>
 </div>

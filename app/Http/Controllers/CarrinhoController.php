@@ -17,7 +17,6 @@ class CarrinhoController extends Controller
     {
         //dd($request);
         return view('carrinho.index')
-            ->with('pageTitle', 'Carrinho de compras')
             ->with('carrinho', session('carrinho') ?? []);
     }
 
@@ -125,39 +124,66 @@ class CarrinhoController extends Controller
         $currentTime = $currentTime->toDateString();
         $userInfo = auth()->user();
 
-        //dd($userInfo);
+        //se nao exister user logado
         if (auth()->user() === null) {
             return redirect()->route('carrinho.index')
             ->with('alert-msg', 'Sem Sessão iniciado, por favor, tente novamente')
             ->with('alert-type', 'danger');
         }
+        // se nao existir sessoes no carrinho
         if ($request->session()->get('carrinho') === []) {
             return redirect()->route('carrinho.index')
             ->with('alert-msg', 'Carrinho vazio, por favor, adicione uma sessão')
             ->with('alert-type', 'danger');
         }
-        //dd($user->id);
-        //dd($request);
-        //dd($currentTime);
-        //dd($user->id);
-        // a funcar
-        $metodoPagamento = $request->paymentMethod;
-        dd($request);
-        $nomeCartao = $request->ccname;
-        $numeroCartao = $request->ccnumber;
-        $expirationCartao = $request->ccexpiration;
-        $cvvCartao = $request->cccvv;
-        $nif = $request->nif;
+        //VISA
+        if ($request->ccnumber != null && $request->cccvv != null) {
+            dd(Payment::payWithVisa($request->ccnumber,$request->cccvv));
+            if(Payment::payWithVisa($request->ccnumber,$request->cccvv)){
+                $metodoPagamento = 'VISA';
+                $nomeCartao = $request->ccname;
+                $ref_pagamento = $request->ccnumber;
+                $expirationCartao = $request->ccexpiration;
+                $cvvCartao = $request->cccvv;
+                $nif = $request->nif;
+            }else{
+                return back()
+                ->with('alert-msg', 'Dados Cartao Invalidos')
+                ->with('alert-type', 'danger');
+            }
+        }
+        //MBWAY
+        if ($request->numTel != null) {
+            if(Payment::payWithMBway($request->numTel)){
+                $metodoPagamento = 'MBWAY';
+                $ref_pagamento = $request->numTel;
+                $nif = $request->nif;
+            }else{
+                return back()
+                ->with('alert-msg', 'Numero Invalido')
+                ->with('alert-type', 'danger');
+            }
+
+        }
+        //PAYPAL
+        if ($request->email != null ) {
+            if(Payment::payWithPaypal($request->email)){
+                $metodoPagamento = 'PAYPAL';
+                $ref_pagamento = $request->email;
+                $nif = $request->nif;
+            }else{
+                return back()
+                ->with('alert-msg', 'Email Invalido')
+                ->with('alert-type', 'danger');
+            }
+        }
+        //Outros dados
         $precoBilhete = Configuracao::where('id', 1)->pluck('preco_bilhete_sem_iva');
         $ivaBilhete = Configuracao::where('id', 1)->pluck('percentagem_iva'); 
         $carro = $request->session()->get('carrinho');  
         $quantidadeCarrinho = count($carro); 
         $precoTotalBilhetesSemIva = ($precoBilhete[0]*$quantidadeCarrinho);     
         $data = $request->session()->all(); // ver tudo da sessao 
-        
-        
-
-        //dd(\Services\Payment::payWithVisa($numeroCartao,$cvvCartao));
 
 
         //---------------------Emitir Recibo--------------------
@@ -170,10 +196,10 @@ class CarrinhoController extends Controller
             'nif' => $nif,
             'nome_cliente' => $userInfo->name,
             'tipo_pagamento' => $metodoPagamento,
-            'ref_pagamento' => $request->ccnumber,
+            'ref_pagamento' => $ref_pagamento,
         ]);
         $Recibo = Recibo::create($newRecibo);
-        //------------------------------------------------------
+        //-----------------------END RECIBOS-------------------------
         //------------------------------------------------------
         //---------------------Emitir Bilhetes--------------------
         $ultimoRecibo = Recibo::orderBy('id','desc')->first();
@@ -189,24 +215,26 @@ class CarrinhoController extends Controller
             ]);
             $Bilhete = Bilhetes::create($newBilhete);
         }
-        //-----------------------------------------------------
+        //-----------------------END Bilhetes------------------------
 
         $request->session()->forget('count');
         $request->session()->forget('carrinho');
-        return redirect()->route('carrinho.index')
-                         ->with('alert-msg', 'Compra efetuado com Sucesso')
-                         ->with('alert-type', 'Success');
+        $user = auth()->user();
+        $last = Recibo::where('cliente_id',$userInfo->id)->latest()->first();
+        $recibos = Recibo::where('cliente_id',$user)->where('id',$last->id)->paginate(8);
+        return view('users.recibos')
+                        ->with('recibos', $recibos)
+                        ->with('alert-msg', 'Compra efetuado com Sucesso')
+                        ->with('alert-type', 'Success');
+    }
 
-
-    //     $nameFile = $request->titulo . '.' . $request->cartaz_url->extension(); 
-    //   $bilhete = [
-    //     'cliente_id' => $sessao->id,
-    //     'data' => $currentTime,
-    //     'preço' => $qtd,
-    //     'data' => $sessao->data,
-    //     'horario_inicio' => $sessao->horario_inicio,
-    //     'sala_id' => $sessao->sala_id,
-    // ];
+    public function carrinhoValidado(Request $request)
+    {
+        $user = auth()->user();
+        $last = Recibo::where('cliente_id',$user)->last('id')->pluck('id');
+        $recibos = Recibo::where('cliente_id',$user)->where('id',$last);
+        //dd($recibos);
+        return view('carrinho.carrinhoValidado', compact('recibos'));
     }
 
     public function destroy(Request $request)

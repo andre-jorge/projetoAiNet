@@ -14,7 +14,7 @@
     </div>
     <div class="col-sm-5 col-md-5">
         <!-- STRING -->
-        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Numero Bilhete (URL nao percebi, na tabela na existe url) " aria-label="Search" aria-describedby="search-addon" />    
+        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Numero Bilhete ou projeto.test\bilhete/(idbilhete) " aria-label="Search" aria-describedby="search-addon" />    
         <!-- STRING --> 
     </div>
     <div class="col-sm-5 col-md-2 .ml-md-auto" >
