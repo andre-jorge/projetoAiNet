@@ -124,11 +124,11 @@ class SessoesController extends Controller
         Bilhetes::where('id', $bilhete->id)
                 ->update(['estado' => 'usado']);
         $sessaoBilhete = Bilhetes::where('id', $bilhete->id)->pluck('sessao_id');
-        $sessao = Sessao::where('id',$sessaoBilhete[0])->get();
-        //dd($sessao);
+        $sessao = Sessao::where('id',$sessaoBilhete[0])->first();
         $user = User::where('id', $bilhete->cliente_id)->first();
         //dd($user);
         return view('sessoes.funcionario.validado')
+                ->with('bilheteId', $bilhete->id)
                 ->with('sessao', $sessao)
                 ->with('user', $user)
                 ->with('successMsg', 'Bilhete '.$bilhete->id.' validado com sucesso!')
@@ -140,6 +140,7 @@ class SessoesController extends Controller
         //dd($request->string);
         $idBilhete = $request->string;
         $sessao = Sessao::where('id',$sessao->id)->first();
+        //dd($sessao);
         $bilhete = Bilhetes::where('id',$idBilhete)->first();
         $user = User::where('id', $bilhete->cliente_id)->first();
 
@@ -148,14 +149,16 @@ class SessoesController extends Controller
                 Bilhetes::where('id', $bilhete->id)
                         ->update(['estado' => 'usado']);
                 return view('sessoes.funcionario.validado')
-                        ->with('sessao', $sessao)
+                        ->with('bilheteId', $bilhete->id)
+                        ->with('sessao', $sessao->id)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' validado com sucesso!')
                         ->with('alert-type', 'success');
             }else{
                 //dd($bilhete->estado);
                 return back()
-                        ->with('sessao', $sessao)
+                        ->with('bilheteId', $bilhete->id)
+                        ->with('sessao', $sessao->id)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' já validado!!')
                         ->with('alert-type', 'danger');
@@ -163,7 +166,8 @@ class SessoesController extends Controller
         }else{
             $outroFilme = Filme::where('id',$sessao->filme_id)->first();
             return back()
-                        ->with('sessao', $sessao)
+                        ->with('bilheteId', $bilhete->id)
+                        ->with('sessao', $sessao->id)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme!!, mas sim ao filme '.$outroFilme->titulo.'.')
                         ->with('alert-type', 'danger');

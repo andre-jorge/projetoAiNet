@@ -2,6 +2,7 @@
 
 @section('content') 
 <div class="container text-center"
+<h3 class="align-middle" ><strong><h1 class="align-middle" style="background-color:green;">Bilhete {{$bilheteId}} Validado com Sucesso </h1></strong></h3>
 <h3 class="align-middle"><strong><h1 class="align-middle">Dados Cliente</h1></strong></h3>
 </div>
 <br>
@@ -37,9 +38,9 @@
                 <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">&nbsp&nbsp&nbspBloquear&nbsp&nbsp&nbsp</a>
                 </td>
                 <td> 
-                @foreach ($sessao as $sessao) 
+                
                 <a href="{{route('sessoes.funcionario.validarSessao', $sessao)}}" name="sessao" value='{{$sessao}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbsp&nbspContinuar&nbsp&nbsp&nbsp</a>
-                @endforeach 
+               
                 </td>
             </tr>
         </tbody>   
