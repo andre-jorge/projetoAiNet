@@ -71,14 +71,6 @@ class UsersController extends Controller
          return view('users.recibos', compact('recibos'));
       }
 
-   public function recibosCarrinho(Request $request)
-      {
-         $user = auth()->user();
-         $id = auth()->user()->id;
-         $recibos = Recibo::where('cliente_id',$id)->paginate(8);
-         //dd($recibos);
-         return view('users.recibos', compact('recibos'));
-      }
    
    
    
