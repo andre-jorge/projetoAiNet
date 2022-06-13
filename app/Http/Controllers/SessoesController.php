@@ -74,12 +74,12 @@ class SessoesController extends Controller
         for ($i=0; $i < $totalLugaresDisponiveis; $i++) { 
             echo $data['fila'][$i];
             echo $data['posicao'][$i];
-            $array1[$i] = array($data['fila'][$i] => $data['posicao'][$i]);
+            //$array1[$i] = array($data['fila'][$i] => $data['posicao'][$i]);
         }
         //dd($array1[0]);
         return view('sessoes.lugares')
         ->with('carrinho', session('carrinho') ?? [])
-                    ->with('lugaresOcupados', $array1)
+                    //->with('lugaresOcupados', $array1)
                     ->with('sessao', $sessao)
                     ->with('lugares', $lugares);
     }
@@ -143,6 +143,7 @@ class SessoesController extends Controller
         $sessao = Sessao::where('id',$sessao->id)->first();
         //dd($sessao);
         $bilhete = Bilhetes::where('id',$idBilhete)->first();
+        //dd($bilhete->cliente_id);
         $user = User::where('id', $bilhete->cliente_id)->first();
 
         if ($bilhete->sessao_id == $sessao->id) {

@@ -194,6 +194,9 @@ Route::get('user/recibos', [usersController::class, 'recibos'])
         ->middleware('auth')->name('users.recibos');
         //->middleware('can:viewAny,App\Models\Cliente');
 
+Route::get('carrinho/recibo', [usersController::class, 'recibosCarrinho'])
+        ->middleware('auth')->name('carrinho.recibos');
+
 //------------------------FUNCSS-------------------------------------
 Route::get('admin/recuperar/funcionarios/{user}', [usersController::class, 'funcionario_recuperar'])
         ->middleware('auth')->name('users.funcionarios.recuperar');

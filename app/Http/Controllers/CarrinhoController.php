@@ -222,7 +222,7 @@ class CarrinhoController extends Controller
         $user = auth()->user();
         $last = Recibo::where('cliente_id',$userInfo->id)->latest()->first();
         $recibos = Recibo::where('cliente_id',$user)->where('id',$last->id)->paginate(8);
-        return view('users.recibos')
+        return view('carrinho.recibos')
                         ->with('recibos', $recibos)
                         ->with('alert-msg', 'Compra efetuado com Sucesso')
                         ->with('alert-type', 'Success');
