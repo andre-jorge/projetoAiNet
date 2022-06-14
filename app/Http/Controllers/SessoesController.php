@@ -57,7 +57,7 @@ class SessoesController extends Controller
                          ->get();
 
         $lugares=$sessao->Salas->Lugares->whereNotIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
-        //dd($lugares);
+        //dd($lugares2=$sessao->Bilhetes->pluck('lugar_id'));
         $lugaresOcupados=$sessao->Salas->Lugares->whereIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
         //$fila = $lugaresOcupados->pluck('fila');
         //$posicao = $lugaresOcupados->pluck('posicao');

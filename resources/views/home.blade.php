@@ -27,7 +27,7 @@
                         <!-- Authentication Links -->
                                 @guest
                                         <i class="fas fa-shopping-cart"></i>
-                                        <span id="nav-bar-cart"><span class="cart-size"> {{ session()->get('countInt') ?? 0}}</span> Bilhete(s) | € session()->get('total') ?? 0}}</span>
+                                        <span id="nav-bar-cart"><span class="cart-size"> {{ session()->get('countInt') ?? 0}}</span> Bilhete(s) | € {{ number_format(session()->get('total'),2, '.', ',') ?? 0}}</span>
                                         </a></li>
                                     @if (Route::has('login'))
                                         <li class="nav-item">

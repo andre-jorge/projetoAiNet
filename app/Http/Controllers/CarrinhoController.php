@@ -15,7 +15,7 @@ class CarrinhoController extends Controller
 {
     public function index(Request $request)
     {
-        //dd($request);
+        //dd(session('carrinho'));
         return view('carrinho.index')
             ->with('carrinho', session('carrinho') ?? []);
     }
@@ -42,6 +42,7 @@ class CarrinhoController extends Controller
         $total = $request->session()->increment('total', $bilheteComIva);
 
         //dd($total);
+        
         $carrinho[$idCarrinho] = [
             'id' => $sessao->id,
             'filme' => $sessao->Filmes->titulo,
@@ -143,7 +144,7 @@ class CarrinhoController extends Controller
         }
         //VISA
         if ($request->ccnumber != null && $request->cccvv != null) {
-            dd(Payment::payWithVisa($request->ccnumber,$request->cccvv));
+            //dd(Payment::payWithVisa($request->ccnumber,$request->cccvv));
             if(Payment::payWithVisa($request->ccnumber,$request->cccvv)){
                 $metodoPagamento = 'VISA';
                 $nomeCartao = $request->ccname;
@@ -229,7 +230,6 @@ class CarrinhoController extends Controller
 
         $request->session()->forget('countInt');
         $request->session()->forget('total');
-        $request->session()->forget('count');
         $request->session()->forget('carrinho');
         $user = auth()->user();
         $last = Recibo::orderBy('id', 'desc')->first();

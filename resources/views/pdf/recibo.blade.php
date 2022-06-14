@@ -230,7 +230,7 @@
 													</td>			
 													<td>
 														<p>
-                            {{$recibo->iva}}<br>
+                            {{(int) $recibo->iva}} %<br>
 														</p>
 														<h5 class="text-success"><strong> {{$recibo->preco_total_com_iva}}</strong></h5>
 													</td>
@@ -243,7 +243,7 @@
 							<!-- Row end -->
 						</div>
 						<div class="invoice-footer">
-							Thank you for your Business.
+							
 						</div>
 					</div>
 				</div>

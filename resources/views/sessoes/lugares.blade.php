@@ -1,8 +1,7 @@
 @extends('home')
 
 @section('content')
-
-    <html>
+<html>
     <head>
     <link href="{{asset("/css/lugares.css")}}" rel="stylesheet" />
         <title>Demo of a canvas used to render seat plan in a Cinema</title>
@@ -121,29 +120,36 @@
             }
         </script>
     </head>
+    
     <body onload="renderSeatplan(getSeatInfo(10,10));">
-        <h1>Seatplan</h1>
-        <canvas id="seatplan" width="640" height="480"></canvas>
+        <div class="container text-center">
+            <h3 class="align-middle"><strong><h1 class="align-middle">Plano da Sala</h1></strong></h3>
         
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{{ route('carrinho.store_sessao', $sessao)}}" method="POST">
+        <div class="container text-center">
+            <canvas id="seatplan" width="640" height="480"></canvas>   
+        </div>
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{{ route('carrinho.store_sessao', $sessao)}}" method="POST">
         @csrf    
         <div class="row mb-2">
             <div class="col-sm-5 col-md-5">
+                <!-- STRING -->
+                <h5 class="align-middle"><strong><h5 class="align-middle">Lugar</h1></strong></h3>
+            <!-- STRING --> 
             </div>
-            <div class="col-sm-10 col-md-10">
+            <div class="col-sm-5 col-md-5">
                 <!-- Tipo -->
-                <select class="form-select" name="idlugar" id="inputGroupSelect04">
+                <select class="form-select" aria-label=".form-select-sm example" name="idlugar">
                     @foreach ($lugares as $lugar)
                         <option value="{{ $lugar->id }}">{{ $lugar->fila }} - {{$lugar->posicao}}</option>
                     @endforeach
                 </select>
                 <!-- Tipo -->
-            </div>  
-            <div class="col-sm-5 col-md-2 .ml-md-auto" >
+            </div> 
+            <div class="col-sm-2 col-md-2 .ml-md-auto" >
                 <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
             </div>
         </div>
-        </form>
+    </form>
     </body>
 </html>
 @endsection

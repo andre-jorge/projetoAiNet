@@ -31,11 +31,11 @@
             <small class="text-muted">{{ $row['data'] }}</small>
             <small class="text-muted">{{ $row['horario_inicio'] }}</small>
             <br>
-            <small class="text-muted">{{ $row['sala_id'] }}</small>
+            <small class="text-muted">Sala:  {{ $row['sala_id'] }}</small>
             <br>
             
           </div>
-          <span class="text-muted">{{ $row['qtd'] }}</span>
+          <span class="text-muted"></span>
           <span class="text-muted">{{ $row['preco'] }}</span>
           
           <span class="text-muted">
@@ -51,7 +51,7 @@
         <input type="hidden" name="quantidade" value="{{$quantidade = $quantidade+$row['qtd']}}">
         @endforeach
         <div class="text-right">
-          <h3 class="my-0">Total C/IVA: {{ $total }} </h3>
+          <h3 class="my-0">Total C/IVA: {{ number_format(session()->get('total'),2, '.', ',') ?? 0}} </h3>
         </div>
       </ul>
       
@@ -104,16 +104,16 @@
           <form action="{{ route('carrinho.store') }}" method="POST">
           <div id="VISA" class="row">
             <div class="col-md-6 mb-3">
-              <label for="cc-name">Nome Cartão Credito</label>
-              <input type="text" class="form-control" name="ccnumber" id="cc-name" placeholder="" required="">
+              <label for="ccname">Nome</label>
+              <input type="text" class="form-control" name="ccname" id="ccname" placeholder="" required="">
               <small class="text-muted">Nome completo</small>
               <div class="invalid-feedback">
                 Nome do cartão obrigatorio
               </div>
             </div>
             <div class="col-md-6 mb-3">
-              <label for="cc-number">Numero Cartão Credito</label>
-              <input type="text" class="form-control" name="ccnameccnumber" id="cc-number" placeholder="" required="">
+              <label for="ccnumber">Numero Cartão Credito</label>
+              <input type="text" class="form-control" name="ccnumber" id="ccnumber" placeholder="" required="">
               <div class="invalid-feedback">
                 Numero do cartão obrigatorio
               </div>
@@ -136,7 +136,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="nif">NIF</label>
-              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" required="">
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" >
               <div class="invalid-feedback">
                 NIF
               </div>
@@ -172,7 +172,7 @@
               </div>
               <div class="col-md-6 mb-3">
               <label for="nif">NIF</label>
-              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" required="">
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" >
               <div class="invalid-feedback">
                 NIF
               </div>
@@ -207,7 +207,7 @@
               </div>
               <div class="col-md-6 mb-3">
               <label for="nif">NIF</label>
-              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" required="">
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" >
               <div class="invalid-feedback">
                 NIF
               </div>

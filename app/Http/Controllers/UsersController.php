@@ -141,8 +141,34 @@ class UsersController extends Controller
       $hashedPassword = Hash::make($request->password);
       $lastId = User::latest('id')->first()->id+1;
       $random = Str::random(10);
-      $nameFile = $lastId . '_'. $random . '.' . $request->foto_url->extension(); 
-      $request->foto_url->move(public_path('storage/fotos'), $nameFile);
+      //valida nome
+      if ($request->name == null) {
+         return back()
+                ->with('alert-msg', 'Campo Nome Obrigatorio')
+                ->with('alert-type', 'danger');
+      }
+      // valida email
+      if ($request->email == null) {
+         return back()
+                ->with('alert-msg', 'Email já existente')
+                ->with('alert-type', 'danger');
+      }
+      //valida foto
+      if ($request->foto_url == null){
+         return back()
+                ->with('alert-msg', 'Foto em Falta')
+                ->with('alert-type', 'danger');
+      }else{
+         $nameFile = $lastId . '_'. $random . '.' . $request->foto_url->extension(); 
+         $request->foto_url->move(public_path('storage/fotos'), $nameFile);
+      }
+      //valida password
+      if ($request->password == null) {
+         return back()
+                ->with('alert-msg', 'Password Obrigatorio')
+                ->with('alert-type', 'danger');
+      }
+      
       $validatedData = $request->validate([
          'name' => 'required|max:50',
          'email' => 'required',
@@ -155,7 +181,9 @@ class UsersController extends Controller
         $newUser->password = $hashedPassword;
         $newUser->bloqueado = 0;
         $newUser->tipo = $request->tipo;
+      if ($request->foto_url <> null) {
         $newUser->foto_url = $nameFile;
+      }
         $newUser->save();
                     
         //DB::table('filmes')->insert($validatedData);
