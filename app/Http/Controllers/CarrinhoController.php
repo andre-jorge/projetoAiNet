@@ -26,6 +26,8 @@ class CarrinhoController extends Controller
         $idlugar = $request->idlugar;
 
         $idCarrinho = $request->session()->increment('count');
+        $countInt = $request->session()->increment('countInt');
+        //$totalCarrinho = $request->session()->increment('totalCarrinho',5);
         $carrinho = $request->session()->get('carrinho', []);
 
         $qtd = $idCarrinho;
@@ -38,7 +40,8 @@ class CarrinhoController extends Controller
         $precoSemIva= $precoBilhete->preco_bilhete_sem_iva;
         $bilheteComIva=$precoSemIva*(($ivaBilhete/100)+1);
         $total = $request->session()->increment('total', $bilheteComIva);
-       
+
+        //dd($total);
         $carrinho[$idCarrinho] = [
             'id' => $sessao->id,
             'filme' => $sessao->Filmes->titulo,
@@ -56,7 +59,7 @@ class CarrinhoController extends Controller
         //dd($carrinho);
         $request->session()->put('carrinho', $carrinho);
         //$request->session()->increment('count', $incrementBy = 1);//incrementa 1 no [] do carrinho
-        return back()
+        return redirect()->back()
             ->with('alert-msg', 'Foi adicionada uma nova sessão ao carrinho!')
             ->with('alert-type', 'success');
     }
@@ -101,9 +104,12 @@ class CarrinhoController extends Controller
 
     public function destroy_sessao(Request $request, Sessao $sessao)
     {
-        
+        $countInt = $request->session()->decrement('countInt');
         $precoBilhete = Configuracao::find(1);
-        $total = $request->session()->decrement('total',$precoBilhete->preco_bilhete_sem_iva);
+        $ivaBilhete = $precoBilhete->percentagem_iva;
+        $precoSemIva= $precoBilhete->preco_bilhete_sem_iva;
+        $bilheteComIva=$precoSemIva*(($ivaBilhete/100)+1);
+        $total = $request->session()->decrement('total', $bilheteComIva);
         $carrinho = $request->session()->get('carrinho', []);
         if (array_key_exists($request->eleminar, $carrinho)) {
             unset($carrinho[$request->eleminar]);
@@ -221,6 +227,8 @@ class CarrinhoController extends Controller
         }
         //-----------------------END Bilhetes------------------------
 
+        $request->session()->forget('countInt');
+        $request->session()->forget('total');
         $request->session()->forget('count');
         $request->session()->forget('carrinho');
         $user = auth()->user();
@@ -244,6 +252,8 @@ class CarrinhoController extends Controller
 
     public function destroy(Request $request)
     {
+        $request->session()->forget('countInt');
+        $request->session()->forget('total');
         $request->session()->forget('count');
         $request->session()->forget('carrinho');
         return back()

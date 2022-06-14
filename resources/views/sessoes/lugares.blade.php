@@ -1,22 +1,10 @@
 @extends('home')
 
 @section('content')
-<link href="{{asset("/css/lugares.css")}}" rel="stylesheet" />
-<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{{ route('carrinho.store_sessao', $sessao)}}" method="POST">
-@csrf    
 
-<div class="search-item">
-            <!-- FILA -->
-            <select name="idlugar">
-            @foreach ($lugares as $lugar)
-                <option value="{{ $lugar->id }}">{{ $lugar->fila }} - {{$lugar->posicao}}</option>
-            @endforeach
-            </select>   
-        <button class="btn btn-primary" type="submit">teste</button>
-    </div>
-</form>
     <html>
     <head>
+    <link href="{{asset("/css/lugares.css")}}" rel="stylesheet" />
         <title>Demo of a canvas used to render seat plan in a Cinema</title>
         <script>
             var EMPTY = 0; // Still available for reservation and purchase.
@@ -136,6 +124,26 @@
     <body onload="renderSeatplan(getSeatInfo(10,10));">
         <h1>Seatplan</h1>
         <canvas id="seatplan" width="640" height="480"></canvas>
+        
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{{ route('carrinho.store_sessao', $sessao)}}" method="POST">
+        @csrf    
+        <div class="row mb-2">
+            <div class="col-sm-5 col-md-5">
+            </div>
+            <div class="col-sm-10 col-md-10">
+                <!-- Tipo -->
+                <select class="form-select" name="idlugar" id="inputGroupSelect04">
+                    @foreach ($lugares as $lugar)
+                        <option value="{{ $lugar->id }}">{{ $lugar->fila }} - {{$lugar->posicao}}</option>
+                    @endforeach
+                </select>
+                <!-- Tipo -->
+            </div>  
+            <div class="col-sm-5 col-md-2 .ml-md-auto" >
+                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+            </div>
+        </div>
+        </form>
     </body>
 </html>
 @endsection
