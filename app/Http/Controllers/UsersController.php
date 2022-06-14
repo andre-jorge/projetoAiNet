@@ -66,7 +66,7 @@ class UsersController extends Controller
       {
          $user = auth()->user();
          $id = auth()->user()->id;
-         $recibos = Recibo::where('cliente_id',$id)->paginate(8);
+         $recibos = Recibo::where('cliente_id',$id)->orderBy('id', 'desc')->paginate(8);
          //dd($recibos);
          return view('users.recibos', compact('recibos'));
       }

@@ -26,22 +26,19 @@ class CarrinhoController extends Controller
         $idlugar = $request->idlugar;
 
         $idCarrinho = $request->session()->increment('count');
-        //dd( $idCarrinho);
         $carrinho = $request->session()->get('carrinho', []);
 
         $qtd = $idCarrinho;
         $fila = ($carrinho[$idCarrinho]['fila']?? 0);
         $lugar = ($carrinho[$idCarrinho]['lugar']?? 0);
         $precoBilhete = Configuracao::find(1);
-        $total = $qtd*($precoBilhete->preco_bilhete_sem_iva);
-        //dd($precoBilhete->percentagem_iva);
+        $ivaBilhete = $precoBilhete->percentagem_iva;
         $fila=Lugares::where('id',$idlugar)->pluck('fila');
         $posicao=Lugares::where('id',$idlugar)->pluck('posicao');
-        
-        //dd($lugar=$sessao->Filmes);
-
-        //dd($lugar);
-        $total = $precoBilhete->preco_bilhete_sem_iva*$qtd;
+        $precoSemIva= $precoBilhete->preco_bilhete_sem_iva;
+        $bilheteComIva=$precoSemIva*(($ivaBilhete/100)+1);
+        $total = $request->session()->increment('total', $bilheteComIva);
+       
         $carrinho[$idCarrinho] = [
             'id' => $sessao->id,
             'filme' => $sessao->Filmes->titulo,
@@ -50,7 +47,7 @@ class CarrinhoController extends Controller
             'horario_inicio' => $sessao->horario_inicio,
             'sala_id' => $sessao->Salas->nome,
             'preco' => $precoBilhete->preco_bilhete_sem_iva,
-            'iva' => $precoBilhete->percentagem_iva,
+            'iva' => $ivaBilhete,
             'idLugar' => $idlugar,
             'fila' => $fila[0],
             'lugar' => $posicao[0],
@@ -104,7 +101,9 @@ class CarrinhoController extends Controller
 
     public function destroy_sessao(Request $request, Sessao $sessao)
     {
-        $idCarrinho = $request->session()->decrement('count');
+        
+        $precoBilhete = Configuracao::find(1);
+        $total = $request->session()->decrement('total',$precoBilhete->preco_bilhete_sem_iva);
         $carrinho = $request->session()->get('carrinho', []);
         if (array_key_exists($request->eleminar, $carrinho)) {
             unset($carrinho[$request->eleminar]);
@@ -180,12 +179,13 @@ class CarrinhoController extends Controller
         //Outros dados
         $precoBilhete = Configuracao::where('id', 1)->pluck('preco_bilhete_sem_iva');
         $ivaBilhete = Configuracao::where('id', 1)->pluck('percentagem_iva'); 
-        $carro = $request->session()->get('carrinho');  
+        $carro = $request->session()->get('carrinho');
+        $count = $request->session()->get('count');    
         $quantidadeCarrinho = count($carro); 
         $precoTotalBilhetesSemIva = ($precoBilhete[0]*$quantidadeCarrinho);     
         $data = $request->session()->all(); // ver tudo da sessao 
 
-
+        //dd($count);
         //---------------------Emitir Recibo--------------------
         $newRecibo = ([
             'cliente_id' => $userInfo->id,
@@ -204,26 +204,31 @@ class CarrinhoController extends Controller
         //---------------------Emitir Bilhetes--------------------
         $ultimoRecibo = Recibo::orderBy('id','desc')->first();
         $ultimoIdRecibo = $ultimoRecibo->id;
-        for ($i=1; $i <= $quantidadeCarrinho ; $i++) { 
+        for ($i=1; $i <= $count ; $i++) {
             $newBilhete = ([
                 'recibo_id' => $ultimoIdRecibo,
                 'cliente_id' => $userInfo->id,
-                'sessao_id' => $carro[$i]['id'],
-                'lugar_id' => $carro[$i]['idLugar'],
+                'sessao_id' => $carro[$i]['id'] ?? 0,
+                'lugar_id' => $carro[$i]['idLugar'] ?? 0,
                 'preco_sem_iva' => $precoBilhete[0],
                 'estado' => 'não usado',
             ]);
-            $Bilhete = Bilhetes::create($newBilhete);
+            //dd($newBilhete);
+
+            if ($newBilhete['sessao_id'] <> 0) {
+                $Bilhete = Bilhetes::create($newBilhete);
+            }  
         }
         //-----------------------END Bilhetes------------------------
 
         $request->session()->forget('count');
         $request->session()->forget('carrinho');
         $user = auth()->user();
-        $last = Recibo::where('cliente_id',$userInfo->id)->latest()->first();
-        $recibos = Recibo::where('cliente_id',$user)->where('id',$last->id)->paginate(8);
-        return view('users.recibos')
-                        ->with('recibos', $recibos)
+        $last = Recibo::orderBy('id', 'desc')->first();
+        $recibo = Recibo::where('cliente_id',$userInfo->id)->where('id',$last->id)->first();
+        //dd($recibo);
+        return view('carrinho.carrinhoValidado')
+                        ->with('recibo', $recibo)
                         ->with('alert-msg', 'Compra efetuado com Sucesso')
                         ->with('alert-type', 'Success');
     }

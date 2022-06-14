@@ -265,7 +265,7 @@ Route::get('recibos/{recibo}', [PdfController::class, 'geraPdfRecibo'])
 
 //------------------Carrinho----------------------
 Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
-//Route::post('carrinho/sessaoValidada', [CarrinhoController::class, 'carrinhoValidado'])->name('carrinho.carrinhoValidado');
+Route::post('carrinho/sessaoValidada', [CarrinhoController::class, 'carrinhoValidado'])->name('carrinho.carrinhoValidado');
 Route::post('carrinho/sessao/{sessao}', [CarrinhoController::class, 'store_sessao'])->name('carrinho.store_sessao');
 Route::put('carrinho/sessao/{sessao}', [CarrinhoController::class, 'update_sessao'])->name('carrinho.update_sessao');
 Route::delete('carrinho/sessao/{sessao}', [CarrinhoController::class, 'destroy_sessao'])->name('carrinho.destroy_sessao');

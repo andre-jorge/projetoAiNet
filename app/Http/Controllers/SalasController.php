@@ -101,7 +101,7 @@ class SalasController extends Controller
               ->with('alert-msg', 'Sala '.$salas->name.' eliminada com sucesso!')
               ->with('alert-type', 'success');
       }else{
-      if ($salas->deleted_at) {
+      if ($salas->deleted_at != null  ) {
         $salas->restore();
           return redirect()->back()
                 ->with('alert-msg', 'Sala '.$salas->name.' recuperada com sucesso!')

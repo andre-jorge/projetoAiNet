@@ -27,7 +27,7 @@
                         <!-- Authentication Links -->
                                 @guest
                                         <i class="fas fa-shopping-cart"></i>
-                                        <span id="nav-bar-cart"><span class="cart-size">{{ $_SESSION['count'] ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span>
+                                        <span id="nav-bar-cart"><span class="cart-size"> {{ session()->get('count') ?? 0}}</span> Bilhete(s) | €{{ session()->get('carrinho->total') }}</span>
                                         </a></li>
                                     @if (Route::has('login'))
                                         <li class="nav-item">
@@ -45,7 +45,7 @@
                                     @if(Auth::user()->tipo <> 'F' )
                                     <li>
                                         <i class="fas fa-shopping-cart"></i>
-                                        <span id="nav-bar-cart"><span class="cart-size">{{ $_SESSION['count'] ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span></a>
+                                        <span id="nav-bar-cart"><span class="cart-size">{{ session()->get('count') ?? 0}}</span> Bilhete(s) | €{{ $total  ?? 0 }}</span></a>
                                         </li>
                                         @endif
                                     @endif
