@@ -126,6 +126,7 @@
             <h3 class="align-middle"><strong><h1 class="align-middle">Plano da Sala</h1></strong></h3>
         
         <div class="container text-center">
+            <p><h4 class="align-middle" style="border-style: solid">Tela</h4>
             <canvas id="seatplan" width="640" height="480"></canvas>   
         </div>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{{ route('carrinho.store_sessao', $sessao)}}" method="POST">
