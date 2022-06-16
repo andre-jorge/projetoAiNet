@@ -51,7 +51,7 @@
                <img class="rounded" style="max-height: 25px; max-width: 25px;" src="/storage/fotos/{{ Auth::user()->foto_url ?? 'default-profile.png'}}" alt="..." />
                </a>
                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  @if(Auth::user()->tipo <> 'F' )
+                  @if(Auth::user()->tipo <> 'C' )
                   <a class="dropdown-item" href="{{ route('users.index' ) }}">
                   Dados Cliente 
                   {{-- {{ route('user.index', $userid=Auth::user()->id ) }} --}}
