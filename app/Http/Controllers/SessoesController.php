@@ -48,8 +48,21 @@ class SessoesController extends Controller
     }
 
     public function lugares(Sessao $sessao)
-    {
-        
+    {        
+        //TAMANHO SALA
+        $num_filas=Lugares::where('sala_id', $sessao->sala_id)
+                    ->get()
+                    ->unique('fila')
+                    ->count();
+        //dd($fila);
+
+        $num_pos=Lugares::where('sala_id', $sessao->sala_id)
+                    ->get()
+                    ->unique('posicao')
+                    ->count();
+        //dd($num_pos);
+
+
         $lugaresOcupados=DB::table('lugares')
                          ->select('lugares.id')
                          ->leftJoin('bilhetes', 'bilhetes.lugar_id', '=', 'lugares.id')
@@ -63,7 +76,7 @@ class SessoesController extends Controller
         //$posicao = $lugaresOcupados->pluck('posicao');
         $totalLugaresDisponiveis = $lugaresOcupados->count();
         //dd($totalLugaresDisponiveis);
-        // dd($lugaresOcupados);
+        //dd($lugaresOcupados);
         for ($i = 0; $i < $totalLugaresDisponiveis; $i++) {
                 $data = array(
                 'fila' => $lugaresOcupados->pluck('fila'), 
@@ -72,16 +85,22 @@ class SessoesController extends Controller
         }
         //dd($data);
         for ($i=0; $i < $totalLugaresDisponiveis; $i++) { 
+            //MOSTRA STRINC COM LUGARES OCUPADOS
             echo $data['fila'][$i];
             echo $data['posicao'][$i];
+
+            //ARRAY COM LUGARES OCUPADOS
             $array1[$i] = array($data['fila'][$i] => $data['posicao'][$i]);
         }
-        //dd($array1[0]);
+        //dd($array1);
         return view('sessoes.lugares')
         ->with('carrinho', session('carrinho') ?? [])
                     ->with('lugaresOcupados', $array1)
                     ->with('sessao', $sessao)
-                    ->with('lugares', $lugares);
+                    ->with('lugares', $lugares)
+                    ->with('num_filas', $num_filas)
+                    ->with('num_pos', $num_pos);
+                    
     }
 
 

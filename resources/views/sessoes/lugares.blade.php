@@ -51,9 +51,9 @@
                         result.Seats[seatKeyFromPosition(row,col)] = EMPTY;
                     }
                 }
-                result.Seats[seatKeyFromPosition(0,0)] = RESERVED;
-                result.Seats[seatKeyFromPosition(0,1)] = RESERVED;
-                result.Seats[seatKeyFromPosition(1,3)] = BOUGHT;
+                //result.Seats[seatKeyFromPosition(0,0)] = RESERVED;
+                //result.Seats[seatKeyFromPosition(0,1)] = RESERVED;
+                //result.Seats[seatKeyFromPosition(1,3)] = BOUGHT;
                 //Valida tenho de dar reservado
                 return result;
             }
@@ -102,7 +102,7 @@
                             // render column headers as numbers...
                             ctx.fillStyle = "black";
                             ctx.textAlign = "center";
-                            ctx.fillText(col.toString(),r.TopLeft.X+center.X,r.TopLeft.Y+center.Y+6);
+                            ctx.fillText((col+1).toString(),r.TopLeft.X+center.X,r.TopLeft.Y+center.Y+6);
                         }
                         else if(col == -1){
                             // render row header
@@ -121,7 +121,7 @@
         </script>
     </head>
     
-    <body onload="renderSeatplan(getSeatInfo(10,10));">
+    <body onload="renderSeatplan(getSeatInfo({{$num_filas}},{{$num_pos}}));">
         <div class="container text-center">
             <h3 class="align-middle"><strong><h1 class="align-middle">Plano da Sala</h1></strong></h3>
         
