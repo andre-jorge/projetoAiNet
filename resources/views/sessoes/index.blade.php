@@ -55,7 +55,7 @@ $height = '450px'; ?>
                   </td>
                   <td><?= $sessao->Salas->custom ?></td>
                   <td>
-                  
+                  @if(Auth::guest() or Auth::user()->tipo == 'C')
                     <form action="{{route('sessoes.lugares', $sessao)}}" id="form" method="GET">
                         @csrf
                         <button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="open">Reservar</button>
@@ -63,7 +63,9 @@ $height = '450px'; ?>
                           </form>
                           
                         </td>
+                        @endif
                       </tr>
+                      
                   @endforeach
             </tbody>  
         </table>

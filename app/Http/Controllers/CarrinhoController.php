@@ -7,6 +7,7 @@ use App\Models\Sessao;
 use App\Models\Lugares;
 use App\Models\Recibo;
 use App\Models\Bilhetes;
+use App\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -236,9 +237,8 @@ class CarrinhoController extends Controller
         $last = Recibo::orderBy('id', 'desc')->first();
         $recibo = Recibo::where('cliente_id',$userInfo->id)->where('id',$last->id)->first();
         //dd($recibo);
-
-        Mail::to($user)
-            ->send(new EnvioRecibo($recibo));
+        // Mail::to($userInfo->email)
+        //     ->send(new EnvioRecibo($recibo));
 
 
 

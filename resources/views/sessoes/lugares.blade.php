@@ -4,7 +4,7 @@
 <html>
     <head>
     <link href="{{asset("/css/lugares.css")}}" rel="stylesheet" />
-        <title>Demo of a canvas used to render seat plan in a Cinema</title>
+
         <script>
             var EMPTY = 0; // Still available for reservation and purchase.
             var RESERVED = 1; // reserved but not yet paid for.

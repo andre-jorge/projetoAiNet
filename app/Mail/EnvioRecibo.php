@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Recibo;
 
 class EnvioRecibo extends Mailable
 {
@@ -23,8 +24,9 @@ class EnvioRecibo extends Mailable
         $this->recibo = $recibo;
     }
 
-    public function build()
+    public function build($recibo)
     {
+        //$recibo = Recibo::orderBy('id','desc')->first();
         return $this->from('noreply@cinemagic.com')
             ->subject('A sua compra foi efetuada com sucesso')
             ->view('emails.compra.sucesso')

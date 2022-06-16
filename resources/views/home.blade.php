@@ -18,7 +18,7 @@
          <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
          <!-- Navbar-->
          <ul class="navbar-nav ms-auto">
-            {{-- @if(Auth::user()->tipo <> 'A' and Auth::user()->tipo <> 'F') --}}
+            @if(Auth::guest() or Auth::user()->tipo == 'C')
             <li class="nav-item">
                <a id="cart-link" href="{{ route('carrinho.index') }}" class="trsn nav-link" title="View/Edit Cart">
                   @csrf                            
@@ -31,7 +31,7 @@
                   Bilhete(s) | € {{ number_format(session()->get('total'),2, '.', ',') ?? 0}}</span>
                </a>
             </li>
-            
+            @endif
             @guest
             @if (Route::has('login'))
             <li class="nav-item">

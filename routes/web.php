@@ -43,6 +43,9 @@ Route::get('sessoesFilme/{filme}', [SessoesController::class, 'index'])
 Route::get('sessoes/lugares/{sessao}', [SessoesController::class, 'lugares'])
         ->name('sessoes.lugares');//lugares sessoes
 
+Route::post('email/mailable', [EmailController::class, 'send_email_with_mailable'])
+        ->name('email.send_with_mailable');
+
 //-----------------------------------------------------------------------------------------
 //--------------------------FUNCIONARIOS---------------------------------------------------        
 //----------------------------------------------------------------------------------------- 
