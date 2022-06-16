@@ -51,9 +51,9 @@
                         result.Seats[seatKeyFromPosition(row,col)] = EMPTY;
                     }
                 }
-                result.Seats[seatKeyFromPosition(0,0)] = RESERVED;
-                result.Seats[seatKeyFromPosition(0,1)] = RESERVED;
-                result.Seats[seatKeyFromPosition(1,3)] = BOUGHT;
+                //result.Seats[seatKeyFromPosition(0,0)] = RESERVED;
+                //result.Seats[seatKeyFromPosition(0,1)] = RESERVED;
+                //result.Seats[seatKeyFromPosition(1,3)] = BOUGHT;
                 //Valida tenho de dar reservado
                 return result;
             }
@@ -102,7 +102,7 @@
                             // render column headers as numbers...
                             ctx.fillStyle = "black";
                             ctx.textAlign = "center";
-                            ctx.fillText(col.toString(),r.TopLeft.X+center.X,r.TopLeft.Y+center.Y+6);
+                            ctx.fillText((col+1).toString(),r.TopLeft.X+center.X,r.TopLeft.Y+center.Y+6);
                         }
                         else if(col == -1){
                             // render row header
@@ -121,11 +121,12 @@
         </script>
     </head>
     
-    <body onload="renderSeatplan(getSeatInfo(10,10));">
+    <body onload="renderSeatplan(getSeatInfo({{$num_filas}},{{$num_pos}}));">
         <div class="container text-center">
             <h3 class="align-middle"><strong><h1 class="align-middle">Plano da Sala</h1></strong></h3>
         
         <div class="container text-center">
+            <p><h4 class="align-middle" style="border-style: solid">Tela</h4>
             <canvas id="seatplan" width="640" height="480"></canvas>   
         </div>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{{ route('carrinho.store_sessao', $sessao)}}" method="POST">
