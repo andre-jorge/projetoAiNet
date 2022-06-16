@@ -13,6 +13,7 @@
    <body>
       <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
          <!-- Navbar Brand-->
+         <img class="rounded" style="max-height: 25px; max-width: 25px;" src="/storage/logo.png" alt="..." />
          <a class="navbar-brand ps-3" href="/">CineMagic</a>
          <!-- Sidebar Toggle-->
          <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
