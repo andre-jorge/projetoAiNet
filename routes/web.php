@@ -52,20 +52,19 @@ Route::post('email/mailable', [EmailController::class, 'send_email_with_mailable
 //--------------------FUNCIONARIOS VALIDA SESSOES------------------------------------------
 Route::get('funcionario/sessoes', [SessoesController::class, 'funcionarioSessoes'])
 ->middleware('auth')->name('sessoes.funcionario.index')
-//->middleware('can:viewFuncionario,App\Models\User')
-; //sessoes
+->middleware('can:viewFuncionario,App\Models\User'); //sessoes
 
 Route::get('funcionario/sessoes/{sessao}', [SessoesController::class, 'funcionarioValidarSessoes'])
 ->middleware('auth')->name('sessoes.funcionario.validarSessao')
-//->middleware('can:viewFuncionario,App\Models\User')
+->middleware('can:viewFuncionario,App\Models\User')
 ; 
 Route::get('funcionario/sessoes/validaBilhete/{bilhete}', [SessoesController::class, 'validaBilhete'])
 ->middleware('auth')->name('sessoes.funcionario.validaBilhete')
-//->middleware('can:viewFuncionario,App\Models\User')
+->middleware('can:viewFuncionario,App\Models\User')
 ; 
 Route::get('funcionario/sessoes/bilheteId/{sessao}', [SessoesController::class, 'validaBilhetePorId'])
 ->middleware('auth')->name('sessoes.funcionario.validaBilhetePorId')
-//->middleware('can:viewFuncionario,App\Models\User')
+->middleware('can:viewFuncionario,App\Models\User')
 ; 
 //----------END------------FUNCIONARIOS VALIDA SESSOES----------------END-----------------
 
@@ -107,27 +106,27 @@ Route::get('admin/recuperar/salas/{salas}', [SalasController::class, 'sala_recup
 
 Route::get('admin/salas', [SalasController::class, 'index'])
 ->middleware('auth')->name('salas.index')
-//->middleware('can:viewAny,App\Models\Sala')
+->middleware('can:viewAdmin,App\Models\User')
 ; //salas
 
 Route::get('admin/salas/criar', [SalasController::class, 'create'])
 ->middleware('auth')->name('salas.create')
-//->middleware('can:viewAny,App\Models\Sala')
+->middleware('can:viewAdmin,App\Models\User')
 ;  //criar filme
 
 Route::post('admin/salas', [SalasController::class, 'store'])
 ->middleware('auth')->name('salas.store')
-//->middleware('can:viewAny,App\Models\Sala')
+->middleware('can:viewAdmin,App\Models\User')
 ;  // guardar filmes
 
 Route::get('admin/salas/{salas}', [SalasController::class, 'edit'])
 ->middleware('auth')->name('salas.edit')
-//->middleware('can:viewAny,App\Models\Sala')
+->middleware('can:viewAdmin,App\Models\User')
 ;  // editar sala
 
 Route::put('admin/salas/{salas}', [SalasController::class, 'update'])
 ->middleware('auth')->name('salas.update')
-//->middleware('can:viewAny,App\Models\Sala')
+->middleware('can:viewAdmin,App\Models\User')
 ; 
 
 //-----------------------------------------------------------------------------
@@ -191,56 +190,60 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
 //------------------USERS----------------------
 
 Route::get('user', [usersController::class, 'index'])
-        ->middleware('auth')->name('users.index');
-        //->middleware('can:viewAny,App\Models\Cliente');// admin filmes
+        ->middleware('auth')->name('users.index')
+        ->middleware('can:viewCliente,App\Models\User')
+        ;// admin filmes
 
 Route::get('admin/clientes', [usersController::class, 'index_admin'])
-        ->middleware('auth')->name('users.admin');
-        //->middleware('can:viewAny,App\Models\User');
+        ->middleware('auth')->name('users.admin')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
 
 Route::get('user/recibos', [usersController::class, 'recibos'])
-        ->middleware('auth')->name('users.recibos');
-        //->middleware('can:viewAny,App\Models\Cliente');
+        ->middleware('auth')->name('users.recibos')
+        ->middleware('can:viewCliente,App\Models\User')
+        ;
 
 //------------------------FUNCSS-------------------------------------
 Route::get('admin/recuperar/funcionarios/{user}', [usersController::class, 'funcionario_recuperar'])
-        ->middleware('auth')->name('users.funcionarios.recuperar');
+        ->middleware('auth')->name('users.funcionarios.recuperar')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
 
 
 Route::get('admin/funcionarios', [usersController::class, 'funcionarios'])
         ->middleware('auth')->name('users.funcionarios.index')
-        ->middleware('can:viewAny,App\Models\Cliente');
+        ->middleware('can:viewAdmin,App\Models\User');
 
 Route::get('admin/funcionarios/criar', [usersController::class, 'funcionario_create'])
         ->middleware('auth')->name('users.funcionarios.create')
-        //->middleware('can:viewAny,App\Models\User')
+        ->middleware('can:viewAdmin,App\Models\User')
         ; 
         
 Route::post('admin/funcionarios', [usersController::class, 'funcionario_store'])
         ->middleware('auth')->name('users.funcionarios.store')
-        //->middleware('can:viewAny,App\Models\User')
+        ->middleware('can:viewAdmin,App\Models\User')
         ;  
 
 Route::get('admin/funcionarios/{user}/inativar', [usersController::class, 'funcionario_inativar'])
-        ->middleware('auth')->name('users.funcionarios.inativar');
-        //->middleware('can:viewAny,App\Models\User'); 
+        ->middleware('auth')->name('users.funcionarios.inativar')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ; 
 
 Route::get('admin/funcionarios/{user}', [usersController::class, 'funcionario_edit'])
         ->middleware('auth')->name('users.funcionarios.edit')
-        //->middleware('can:viewAny,App\Models\User')
+        ->middleware('can:viewAdmin,App\Models\User')
         ;  
         
 Route::put('admin/funcionarios/{user}', [usersController::class, 'funcionario_update'])
         ->middleware('auth')->name('users.funcionarios.update')
-        //->middleware('can:viewAny,App\Models\User')
+        ->middleware('can:viewAdmin,App\Models\User')
         ; 
         
 Route::delete('admin/funcionarios/{user}', [usersController::class, 'funcionario_destroy'])
-        ->middleware('auth')->name('users.funcionarios.destroy');
-        //->middleware('can:viewAny,App\Models\User');
-
-
-        //->middleware('can:viewAny,App\Models\User'); 
+        ->middleware('auth')->name('users.funcionarios.destroy')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
         
         
 //---------------------------------------------------------
@@ -250,15 +253,15 @@ Route::delete('admin/funcionarios/{user}', [usersController::class, 'funcionario
 
 Route::get('recibos/bilhete/{recibo}', [PdfController::class, 'geraPdfBilhete'])
         ->middleware('auth')->name('pdf.bilhete')
-        ->middleware('can:viewAny,App\Models\Recibos');
+        ->middleware('can:viewAdminCliente,App\Models\User');
 
 Route::get('recibos', [PdfController::class, 'indexRecibo'])
         ->middleware('auth')->name('pdf.indexRecibo')
-        ->middleware('can:viewAny,App\Models\Recibos');
+        ->middleware('can:viewAdminCliente,App\Models\User');
 
 Route::get('recibos/{recibo}', [PdfController::class, 'geraPdfRecibo'])
         ->middleware('auth')->name('pdf.recibo')
-        ->middleware('can:viewAny,App\Models\Recibos');
+        ->middleware('can:viewAdminCliente,App\Models\User');
 
 
 
