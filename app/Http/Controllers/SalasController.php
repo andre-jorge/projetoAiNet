@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 use App\Models\Salas;
 use App\Models\Lugares;
+use App\Models\Sessao;
 use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 //problema com timestamp estava sempre a colocar
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -39,7 +45,6 @@ class SalasController extends Controller
     public function store(Request $request)
    {
       $ultimaSala = Salas::orderBy('id', 'desc')->first();
-      $ultimaSalaId = $ultimaSala->id+1;
       //dd($request);
       $validatedData = $request->validate([
          'nome' => 'required|max:50',
@@ -50,7 +55,7 @@ class SalasController extends Controller
         //dd($newSala->custom);
         $newSala->save();
         
-        SalasController::CriaLugares($request->filas,$request->lugares,$ultimaSalaId);
+        SalasController::CriaLugares($request->filas,$request->lugares,$ultimaSala->id+1);
                     
         //DB::table('filmes')->insert($validatedData);
         return redirect()->route('salas.index')
@@ -90,23 +95,43 @@ class SalasController extends Controller
     //         ->with('alert-type', 'success');
     // }
 
-    public function sala_recuperar(Request $request, Salas $salas)
+    public function sala_recuperar(Request $request,Salas $salas)
     {
-      //dd($salas);
-      $sala = Salas::withTrashed()->find($salas->id);
-      //recuperar/eleminar
-      if (is_null($salas->deleted_at)) {
-        $salas->delete();
-        return redirect()->back()
-              ->with('alert-msg', 'Sala '.$salas->name.' eliminada com sucesso!')
-              ->with('alert-type', 'success');
-      }else{
-      if ($salas->deleted_at != null  ) {
-        $salas->restore();
+      $currentTime = Carbon::now();
+      $currentTime = $currentTime->toDateString();
+      $apagar = Salas::withTrashed()->find($salas->id);
+      $ocupacaoSalas = Sessao::where('data','>', $currentTime)
+                             ->where('sala_id', $apagar->id)->first();
+                             
+      if (!isset($ocupacaoSalas)) {
+        if (is_null($apagar->deleted_at)) {
+          $lugares = Lugares::where('sala_id',$apagar->id)->get();
+          //dd($lugares);
+          foreach ($lugares as $lugar) {
+            $lugar->delete();
+          }
+          $apagar->delete();
           return redirect()->back()
-                ->with('alert-msg', 'Sala '.$salas->name.' recuperada com sucesso!')
+                ->with('alert-msg', 'Sala '.$apagar->name.' eliminada com sucesso!')
                 ->with('alert-type', 'success');
-      } }
+        }else{
+          $lugares = Lugares::withTrashed()->where('sala_id',$apagar->id)->get();
+          foreach ($lugares as $lugar) {
+            $lugar->restore();
+          }
+          $apagar->restore();
+            return redirect()->back()
+                  ->with('alert-msg', 'Sala '.$apagar->name.' recuperada com sucesso!')
+                  ->with('alert-type', 'success');
+                }
+      }else{
+        return redirect()->back()
+                  ->with('alert-msg', 'Sala '.$apagar->name.' com sessoes a decorrer!')
+                  ->with('alert-type', 'danger');
+      }
+      
+      //recuperar/eleminar
+      
     }
 }
 

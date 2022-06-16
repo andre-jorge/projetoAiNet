@@ -99,28 +99,33 @@ Route::delete('admin/adminsessoes/{sessao}', [SessoesController::class, 'admin_d
 
 //---------------------Salas-------------------------------------------------
 Route::get('admin/recuperar/salas/{salas}', [SalasController::class, 'sala_recuperar'])
-        ->middleware('auth')->name('salas.index.recuperar');
+        ->name('salas.index.recuperar');
 
 
 Route::get('admin/salas', [SalasController::class, 'index'])
 ->middleware('auth')->name('salas.index')
-->middleware('can:viewAny,App\Models\Sala'); //salas
+//->middleware('can:viewAny,App\Models\Sala')
+; //salas
 
 Route::get('admin/salas/criar', [SalasController::class, 'create'])
 ->middleware('auth')->name('salas.create')
-->middleware('can:viewAny,App\Models\Sala');  //criar filme
+//->middleware('can:viewAny,App\Models\Sala')
+;  //criar filme
 
 Route::post('admin/salas', [SalasController::class, 'store'])
 ->middleware('auth')->name('salas.store')
-->middleware('can:viewAny,App\Models\Sala');  // guardar filmes
+//->middleware('can:viewAny,App\Models\Sala')
+;  // guardar filmes
 
 Route::get('admin/salas/{salas}', [SalasController::class, 'edit'])
 ->middleware('auth')->name('salas.edit')
-->middleware('can:viewAny,App\Models\Sala');  // editar sala
+//->middleware('can:viewAny,App\Models\Sala')
+;  // editar sala
 
 Route::put('admin/salas/{salas}', [SalasController::class, 'update'])
 ->middleware('auth')->name('salas.update')
-->middleware('can:viewAny,App\Models\Sala'); 
+//->middleware('can:viewAny,App\Models\Sala')
+; 
 
 //-----------------------------------------------------------------------------
 

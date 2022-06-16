@@ -36,9 +36,9 @@
                 <td>{{$user->Cliente->ref_pagamento ?? ' '}}</td>
                 <td>
                 @if($user->bloqueado == 1)
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">&nbsp&nbsp&nbspBloquear&nbsp&nbsp&nbsp</a>
+                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">&nbsp&nbsp&nbspDesbloquear&nbsp&nbsp&nbsp</a>
                 @else
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbsp&nbspDesbloquear&nbsp&nbsp&nbsp</a>
+                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbsp&nbspBloquear&nbsp&nbsp&nbsp</a>
                 @endif    
                 </td>
                 <td> 

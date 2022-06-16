@@ -79,7 +79,7 @@ class SessoesController extends Controller
         //dd($array1[0]);
         return view('sessoes.lugares')
         ->with('carrinho', session('carrinho') ?? [])
-                    ->with('lugaresOcupados', $array1)
+                    //->with('lugaresOcupados', $array1)
                     ->with('sessao', $sessao)
                     ->with('lugares', $lugares);
     }
