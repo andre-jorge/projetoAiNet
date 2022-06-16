@@ -24,9 +24,9 @@ class EnvioRecibo extends Mailable
         $this->recibo = $recibo;
     }
 
-    public function build($recibo)
+    public function build()
     {
-        //$recibo = Recibo::orderBy('id','desc')->first();
+        $recibo = Recibo::orderBy('id','desc')->first();
         return $this->from('noreply@cinemagic.com')
             ->subject('A sua compra foi efetuada com sucesso')
             ->view('emails.compra.sucesso')
@@ -36,7 +36,8 @@ class EnvioRecibo extends Mailable
             //     'reciboName' => 'John Doe',
             //     'reciboPrice' => 126.5,
             // ])
-            ->attachFromStorage('pdf_recibos/1.pdf');
+            ->attachFromStorage('pdf_recibos/'.$recibo->id.'.pdf');
+        return back();
     }
 
     /**

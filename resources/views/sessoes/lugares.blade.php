@@ -164,12 +164,12 @@
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{{ route('carrinho.store_sessao', $sessao)}}" method="POST">
         @csrf    
         <div class="row mb-2">
-            <div class="col-sm-5 col-md-5">
+            <div class="col-sm-4 col-md-4">
                 <!-- STRING -->
                 <h5 class="align-middle"><strong><h5 class="align-middle">Lugar</h1></strong></h3>
             <!-- STRING --> 
             </div>
-            <div class="col-sm-5 col-md-5">
+            <div class="col-sm-4 col-md-4">
                 <!-- Tipo -->
                 <select class="form-select" aria-label=".form-select-sm example" name="idlugar">
                     @foreach ($lugares as $lugar)
@@ -178,8 +178,8 @@
                 </select>
                 <!-- Tipo -->
             </div> 
-            <div class="col-sm-2 col-md-2 .ml-md-auto" >
-                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+            <div class="col-sm-4 col-md-4 .ml-md-auto" >
+                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Adicionar ao Carrinho</button>
             </div>
         </div>
     </form>

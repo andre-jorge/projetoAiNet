@@ -6,12 +6,15 @@ use App\Models\Configuracao;
 use App\Models\Sessao;
 use App\Models\Lugares;
 use App\Models\Recibo;
+use App\Models\User;
 use App\Models\Bilhetes;
-use App\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Services\Payment;
+use App\Notifications\ReciboPago;
+use App\Mail\EnvioRecibo;
+use PDF;
 
 class CarrinhoController extends Controller
 {
@@ -132,6 +135,8 @@ class CarrinhoController extends Controller
         $currentTime = $currentTime->toDateString();
         $userInfo = auth()->user();
 
+        
+
         //se nao exister user logado
         if (auth()->user() === null) {
             return redirect()->route('carrinho.index')
@@ -196,6 +201,18 @@ class CarrinhoController extends Controller
 
         //dd($count);
         //---------------------Emitir Recibo--------------------
+        //gravar pdf
+        //guardar pdf em app\pdf_recibos com nome (1.pdf)
+        //possivel implementacao string random
+        $last = Recibo::orderBy('id', 'desc')->first();
+        //$recibo = Recibo::where('cliente_id',$userInfo->id)->where('id',$last->id)->first();
+        //dd($last->id+1);
+        $novoIdRecibo = $last->id+1;
+
+        $fileStorage = "http://projeto.test/recibos/bilhete/" . $novoIdRecibo . '.' . 'pdf' ;
+        $fileName = $novoIdRecibo . '.' . 'pdf' ;
+        
+
         $newRecibo = ([
             'cliente_id' => $userInfo->id,
             'data' => $currentTime,
@@ -206,8 +223,11 @@ class CarrinhoController extends Controller
             'nome_cliente' => $userInfo->name,
             'tipo_pagamento' => $metodoPagamento,
             'ref_pagamento' => $ref_pagamento,
+            'recibo_pdf_url' => $fileStorage,
         ]);
-        $Recibo = Recibo::create($newRecibo);
+        $recibo = Recibo::create($newRecibo);
+        
+        
         //-----------------------END RECIBOS-------------------------
         //------------------------------------------------------
         //---------------------Emitir Bilhetes--------------------
@@ -233,21 +253,17 @@ class CarrinhoController extends Controller
         $request->session()->forget('countInt');
         $request->session()->forget('total');
         $request->session()->forget('carrinho');
-        $user = auth()->user();
-        $last = Recibo::orderBy('id', 'desc')->first();
-        $recibo = Recibo::where('cliente_id',$userInfo->id)->where('id',$last->id)->first();
+        
         //dd($recibo);
-        // Mail::to($userInfo->email)
-        //     ->send(new EnvioRecibo($recibo));
-
-
-
-
-
-
-
-
-
+        // enviar por email
+        $user = auth()->user();
+        $recibo = Recibo::findOrFail($novoIdRecibo);
+        $sessoes = Bilhetes::where('recibo_id',$recibo->id)->get();
+        $pdf = pdf::loadView('pdf.recibo', compact('recibo', 'sessoes'));
+        $path = storage_path('app\pdf_recibos');
+        $pdf->save($path . '/' . $fileName);
+        Mail::to($user)->send(new EnvioRecibo($recibo));
+        
         return view('carrinho.carrinhoValidado')
                         ->with('recibo', $recibo)
                         ->with('alert-msg', 'Compra efetuado com Sucesso')
@@ -258,9 +274,10 @@ class CarrinhoController extends Controller
     {
         $user = auth()->user();
         $last = Recibo::where('cliente_id',$user)->last('id')->pluck('id');
-        $recibos = Recibo::where('cliente_id',$user)->where('id',$last);
+        $recibo = Recibo::where('cliente_id',$user)->where('id',$last);
+        
         //dd($recibos);
-        return view('carrinho.carrinhoValidado', compact('recibos'));
+        return view('carrinho.carrinhoValidado', compact('recibo'));
     }
 
     public function destroy(Request $request)

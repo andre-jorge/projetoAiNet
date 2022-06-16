@@ -11,6 +11,7 @@ use App\Http\Controllers\RecibosController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\ConfiguracoesController;
+use App\Http\Controllers\EmailController;
 use App\Services\Payment;
 
 
@@ -42,6 +43,9 @@ Route::get('sessoesFilme/{filme}', [SessoesController::class, 'index'])
 
 Route::get('sessoes/lugares/{sessao}', [SessoesController::class, 'lugares'])
         ->name('sessoes.lugares');//lugares sessoes
+
+Route::post('email/notification/1', [EmailController::class, 'send_email_with_notification1'])
+        ->name('email.send_with_notification1');
 
 Route::post('email/mailable', [EmailController::class, 'send_email_with_mailable'])
         ->name('email.send_with_mailable');

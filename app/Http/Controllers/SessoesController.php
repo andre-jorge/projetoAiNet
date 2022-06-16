@@ -86,8 +86,8 @@ class SessoesController extends Controller
         //dd($data);
         for ($i=0; $i < $totalLugaresDisponiveis; $i++) { 
             //MOSTRA STRINC COM LUGARES OCUPADOS
-            echo $data['fila'][$i];
-            echo $data['posicao'][$i];
+            // echo $data['fila'][$i];
+            // echo $data['posicao'][$i];
 
             //ARRAY COM LUGARES OCUPADOS
             $array1[$i] = array($data['fila'][$i] => $data['posicao'][$i]);
