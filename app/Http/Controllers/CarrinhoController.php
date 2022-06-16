@@ -7,7 +7,6 @@ use App\Models\Sessao;
 use App\Models\Lugares;
 use App\Models\Recibo;
 use App\Models\Bilhetes;
-use App\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
