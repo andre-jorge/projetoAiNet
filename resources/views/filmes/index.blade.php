@@ -3,7 +3,7 @@
 @section('content')
 <!--  Navbar Search -->
 <div class="container text-center"
-<h3 class="align-middle"><strong><h1 class="align-middle">Filme em Exebição</h1></strong></h3>
+<h3 class="align-middle"><strong><h1 class="align-middle">Filme em Exibição</h1></strong></h3>
 </div>
 <br>
 <br>

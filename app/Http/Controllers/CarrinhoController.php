@@ -8,6 +8,7 @@ use App\Models\Lugares;
 use App\Models\Recibo;
 use App\Models\Bilhetes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Services\Payment;
 
@@ -235,6 +236,18 @@ class CarrinhoController extends Controller
         $last = Recibo::orderBy('id', 'desc')->first();
         $recibo = Recibo::where('cliente_id',$userInfo->id)->where('id',$last->id)->first();
         //dd($recibo);
+
+        Mail::to($user)
+            ->send(new EnvioRecibo($recibo));
+
+
+
+
+
+
+
+
+
         return view('carrinho.carrinhoValidado')
                         ->with('recibo', $recibo)
                         ->with('alert-msg', 'Compra efetuado com Sucesso')

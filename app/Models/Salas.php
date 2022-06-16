@@ -10,6 +10,7 @@ class Salas extends Model
 {
     use HasFactory, SoftDeletes;
     public $timestamps = false;
+    protected $softDelete = true;
 
     protected $fillable = [
         'nome','custom'];
