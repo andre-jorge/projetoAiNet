@@ -143,14 +143,14 @@ class CarrinhoController extends Controller
             ->with('alert-type', 'danger');
         }
         //VISA
-        if ($request->ccnumber != null && $request->cccvv != null) {
-            //dd(Payment::payWithVisa($request->ccnumber,$request->cccvv));
-            if(Payment::payWithVisa($request->ccnumber,$request->cccvv)){
+        if ($request->numerocard != null && $request->cvv != null) {
+            //dd(Payment::payWithVisa($request->numerocard,$request->cvv));
+            if(Payment::payWithVisa($request->numerocard,$request->cvv)){
                 $metodoPagamento = 'VISA';
                 $nomeCartao = $request->ccname;
-                $ref_pagamento = $request->ccnumber;
+                $ref_pagamento = $request->numerocard;
                 $expirationCartao = $request->ccexpiration;
-                $cvvCartao = $request->cccvv;
+                $cvvCartao = $request->cvv;
                 $nif = $request->nif;
             }else{
                 return back()

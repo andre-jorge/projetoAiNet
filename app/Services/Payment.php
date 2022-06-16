@@ -17,7 +17,7 @@ class Payment
         if (!$card_number) {
             return false;
         }
-        if (($card_number<1000000000000000) || ($card_number>1000000000000000))  {
+        if (($card_number<1000000000000000) || ($card_number>9999999999999999))  {
             return false;
         }
         $cvc_code = filter_var($cvc_code, FILTER_VALIDATE_INT);

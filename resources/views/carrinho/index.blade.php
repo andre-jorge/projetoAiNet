@@ -112,8 +112,8 @@
               </div>
             </div>
             <div class="col-md-6 mb-3">
-              <label for="ccnumber">Numero Cartão Credito</label>
-              <input type="text" class="form-control" name="ccnumber" id="ccnumber" placeholder="" required="">
+              <label for="numerocard">Numero Cartão Credito</label>
+              <input type="text" class="form-control" name="numerocard" id="numerocard" placeholder="" required="">
               <div class="invalid-feedback">
                 Numero do cartão obrigatorio
               </div>
@@ -128,8 +128,8 @@
               </div>
             </div>
             <div class="col-md-3 mb-3">
-              <label for="cc-cvv">CVV</label>
-              <input type="text" class="form-control" name="cccvv" id="cc-cvv" placeholder="xxx" required="">
+              <label for="cvv">CVV</label>
+              <input type="text" class="form-control" name="cvv" id="cvv" placeholder="xxx" required="">
               <div class="invalid-feedback">
                 CVV obrigatorio
               </div>
