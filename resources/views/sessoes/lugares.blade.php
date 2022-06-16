@@ -10,6 +10,26 @@
             var RESERVED = 1; // reserved but not yet paid for.
             var BOUGHT = 2; // bought and paid for.
 
+            const alfabeto = new Map();
+                alfabeto.set('A',0);
+                alfabeto.set('B',1);
+                alfabeto.set('C',2);
+                alfabeto.set('D',3);
+                alfabeto.set('E',4);
+                alfabeto.set('F',5);
+                alfabeto.set('G',6);
+                alfabeto.set('H',7);
+                alfabeto.set('I',9);
+                alfabeto.set('J',10);
+                alfabeto.set('K',11);
+                alfabeto.set('L',12);
+                alfabeto.set('M',13);
+                alfabeto.set('N',14);
+
+                var lugares = JSON.parse("{{ json_encode($lugaresOcupados) }}");
+
+            
+
             function Point(x,y) {
                 return { X: x, Y: y }
             }
@@ -46,11 +66,21 @@
             }
             function getSeatInfo(nrows,ncolumns) {
                 var result = { NRows: nrows, NColumns: ncolumns, Seats : {} };
+                
                 for(row = 0; row < nrows; row++) {
-                    for( col = 0; col < ncolumns; col++ ) {
-                        result.Seats[seatKeyFromPosition(row,col)] = EMPTY;
+                    for( col = 0; col < ncolumns; col++ ) {                    
+                        if(alfabeto.get('lugares') == row && lugares == col ){
+                            result.Seats[seatKeyFromPosition(row ,(col-1))] = EMPTY
+                        }
+                        else{
+                            result.Seats[seatKeyFromPosition(row ,(col))] = EMPTY
+                        }                     
+                        
+                        
                     }
                 }
+
+                
                 //result.Seats[seatKeyFromPosition(0,0)] = RESERVED;
                 //result.Seats[seatKeyFromPosition(0,1)] = RESERVED;
                 //result.Seats[seatKeyFromPosition(1,3)] = BOUGHT;
@@ -85,6 +115,8 @@
                     , Math.floor(rcContent.Size.Height / (nrows + 1))
                 );
                 ctx.font = "30px Arial";
+
+               
 
                 for(row = -1; row < nrows; row++) {
                     for(col = -1; col < ncolumns; col++ ) {
