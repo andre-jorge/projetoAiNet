@@ -216,7 +216,8 @@ class SessoesController extends Controller
         $sessoes = Sessao::paginate(8);
         $listaFilmes = Filme::pluck('id', 'Titulo');
         $listaSalas = Salas::pluck('id', 'nome');
-         return view('sessoes.admin.create', compact('sessoes','listaSalas', 'listaFilmes'));
+        $continuar = 0;
+         return view('sessoes.admin.create', compact('sessoes','continuar','listaSalas', 'listaFilmes'));
       }
 
 
@@ -225,15 +226,33 @@ class SessoesController extends Controller
     {
         //dd($request);
         //$todassessoes= Sessao::all();
+        
         $validatedData = $request->validate([
             'filme_id' => 'required|max:500',
             'sala_id' => 'required|max:2',
             'data' => 'required|date',
-            'horario_inicio' => 'required|date_format:H:i:s']);
+            'horario_inicio' => 'required|date_format:H:i']);
             $newSessao = Sessao::create($validatedData);
-            return redirect()->route('filme.index')
+
+        if ($request->continuar == 1) {
+                $sessoes = Sessao::paginate(8);
+                $listaFilmes = Filme::pluck('id', 'Titulo');
+                $listaSalas = Salas::pluck('id', 'nome');
+                $continuar = 1;
+                return view('sessoes.admin.create')
+                    ->with('sessoes', $sessoes)
+                    ->with('continuar', $continuar)
+                    ->with('listaSalas', $listaSalas)
+                    ->with('listaFilmes', $listaFilmes)
+                    ->with('alert-msg', 'Sessao criada com sucesso')
+                    ->with('alert-type', 'success');
+            }else{
+                $filmes = Filme::paginate(8);
+                $listaGeneros = Genero::all();   
+                return view('filmes.admin', compact('filmes','listaGeneros'))
                 ->with('alert-msg', 'Sessao criada com sucesso')
                 ->with('alert-type', 'success');
+            }
     }
 
 

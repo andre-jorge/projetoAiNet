@@ -9,7 +9,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="horario_inicio" id="horario_inicio" type="time" step="2" value="{{old('horario_inicio')}}" placeholder="Hora">
+                        <input class="form-control" name="horario_inicio" id="horario_inicio" type="time" value="{{old('horario_inicio')}}" placeholder="Hora">
                         @error('horario_inicio')
                             <div class="error">{{ $message }}</div>
                         @enderror
@@ -55,6 +55,25 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                        Continuar a inserir sessoes?
+                        <a value="{{$continuar}}"></a>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="continuar" id="gridRadios1" value="1" @if($continuar == 1) checked @endif>
+                            <label class="form-check-label" for="continuar">
+                                Sim
+                            </label>
+                            </div>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="continuar" id="gridRadios2" value="0" @if($continuar == 0) checked @endif >
+                            <label class="form-check-label" for="continuar">
+                                Não
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <div class="mt-4 mb-0">
                 <div class="d-grid">
                     <button class="btn btn-primary btn-block" type="submit">Criar Sessao</button>
