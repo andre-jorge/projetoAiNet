@@ -48,10 +48,10 @@ $height = '450px'; ?>
                   <td name="horainicio" value="<?= $sessao->horario_inicio ?>"><?= $sessao->horario_inicio ?></td>
                   <td><?= $sessao->Salas->nome ?></td>
                   <td> 
-                  @php echo App\Http\Controllers\SessoesController::ContaBilhetes($filme->id,$sessao->data,$sessao->horario_inicio);  @endphp
+                  @php echo App\Http\Controllers\SessoesController::ContaBilhetes($sessao->id);  @endphp
                   </td>
                   <td> 
-                  @php echo ($sessao->Salas->custom)-(App\Http\Controllers\SessoesController::ContaBilhetes($filme->id,$sessao->data,$sessao->horario_inicio));  @endphp
+                  @php echo ($sessao->Salas->custom)-(App\Http\Controllers\SessoesController::ContaBilhetes($sessao->id));  @endphp
                   </td>
                   <td><?= $sessao->Salas->custom ?></td>
                   <td>

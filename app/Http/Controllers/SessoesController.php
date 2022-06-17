@@ -26,6 +26,8 @@ class SessoesController extends Controller
                                     ->where('data','>', $currentTime)
                                     ->paginate(5);
                                     //dd($sessoesFilme);
+        
+        //dd($contaBilhetes);
         return view('sessoes.index')
                     ->with('filme', $filme)
                     ->with('sessoesFilme', $sessoesFilme);
@@ -36,18 +38,19 @@ class SessoesController extends Controller
 
 
     //FUNÇAO PARA CONTAR BILHETES E DIZER LOTAÇÃO
-    public static function ContaBilhetes($arg1,$arg2,$args3){
-        $sessoesFilmeBilhetes=DB::table('sessoes')
-                        ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
-                        ->leftJoin('bilhetes', 'bilhetes.sessao_id', '=', 'sessoes.id')
-                        ->where('sessoes.filme_id', $arg1)
-                        ->where('sessoes.data', $arg2)
-                        ->where('sessoes.horario_inicio', $args3)
-                        ->count();
+    public static function ContaBilhetes($arg1){
+        $sessoesFilmeBilhetes = Bilhetes::where('sessao_id',$arg1)->count();
+        // $sessoesFilmeBilhetes=DB::table('sessoes')
+        //                 ->leftJoin('salas', 'salas.id', '=', 'sessoes.sala_id')
+        //                 ->leftJoin('bilhetes', 'bilhetes.sessao_id', '=', 'sessoes.id')
+        //                 ->where('sessoes.filme_id', $arg1)
+        //                 ->where('sessoes.data', $arg2)
+        //                 ->where('sessoes.horario_inicio', $args3)
+        //                 ->count();
         return $sessoesFilmeBilhetes;
     }
 
-    public function lugares(Sessao $sessao)
+    public function lugares(Request $request, Sessao $sessao)
     {        
         //TAMANHO SALA
         $num_filas=Lugares::where('sala_id', $sessao->sala_id)
@@ -68,9 +71,34 @@ class SessoesController extends Controller
                          ->leftJoin('bilhetes', 'bilhetes.lugar_id', '=', 'lugares.id')
                          ->where('sessao_id', $sessao->id)
                          ->get();
-
-        $lugares=$sessao->Salas->Lugares->whereNotIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
-        //dd($lugares2=$sessao->Bilhetes->pluck('lugar_id'));
+        $carrinho = $request->session()->get('carrinho', [] );
+        //dd($carrinho);
+        $lugares2=$sessao->Bilhetes->pluck('lugar_id');
+        
+        //funcao para saber se tem uma sessao dessas no carinho
+        //nao deixa duplicar bilhetes no carrinho
+        //dd(count($carrinho)+1);
+        if (count($carrinho)+1 == 1) {
+            
+            $array1[0] = array(0 => 0);
+            $teste = $lugares2;
+        }else{
+            for ($i=1 ; $i < count($carrinho)+1 ; $i++) { 
+                if ($carrinho[$i]['id'] == $sessao->id) {
+                    $array1[$carrinho[$i]['idLugar']] = array($carrinho[$i]['idLugar'] => $carrinho[$i]['idLugar']);
+                    $teste = $lugares2->push($carrinho[$i]['idLugar']);
+                }else{
+                    $teste = $lugares2;
+                    $array1[0] = array(0 => 0);
+                }
+            }
+            
+            //dd($teste);
+        }
+        //dd($lugares2->toArray());
+        $lugares=$sessao->Salas->Lugares
+                        ->whereNotIn('id', $lugares2);
+                        //dd($lugares);
         $lugaresOcupados=$sessao->Salas->Lugares->whereIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
         //$fila = $lugaresOcupados->pluck('fila');
         //$posicao = $lugaresOcupados->pluck('posicao');
