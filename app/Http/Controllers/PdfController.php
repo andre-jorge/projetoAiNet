@@ -55,7 +55,8 @@ class PdfController extends Controller
         if ($request->clientenome != null) {
             $clienteid = User::where('name', 'like', '%' . $request->clientenome . '%')
                         ->pluck('id');
-            $recibos = Recibo::where('cliente_id',$clienteid)->paginate(8);
+
+            $recibos = Recibo::whereIn('cliente_id',$clienteid)->paginate(8);
             return view('pdf.indexRecibo', compact('recibos'));
         }
         //nif
