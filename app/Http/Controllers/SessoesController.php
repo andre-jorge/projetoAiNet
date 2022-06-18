@@ -72,7 +72,8 @@ class SessoesController extends Controller
                          ->where('sessao_id', $sessao->id)
                          ->get();
         $carrinho = $request->session()->get('carrinho', [] );
-        //dd($carrinho);
+        $carrinhoCount = $request->session()->get('count');
+        //dd($carrinhoCount);
         $lugares2=$sessao->Bilhetes->pluck('lugar_id');
         
         //funcao para saber se tem uma sessao dessas no carinho
@@ -83,22 +84,20 @@ class SessoesController extends Controller
             $array1[0] = array(0 => 0);
             $teste = $lugares2;
         }else{
-            for ($i=1 ; $i < count($carrinho)+1 ; $i++) { 
-                if ($carrinho[$i]['id'] == $sessao->id) {
-                    $array1[$carrinho[$i]['idLugar']] = array($carrinho[$i]['idLugar'] => $carrinho[$i]['idLugar']);
-                    $teste = $lugares2->push($carrinho[$i]['idLugar']);
-                }else{
-                    $teste = $lugares2;
-                    $array1[0] = array(0 => 0);
+            for ($i=1 ; $i < $carrinhoCount+1 ; $i++) { 
+                if (array_key_exists($i, $carrinho)) {
+                    if ($carrinho[$i]['id'] == $sessao->id ) {
+                        $array1[$carrinho[$i]['idLugar']] = array($carrinho[$i]['idLugar'] => $carrinho[$i]['idLugar']);
+                        $teste = $lugares2->push($carrinho[$i]['idLugar']);
+                    }
                 }
             }
-            
-            //dd($teste);
         }
+        //dd($teste);
         //dd($lugares2->toArray());
         $lugares=$sessao->Salas->Lugares
                         ->whereNotIn('id', $lugares2);
-                        //dd($lugares);
+                        //dd($lugares2);
         $lugaresOcupados=$sessao->Salas->Lugares->whereIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
         //$fila = $lugaresOcupados->pluck('fila');
         //$posicao = $lugaresOcupados->pluck('posicao');
