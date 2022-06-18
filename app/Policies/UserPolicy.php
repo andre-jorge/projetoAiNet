@@ -23,7 +23,7 @@ class UserPolicy
      */
     public function viewAdmin(User $user)
     {
-        return  ($user->tipo == 'A');
+        return  ($user->tipo == 'A') && ($user->bloqueado == '0');
     }
 
     public function viewCliente(User $user)
