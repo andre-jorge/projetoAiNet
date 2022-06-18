@@ -11,7 +11,7 @@ class UserPolicy
     
      public function viewFuncionario(User $user)
     {
-        return  ($user->tipo == 'F') || ($user->tipo == 'A');
+        return  (($user->tipo == 'F') || ($user->tipo == 'A') ) && ($user->bloqueado == '0');
     }
 
 
