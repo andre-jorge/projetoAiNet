@@ -207,6 +207,11 @@ Route::get('user/recibos', [usersController::class, 'recibos'])
         ->middleware('auth')->name('users.recibos')
         ->middleware('can:viewCliente,App\Models\User')
         ;
+//dados clientes update
+ Route::get('user/edit', [usersController::class, 'cliente_update'])
+         ->middleware('auth')->name('users.edit')
+//         //->middleware('can:viewAdmin,App\Models\User')
+         ;
 
 //------------------------FUNCSS-------------------------------------
 Route::get('admin/recuperar/funcionarios/{user}', [usersController::class, 'funcionario_recuperar'])

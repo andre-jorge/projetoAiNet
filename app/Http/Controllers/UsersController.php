@@ -10,7 +10,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -47,9 +47,10 @@ class UsersController extends Controller
                         }
          //Se tiver NIF               
          if($request->nif && $request->nif != null ){
+            $numeroClienteNif = Cliente::where('nif', 'like', '%' . $request->nif . '%')->pluck('id');
             $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
-                           ->Where('nif', 'like', '%' . $request->nif . '%')
+                           ->Where('id',$numeroClienteNif)
                            ->paginate(6, ['*'], 'ativos'); 
                            return view('users.admin')
                                  ->with('dadosClientes', $dadosClientes); 
@@ -141,6 +142,7 @@ class UsersController extends Controller
       $hashedPassword = Hash::make($request->password);
       $lastId = User::latest('id')->first()->id+1;
       $random = Str::random(10);
+      dd($user);
       //valida nome
       if ($request->name == null) {
          return back()
@@ -317,8 +319,54 @@ class UsersController extends Controller
       }    
     }
 
+    //Dados clientes update
+    public function cliente_update(Request $request)
+   {
+      $user = auth()->user();
+      $random = Str::random(10);
+      //dd(strlen($request->nif));
+      //valida se houver alterações
+      if ($request->name == $user->name and $request->nif == $user->Cliente->nif and $request->tipo_pagamento == $user->Cliente->tipo_pagamento and $request->foto_url == null) {
+         return back()
+                ->with('alert-msg', 'Sem dados a alterar')
+                ->with('alert-type', 'success');
+      }
+      
+     
+      //update nome
+      if($request->name){
+         $validatedData = $request->validate(['name' => 'required|max:50']);
+         User::where('id', $user->id)->update(['name' => $validatedData['name']]);
+      }
+      //update nif
+      if($request->nif){
+         if (strlen($request->nif) == 9) {
+         $validatedData = $request->validate(['nif' => 'required']);
+         Cliente::where('id', $user->id)->update(['nif' => $validatedData['nif']]);
+      }else{
+         return back()
+             ->with('alert-msg', 'NIF invalido')
+             ->with('alert-type', 'success');
+      }   
+      }
+      //update nif
+      if($request->tipo_pagamento){
+         Cliente::where('id', $user->id)->update(['tipo_pagamento' => $request->tipo_pagamento]);
+      }
+      //update foto
+      if($request->foto_url){
+         $nameFile = ($user->id . '_'. $random . '.' . $request->foto_url->extension()); 
+         $request->foto_url->move(public_path('storage/fotos'), $nameFile);
+         User::where('id', $user->id)
+              ->update(['foto_url' => $nameFile]);
+      }
 
 
-    
+
+
+        return back()
+            ->with('alert-msg', 'Dados atualizados com sucesso!')
+            ->with('alert-type', 'success');
+    }
 }
 

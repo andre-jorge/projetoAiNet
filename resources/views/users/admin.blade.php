@@ -48,7 +48,7 @@
                     echo $first_word. ' '.$last_word; ?>
                 </td>
                 <td>{{$user->email}}</td>
-                <td>{{$user->nif}}</td>
+                <td>{{$user->Cliente->nif ?? ' '}}</td>
                 <td>{{$user->Cliente->tipo_pagamento ?? ' '}} </td>
                 <td>{{$user->Cliente->ref_pagamento ?? ' '}}</td>
                 @if($user->bloqueado == 0)

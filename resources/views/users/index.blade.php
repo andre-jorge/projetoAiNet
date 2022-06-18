@@ -1,13 +1,14 @@
 @extends('home')
 
 @section('content')  
-     <div class="card-header"><h3 class="text-center font-weight-light my-4">Dados Cliente</h3></div>
-       
+
+<div class="card-header"><h3 class="text-center font-weight-light my-4">Dados Cliente</h3></div> 
     <div class="card-body">
+            <form  action="{{route('users.edit')}}" method="GET">
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="nome" id="idnome" type="select" value="{{$clientes->name}}" placeholder="Nome">
+                        <input class="form-control" name="name" id="name" type="select" value="{{$clientes->name}}" placeholder="Nome">
                         @error('titulo')
                             <div class="error">{{ $message }}</div>
                         @enderror
@@ -16,7 +17,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="nif" id="idemail" type="select" value="{{$clientes->nif}}" placeholder="NIF">
+                        <input class="form-control" name="nif" id="nif" type="select" value="{{$clientes->Cliente->nif}}" placeholder="NIF">
                         @error('email')
                             <div class="error">{{ $message }}</div>
                         @enderror
@@ -26,25 +27,29 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="nome" id="idnome" type="select" value="{{$clientes->tipo_pagamento}}" placeholder="Nome">
+                    <div class="form-floating">
+                        <select class="form-select" name="tipo_pagamento" id="tipo_pagamento">
+                                <option value="NENHUM" @if($clientes->Cliente->tipo_pagamento == null) selected @endif>NENHUM</option>
+                                <option value="MBWAY" @if($clientes->Cliente->tipo_pagamento == 'MBWAY') selected @endif>MBWAY</option>
+                                <option value="VISA" @if($clientes->Cliente->tipo_pagamento == 'VISA') selected @endif>VISA</option>
+                                <option value="PAYPAL" @if($clientes->Cliente->tipo_pagamento == 'PAYPAL') selected @endif>PAYPAL</option>
+                        </select>
                         @error('dados_pagamento')
                             <div class="error">{{ $message }}</div>
                         @enderror
-                        <label for="idTitulo">Dados Pagamento</label>
+                        <label for="filme_id">Modo Pagamento Default</label> 
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="foto" id="idfoto" type="select" value="{{$clientes->foto_url}}" placeholder="NIF">
-                        @error('foto')
+                        <input class="form-control" name="foto_url" id="foto_url" type="file" value="{{$clientes->foto_url}}" placeholder="Foto">
+                        @error('foto_url')
                             <div class="error">{{ $message }}</div>
                         @enderror
-                        <label for="idTitulo">Foto/Avatar</label>
+                        <label for="foto_url">Foto/Avatar</label>
                     </div>
                 </div>
-            </div>
-            
+            </div>            
             <div class="row mb-0">
                 <div class="col-md-8 offset-md-4">
                     @if (Route::has('password.request'))
@@ -54,51 +59,14 @@
                     @endif
                 </div>
             </div>
-            
-            {{-- 
-            <!-- <div class="row mb-3">
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="cartaz_url" id="idCartaz_url" type="text" value="{{$filme->cartaz_url}}" placeholder="234bjbdf.jpg"> 
-                        @error('cartaz_url')
-                            <div class="error">{{ $message }}</div>
-                        @enderror
-                        <label for="idCartaz_url">Cartaz URL</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="ano" id="idAno" type="number" value="{{$filme->ano}}" placeholder="2022">
-                        @error('ano')
-                            <div class="error">{{ $message }}</div>
-                        @enderror
-                        <label for="idAno">Ano</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-floating mb-3">
-                <input class="form-control" id="idSumario" name="sumario" type="text" value="{{$filme->sumario}}" placeholder="Sumario"> 
-                @error('sumario')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-                <label for="idSumario">Sumario</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input class="form-control" id="idTrailer_url" name="trailer_url" type="text" value="{{$filme->cartaz_url}}" placeholder="Sumario"> 
-                @error('trailer_url')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-                <label for="idTrailer_url">Trailer URL</label>
-            </div> -->
-            
-            
             <div class="mt-4 mb-0">
                 <div class="d-grid">
-                    <button class="btn btn-primary btn-block" type="submit">Gravar alterações</button>
-                </div>
-            </div>--}}
+                    <button class="btn btn-primary btn-block" type="submit">Concluido</button>
+                </div> 
+                </form>
+            </div>          
         </div>
     </div>
+     
 
 @endsection
