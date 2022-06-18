@@ -75,11 +75,10 @@ class SalasController extends Controller
     {
       $validatedData = $request->validate([
         'nome' => 'required|max:50',
-        'custom' => 'required|numeric|between:40,120'
       ]);
         //dd($validatedData);
         Salas::where('id', $salas->id)
-              ->update(['nome' => $validatedData['nome'],'custom' => $validatedData['custom']]);//seleciona apenas o valor nome no array que é a ediçao
+              ->update(['nome' => $validatedData['nome']]);//seleciona apenas o valor nome no array que é a ediçao
         return redirect()->route('salas.index')
             ->with('alert-msg', 'Sala foi alterada com sucesso!')
             ->with('alert-type', 'success');
