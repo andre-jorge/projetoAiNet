@@ -296,11 +296,17 @@ Route::delete('carrinho', [CarrinhoController::class, 'destroy'])->name('carrinh
 
 //Estatisticas
 Route::get('admin/estatisticas/totais/diarios', [EstatisticasController::class, 'estatisticas_totais_diario'])
-->name('estatisticas.totais.diarios');
+        ->middleware('auth')->name('estatisticas.totais.diarios')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
 Route::get('admin/estatisticas/totais/mensal', [EstatisticasController::class, 'estatisticas_total_mensal'])
-->name('estatisticas.totais.mensal');
+        ->middleware('auth')->name('estatisticas.totais.mensal')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
 Route::get('admin/estatisticas/totais/anual', [EstatisticasController::class, 'estatisticas_total_anual'])
-->name('estatisticas.totais.anual');
+        ->middleware('auth')->name('estatisticas.totais.anual')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
 
 
 
