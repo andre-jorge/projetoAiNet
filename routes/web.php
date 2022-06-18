@@ -210,7 +210,7 @@ Route::get('user/recibos', [usersController::class, 'recibos'])
 //dados clientes update
  Route::put('user/edit', [usersController::class, 'cliente_update'])
          ->middleware('auth')->name('users.edit')
-//         //->middleware('can:viewAdmin,App\Models\User')
+         ->middleware('can:viewCliente,App\Models\User')
          ;
 
 //------------------------FUNCSS-------------------------------------
