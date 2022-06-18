@@ -183,6 +183,7 @@
             </div>
         </div>
     </form>
+    <a id="cart-link" href="{{ route('carrinho.index') }}" class="trsn nav-link" title="View/Edit Cart">Ir para o Carrinho</a>
     </body>
 </html>
 @endsection
