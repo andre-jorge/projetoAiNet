@@ -64,15 +64,15 @@
           
           <div data-toggle="collapse" class="d-block my-3">
             <div class="custom-control custom-radio">
-              <input id="BTNVISA" name="paymentMethod" type="radio" value="VISA" class="custom-control-input" checked="" required="" onclick="mostraVISA()"> 
+              <input id="BTNVISA" name="paymentMethod" type="radio" value="VISA" class="custom-control-input" required="" onclick="mostraVISA()" @if(Auth::user()->Cliente->tipo_pagamento == 'VISA') checked @endif > 
               <label class="custom-control-label" for="paymentMethod">Cartao Crédito</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="BTNMBWAY" name="paymentMethod" type="radio" value="MBWAY" class="custom-control-input" required="" onclick="mostraMBWAY()">
+              <input id="BTNMBWAY" name="paymentMethod" type="radio" value="MBWAY" class="custom-control-input" required="" onclick="mostraMBWAY()" @if(Auth::user()->Cliente->tipo_pagamento == 'MBWAY') checked @endif>
               <label class="custom-control-label" for="paymentMethod">MBWAY</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="BTNPAYPAL" name="paymentMethod" type="radio" value="PAYPAL" class="custom-control-input" required="" onclick="mostraPAYPAL()">
+              <input id="BTNPAYPAL" name="paymentMethod" type="radio" value="PAYPAL" class="custom-control-input" required="" onclick="mostraPAYPAL()" @if(Auth::user()->Cliente->tipo_pagamento == 'PAYPAL') checked mostraPAYPAL() @endif>
               <label class="custom-control-label" for="paymentMethod">PayPal</label>
             </div>
 
@@ -113,9 +113,9 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="numerocard">Numero Cartão Credito</label>
-              <input type="text" class="form-control" name="numerocard" id="numerocard" placeholder="" required="">
+              <input type="text" class="form-control" name="numerocard" id="numerocard"  placeholder="" required="" @if(Auth::user()->Cliente->tipo_pagamento == 'VISA') echo value="{{$cliente->Cliente->ref_pagamento}}" @endif>
               <div class="invalid-feedback">
-                Numero do cartão obrigatorio
+                Numero do cartão obrigatorio              
               </div>
             </div>
       
@@ -136,7 +136,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="nif">NIF</label>
-              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" >
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" @if(Auth::user()->Cliente->tipo_pagamento == 'VISA') echo value="{{$cliente->Cliente->nif}}" @endif>
               <div class="invalid-feedback">
                 NIF
               </div>
@@ -144,13 +144,12 @@
           </div>
           <hr class="mb-10">
           <div class="row">
-            <div class="col-md-3 mb-3">
-            
+            <div class="col-md-6 mb-6">
               @csrf
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
               </form>
             </div>
-            <div class="col-md-5 mb-3">
+            <div class="col-md-6 mb-6">
               <form action="{{ route('carrinho.destroy') }}" method="POST">
                 @csrf
                 @method("DELETE")
@@ -165,27 +164,26 @@
           <div id="MBWAY" class="row" style="display:  none">
               <div class="col-md-6 mb-3">
                 <label for="numTel">Numero de Telémovel</label>
-                <input type="text" class="form-control" name="numTel" id="numTel" placeholder="" required="">
+                <input type="text" class="form-control" name="numTel" id="numTel" placeholder="" required="" @if(Auth::user()->Cliente->tipo_pagamento == 'MBWAY') echo value="{{$cliente->Cliente->ref_pagamento}}" @endif>
                 <div class="invalid-feedback">
                   Numero obrigatório
                 </div>
               </div>
               <div class="col-md-6 mb-3">
               <label for="nif">NIF</label>
-              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" >
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" @if(Auth::user()->Cliente->tipo_pagamento == 'MBWAY') echo value="{{$cliente->Cliente->nif}}" @endif>
               <div class="invalid-feedback">
                 NIF
               </div>
             </div>
             <hr class="mb-10">
           <div class="row">
-            <div class="col-md-3 mb-3">
-            
+            <div class="col-md-6 mb-6">
               @csrf
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
               </form>
             </div>
-            <div class="col-md-5 mb-3">
+            <div class="col-md-6 mb-6">
               <form action="{{ route('carrinho.destroy') }}" method="POST">
                 @csrf
                 @method("DELETE")
@@ -200,27 +198,26 @@
           <div id="PAYPAL" class="row" style="display:  none">
               <div class="col-md-6 mb-3">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="" required="">
+                <input type="email" class="form-control" name="email" id="email" placeholder="" required="" @if(Auth::user()->Cliente->tipo_pagamento == 'PAYPAL') echo value="{{$cliente->Cliente->ref_pagamento}}" @endif>
                 <div class="invalid-feedback">
                   Email obrigatório
                 </div>
               </div>
               <div class="col-md-6 mb-3">
               <label for="nif">NIF</label>
-              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" >
+              <input type="text" class="form-control" name="nif" id="nif" placeholder="Opcional" @if(Auth::user()->Cliente->tipo_pagamento == 'PAYPAL') echo value="{{$cliente->Cliente->nif}}" @endif>
               <div class="invalid-feedback">
                 NIF
               </div>
             </div>
             <hr class="mb-10">
           <div class="row">
-            <div class="col-md-3 mb-3">
-            
+            <div class="col-md-6 mb-6">
               @csrf
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Checkout</button>
               </form>
             </div>
-            <div class="col-md-5 mb-3">
+            <div class="col-md-6 mb-6">
               <form action="{{ route('carrinho.destroy') }}" method="POST">
                 @csrf
                 @method("DELETE")

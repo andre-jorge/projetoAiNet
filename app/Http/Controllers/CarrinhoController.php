@@ -20,7 +20,10 @@ class CarrinhoController extends Controller
 {
     public function index(Request $request)
     {
+        $cliente = auth()->user();
+        //dd($cliente);
         return view('carrinho.index')
+            ->with('cliente', $cliente)
             ->with('carrinho', session('carrinho') ?? []);
     }
 
