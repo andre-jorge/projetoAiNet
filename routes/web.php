@@ -308,6 +308,7 @@ Route::get('admin/estatisticas/totais/anual', [EstatisticasController::class, 'e
         ->middleware('can:viewAdmin,App\Models\User')
         ;
 
+Route::get('export', [EstatisticasController::class, 'export']);
 
 
 

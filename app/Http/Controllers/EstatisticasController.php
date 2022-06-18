@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
+use App\Exports\ExcelExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class EstatisticasController extends Controller
@@ -89,6 +91,11 @@ class EstatisticasController extends Controller
       //dd($totaisAnual);          
       return view('estatisticas.totais.anual')
               ->with('totaisAnual', $totaisAnual);
+    }
+
+    public function export() 
+    {
+        return Excel::download(new EstatisticasController, 'excel.xlsx');
     }
 
 }
