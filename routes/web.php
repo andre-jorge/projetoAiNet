@@ -138,15 +138,15 @@ Route::put('admin/salas/{salas}', [SalasController::class, 'update'])
 //---------------------Configuracoes-------------------------------------------------
 Route::get('admin/configs', [ConfiguracoesController::class, 'index'])
 ->middleware('auth')->name('configuracao.index')
-->middleware('can:viewAny,App\Models\Configuracao'); //bilhetes preços
+->middleware('can:viewAdmin,App\Models\User'); //bilhetes preços
 
 Route::get('admin/configs/{id?}', [ConfiguracoesController::class, 'edit'])
 ->middleware('auth')->name('configuracao.edit')
-->middleware('can:viewAny,App\Models\Configuracao'); // editar preços
+->middleware('can:viewAdmin,App\Models\User'); // editar preços
 
 Route::put('admin/configs/{id?}', [ConfiguracoesController::class, 'update'])
 ->middleware('auth')->name('configuracao.update')
-->middleware('can:viewAny,App\Models\Configuracao');
+->middleware('can:viewAdmin,App\Models\User');
 //-----------------------------------------------------------------------------
 
 
@@ -160,27 +160,27 @@ Route::get('generos', [GeneroController::class, 'index'])
 //---------------------FILMES----------------------------------------------------
 Route::get('admin/filmes', [FilmesController::class, 'admin_index'])
 ->middleware('auth')->name('filmes.admin')
-->middleware('can:viewAny,App\Models\Filme'); // admin filmes
+->middleware('can:viewAdmin,App\Models\User'); // admin filmes
         
 Route::get('admin/filmes/criar', [FilmesController::class, 'create'])
 ->middleware('auth')->name('filmes.create')
-->middleware('can:viewAny,App\Models\Filme'); //criar filme
+->middleware('can:viewAdmin,App\Models\User'); //criar filme
         
 Route::get('admin/filmes/{id?}', [FilmesController::class, 'edit'])
 ->middleware('auth')->name('filmes.edit')
-->middleware('can:viewAny,App\Models\Filme'); // editar filme
+->middleware('can:viewAdmin,App\Models\User'); // editar filme
 
 Route::post('admin/filmes', [FilmesController::class, 'store'])
 ->middleware('auth') ->name('filmes.store')
-->middleware('can:viewAny,App\Models\Filme'); // guardar filmes
+->middleware('can:viewAdmin,App\Models\User'); // guardar filmes
 
 Route::put('admin/filmes/{filme}', [FilmesController::class, 'update'])
 ->middleware('auth')->name('filmes.update')
-->middleware('can:viewAny,App\Models\Filme');
+->middleware('can:viewAdmin,App\Models\User');
 
 Route::delete('admin/filmes/{filme}', [FilmesController::class, 'destroy'])
 ->middleware('auth')->name('filmes.destroy')
-->middleware('can:viewAny,App\Models\Filme');
+->middleware('can:viewAdmin,App\Models\User');
 
 //-----------------------------------------------------------------------------
 
@@ -266,7 +266,7 @@ Route::get('recibos/bilhete/{recibo}', [PdfController::class, 'geraPdfBilhete'])
 
 Route::get('recibos', [PdfController::class, 'indexRecibo'])
         ->middleware('auth')->name('pdf.indexRecibo')
-        ->middleware('can:viewAdminCliente,App\Models\User');
+        ->middleware('can:viewAdmin,App\Models\User');
 
 Route::get('recibos/{recibo}', [PdfController::class, 'geraPdfRecibo'])
         ->middleware('auth')->name('pdf.recibo')
