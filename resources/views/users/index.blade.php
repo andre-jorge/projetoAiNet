@@ -4,7 +4,9 @@
 
 <div class="card-header"><h3 class="text-center font-weight-light my-4">Dados Cliente</h3></div> 
     <div class="card-body">
-            <form  enctype="multipart/form-data" action="{{route('users.edit')}}" method="GET">
+    <form action="{{route('users.edit')}}" enctype="multipart/form-data" id="filmes-form" method="POST">
+            @csrf
+            @method('PUT')
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">

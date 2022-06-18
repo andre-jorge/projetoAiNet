@@ -92,6 +92,7 @@ class FilmesController extends Controller
    //revalidar esta funcao
    public function update(Request $request,Filme $filme)
    {
+      //dd($request->cartaz_url);
       if(is_null($request->cartaz_url)){
          $request->cartaz_url = $filme->cartaz_url;
       }else{
