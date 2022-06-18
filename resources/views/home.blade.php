@@ -114,12 +114,39 @@
                   <a class="nav-link" href="{{route('pdf.indexRecibo')}}">
                      <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                      Recibos Clientes
-                  </a>
-                  <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{route('filmes.admin')}}">Filmes</a>
-                     </nav>
-                  </div>
+                  </a>  
+                  <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Estatisticas
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                {{--<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Salas
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    
+                                        <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="">Salas</a>
+                                            <a class="nav-link" href="">Lugares</a>
+                                        </nav>
+                                    </div> 
+                                    --}}
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        Totais
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="{{route('estatisticas.totais.diarios')}}">Diario</a>
+                                            <a class="nav-link" href="{{route('estatisticas.totais.mensal')}}">Mensal</a>
+                                            <a class="nav-link" href="{{route('estatisticas.totais.anual')}}">Anual</a>
+                                        </nav>
+                                    </div>
+                                </nav>
+                            </div>                
                   @endcan
                   @can('viewFuncionario', App\Models\Filme::class)		
                   <div class="sb-sidenav-menu-heading">Funcionarios</div>

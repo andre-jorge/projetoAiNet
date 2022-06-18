@@ -13,6 +13,7 @@ use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\ConfiguracoesController;
 use App\Http\Controllers\EmailController;
 use App\Services\Payment;
+use App\Http\Controllers\EstatisticasController;
 
 
 /*
@@ -293,6 +294,13 @@ Route::post('carrinho', [CarrinhoController::class, 'store'])->name('carrinho.st
 Route::delete('carrinho', [CarrinhoController::class, 'destroy'])->name('carrinho.destroy');
 
 
+//Estatisticas
+Route::get('admin/estatisticas/totais/diarios', [EstatisticasController::class, 'estatisticas_totais_diario'])
+->name('estatisticas.totais.diarios');
+Route::get('admin/estatisticas/totais/mensal', [EstatisticasController::class, 'estatisticas_total_mensal'])
+->name('estatisticas.totais.mensal');
+Route::get('admin/estatisticas/totais/anual', [EstatisticasController::class, 'estatisticas_total_anual'])
+->name('estatisticas.totais.anual');
 
 
 

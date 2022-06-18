@@ -183,6 +183,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         //adicionado
         Barryvdh\DomPDF\ServiceProvider::class,
+        //Maatwebsite\Excel\ExcelServiceProvider::class,
+        //SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -196,6 +198,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
 
     ],
 
@@ -214,5 +217,8 @@ return [
         //'PDF' => Barryvdh\DomPDF\Facade::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+    //'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+    
 
 ];

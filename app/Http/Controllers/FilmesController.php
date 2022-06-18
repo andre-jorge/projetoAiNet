@@ -39,6 +39,7 @@ class FilmesController extends Controller
          //dd($request);
          $currentTime = Carbon::now();
          $currentTime = $currentTime->toDateString();
+         $filmesGenero = null;
          $filmesAtuais = Sessao::where('data','>', $currentTime)
                         ->get()
                         ->unique('filme_id');
@@ -66,7 +67,7 @@ class FilmesController extends Controller
          $listaGeneros = Genero::all();         
          return view(
              'filmes.index',
-             compact('filmesAtuais', 'listaGeneros'));
+             compact('filmesGenero','filmesAtuais', 'listaGeneros'));
       }
       
 

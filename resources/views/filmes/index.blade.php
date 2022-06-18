@@ -19,7 +19,7 @@
         <!-- Tipo -->
         <select class="form-select" name="genero" id="inputGroupSelect04">
             @foreach ($listaGeneros as $gen)
-                <option value="{{$gen->code}}" {{$gen->nome == $gen->nome ?  : 'Todos'}}>
+                <option value="{{$gen->code}}">
                     {{$gen->nome}}
                 </option>
             @endforeach
