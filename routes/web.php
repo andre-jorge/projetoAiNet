@@ -71,6 +71,11 @@ Route::get('funcionario/sessoes/bilheteId/{sessao}', [SessoesController::class, 
 ->middleware('auth')->name('sessoes.funcionario.validaBilhetePorId')
 ->middleware('can:viewFuncionario,App\Models\User')
 ; 
+
+Route::get('funcionario/sessoes/validaBilhete/validado/{bilhete}', [SessoesController::class, 'validado'])
+->middleware('auth')->name('sessoes.funcionario.validado')
+->middleware('can:viewFuncionario,App\Models\User')
+;
 //----------END------------FUNCIONARIOS VALIDA SESSOES----------------END-----------------
 
 
@@ -304,6 +309,16 @@ Route::get('admin/estatisticas/totais/mensal', [EstatisticasController::class, '
         ;
 Route::get('admin/estatisticas/totais/anual', [EstatisticasController::class, 'estatisticas_total_anual'])
         ->middleware('auth')->name('estatisticas.totais.anual')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
+
+Route::get('admin/estatisticas/bilhetes/filmes', [EstatisticasController::class, 'estatisticas_bilhetes_filmes'])
+        ->middleware('auth')->name('estatisticas.bilhetes.filmes')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
+
+Route::get('admin/estatisticas/bilhetes/filmes/{filme}/sessoes/', [EstatisticasController::class, 'estatisticas_bilhetes_filmes_sessoes'])
+        ->middleware('auth')->name('estatisticas.bilhetes.sessoes')
         ->middleware('can:viewAdmin,App\Models\User')
         ;
 

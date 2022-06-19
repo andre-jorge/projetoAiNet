@@ -2,8 +2,8 @@
 
 @section('content') 
 <div class="container text-center"
-<h3 class="align-middle" ><strong><h1 class="align-middle" style="background-color:green;">Bilhete {{$bilheteId}} Validado com Sucesso </h1></strong></h3>
-<h3 class="align-middle"><strong><h1 class="align-middle">Dados Cliente</h1></strong></h3>
+<h3 class="align-middle" ><strong><h1 class="align-middle" style="background-color:green;">Bilhete {{$bilhete->id}} é Valido</h1></strong></h3>
+<h3 class="align-middle"><strong><h1 class="align-middle">Verficação dos Dados do Cliente</h1></strong></h3>
 </div>
 <br>
 <br>
@@ -43,7 +43,7 @@
                 </td>
                 <td> 
                 
-                <a href="{{route('sessoes.funcionario.validarSessao', $sessao)}}" name="sessao" value='{{$sessao}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbsp&nbspContinuar&nbsp&nbsp&nbsp</a>
+                <a href="{{route('sessoes.funcionario.validado', $bilhete )}}" name="sessao" value='{{$bilhete}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbsp&nbspContinuar&nbsp&nbsp&nbsp</a>
                
                 </td>
             </tr>

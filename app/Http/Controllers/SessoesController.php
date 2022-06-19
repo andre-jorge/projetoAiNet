@@ -168,18 +168,16 @@ class SessoesController extends Controller
         //dd($request);
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
-        Bilhetes::where('id', $bilhete->id)
-                ->update(['estado' => 'usado']);
         $sessaoBilhete = Bilhetes::where('id', $bilhete->id)->pluck('sessao_id');
         $sessao = Sessao::where('id',$sessaoBilhete[0])->first();
         $user = User::where('id', $bilhete->cliente_id)->first();
         //dd($user);
         return view('sessoes.funcionario.validado')
-                ->with('bilheteId', $bilhete->id)
+                ->with('bilhete', $bilhete)
                 ->with('sessao', $sessao)
                 ->with('user', $user)
                 ->with('successMsg', 'Bilhete '.$bilhete->id.' validado com sucesso!')
-                ->with('alert-type', 'danger');
+                ->with('alert-type', 'success');
     }
 
     public function validaBilhetePorId(Request $request, Sessao $sessao)
@@ -189,16 +187,15 @@ class SessoesController extends Controller
         //buscar apenas o id no fim do link
         $idBilhete = substr($idBilhete,strpos($idBilhete, "bilhete/")+8);
         $sessao = Sessao::where('id',$sessao->id)->first();
-        //dd($sessao);
+        //dd($idBilhete);
         $bilhete = Bilhetes::where('id',$idBilhete)->first();
+        //dd($bilhete);
         $user = User::where('id', $bilhete->cliente_id)->first();
 
         if ($bilhete->sessao_id == $sessao->id) {
             if ($bilhete->estado == 'não usado') {
-                Bilhetes::where('id', $bilhete->id)
-                        ->update(['estado' => 'usado']);
                 return view('sessoes.funcionario.validado')
-                        ->with('bilheteId', $bilhete->id)
+                        ->with('bilhete', $bilhete)
                         ->with('sessao', $sessao->id)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' validado com sucesso!')
@@ -206,7 +203,7 @@ class SessoesController extends Controller
             }else{
                 //dd($bilhete->estado);
                 return back()
-                        ->with('bilheteId', $bilhete->id)
+                        ->with('bilhete', $bilhete)
                         ->with('sessao', $sessao->id)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' já validado!!')
@@ -215,12 +212,30 @@ class SessoesController extends Controller
         }else{
             $outroFilme = Filme::where('id',$sessao->filme_id)->first();
             return back()
-                        ->with('bilheteId', $bilhete->id)
+                        ->with('bilhete', $bilhete)
                         ->with('sessao', $sessao->id)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme!!, mas sim ao filme '.$outroFilme->titulo.'.')
                         ->with('alert-type', 'danger');
         }
+    }
+
+    public function validado(Request $request, Bilhetes $bilhete){
+        //dd($bilhete);
+        Bilhetes::where('id', $bilhete->id)
+                        ->update(['estado' => 'usado']);
+        $sessao = Sessao::where('id',$bilhete->sessao_id)->first();
+        //dd($sessao);
+        $currentTime = Carbon::now();
+        $currentTime = $currentTime->toDateString();
+        $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
+                            ->where('estado','=','não usado')
+                            ->get();
+        //dd($sessao);
+        return view('sessoes.funcionario.validarSessao')
+                ->with('sessao', $sessao)
+                ->with('todosBilhetes', $todosBilhetes);
+
     }
 //------------END--FUNCIONARIOS VALIDAR SESSOES----------END--------------------
 //------------END--FUNCIONARIOS VALIDAR SESSOES----------END--------------------

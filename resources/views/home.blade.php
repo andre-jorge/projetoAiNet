@@ -145,6 +145,17 @@
                                             <a class="nav-link" href="{{route('estatisticas.totais.anual')}}">Anual</a>
                                         </nav>
                                     </div>
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError2" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        Bilhetes
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseError2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="{{route('estatisticas.bilhetes.filmes')}}">Bilhetes por Filme</a>
+                                            <a class="nav-link" href=""></a>
+                                            <a class="nav-link" href=""></a>
+                                        </nav>
+                                    </div>
                                 </nav>
                             </div>                
                   @endcan
