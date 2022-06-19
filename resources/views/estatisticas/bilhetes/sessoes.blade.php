@@ -4,6 +4,22 @@
 <div class="container text-center"
 <h3 class="align-middle"><strong><h1 class="align-middle">Todas as sessoes do Filme</h1></strong></h3>
 </div>
+<form  action="{{route('estatisticas.bilhetes.sessoes', $filme)}}" method="GET">
+<div class="row mb-2">
+    <div class="col-sm-10 col-md-10">
+        <!-- tipo_pagamento -->
+        <select class="form-select" name="ordenar" id="ordenar">
+                <option value="TODOS">Ordenar</option>
+                <option value="1">Taxa de ocupação ASC</option>
+                <option value="2">Taxa de ocupação DESC</option>
+        </select>
+        <!-- tipo_pagamento -->
+    </div>  
+    <div class="col-sm-5 col-md-2 .ml-md-auto" >
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+    </div>
+</div>
+</form>
     <br>
         <table class="table table-striped">
             <thead>
@@ -32,8 +48,7 @@
                 </tr>
                 @endforeach
             </tbody>  
-        </table>
-              
+        </table>   
     </div>              
   </div>
 </div>

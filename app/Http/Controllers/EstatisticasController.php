@@ -102,7 +102,11 @@ class EstatisticasController extends Controller
     public function estatisticas_bilhetes_filmes(Request $request)
     { 
       $filmes = Filme::paginate(8);
-      //dd($filmes);          
+      //dd($filmes);        
+      if ($request->string) {
+        $filmes = Filme::where('titulo', 'like', '%' . $request->string . '%')
+                           ->paginate(8);
+      }  
       return view('estatisticas.bilhetes.filmes')
               ->with('filmes', $filmes);
     }
@@ -140,9 +144,91 @@ class EstatisticasController extends Controller
       LEFT JOIN filmes fil
       ON ses.filme_id=fil.id
       WHERE fil.id = '. $filme->id . '');
-
       //dd($sessoesFilme);
+        //dd($request->ordenar);
+        
+        if ($request->ordenar == 1 ) {
+          $sessoesFilme =DB::select('SELECT ses.*,(
+            SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id
+            ) AS "BilhetesVendidos", 
+            (
+            SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id
+            AND bil.estado = "usado"
+            ) AS "Usados",
+            (
+            SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id
+            AND bil.estado = "não usado"
+            ) AS "Naousados",
+            (
+            SELECT COUNT(*)
+            FROM lugares lug
+            WHERE lug.sala_id = ses.sala_id
+            ) AS "Totallugares",
+            round(
+            (SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id)*100/
+            (SELECT COUNT(*)
+            FROM lugares lug
+            WHERE lug.sala_id = ses.sala_id),2
+            )AS "TaxaOcupação" 
+              
+            FROM sessoes ses
+            LEFT JOIN filmes fil
+            ON ses.filme_id=fil.id
+            WHERE fil.id = "'.$filme->id.'"ORDER BY round(
+            (SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id)*100/
+            (SELECT COUNT(*)
+            FROM lugares lug
+            WHERE lug.sala_id = ses.sala_id),2
+            ) asc');
+        }
+        if ($request->ordenar == 2 ) {
+          $sessoesFilme =DB::select('SELECT ses.*,(
+            SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id
+            ) AS "BilhetesVendidos", 
+            (
+            SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id
+            AND bil.estado = "usado"
+            ) AS "Usados",
+            (
+            SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id
+            AND bil.estado = "não usado"
+            ) AS "Naousados",
+            (
+            SELECT COUNT(*)
+            FROM lugares lug
+            WHERE lug.sala_id = ses.sala_id
+            ) AS "Totallugares",
+            round(
+            (SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id)*100/
+            (SELECT COUNT(*)
+            FROM lugares lug
+            WHERE lug.sala_id = ses.sala_id),2
+            )AS "TaxaOcupação" 
+              
+            FROM sessoes ses
+            LEFT JOIN filmes fil
+            ON ses.filme_id=fil.id
+            WHERE fil.id = "'.$filme->id.'"ORDER BY round(
+            (SELECT COUNT(*) FROM bilhetes bil
+            WHERE bil.sessao_id = ses.id)*100/
+            (SELECT COUNT(*)
+            FROM lugares lug
+            WHERE lug.sala_id = ses.sala_id),2
+            ) desc');
+        }
+
+      
       return view('estatisticas.bilhetes.sessoes')
+                  ->with('filme', $filme)
                   ->with('sessoesFilme', $sessoesFilme);
     }
 

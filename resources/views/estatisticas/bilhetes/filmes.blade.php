@@ -4,7 +4,7 @@
 <h3 class="align-middle"><strong><h1 class="align-middle">Estatisticas Filmes|Sessoes</h1></strong></h3>
 </div>
 <br>
-<form  action="{{route('filmes.admin')}}" method="GET">
+<form  action="{{route('estatisticas.bilhetes.filmes')}}" method="GET">
 <div class="row mb-2">
     <div class="col-sm-5 col-md-5">
         <!-- STRING -->
@@ -12,7 +12,6 @@
         <!-- STRING --> 
     </div>
     <div class="col-sm-5 col-md-5">
-
     </div>  
     <div class="col-sm-5 col-md-2 .ml-md-auto" >
         <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
