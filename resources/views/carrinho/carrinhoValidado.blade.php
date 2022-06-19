@@ -40,10 +40,10 @@
                 </td>
                 </td>
                 <td>
-                <form action="{{ route('email.send_with_notification1') }}" method="POST">
+                <!-- <form action="{{ route('email.send_with_notification1') }}" method="POST">
                     @csrf
                     <input type="submit" value="Send Email With Mailable">
-                </form>
+                </form> -->
                 </td>
             </tr>
             
