@@ -105,9 +105,8 @@ Route::delete('admin/adminsessoes/{sessao}', [SessoesController::class, 'admin_d
 
 
 //---------------------Salas-------------------------------------------------
-Route::get('admin/recuperar/salas/{salas}', [SalasController::class, 'sala_recuperar'])
+Route::get('admin/recuperar/salas', [SalasController::class, 'sala_recuperar'])
         ->name('salas.index.recuperar');
-
 
 Route::get('admin/salas', [SalasController::class, 'index'])
 ->middleware('auth')->name('salas.index')

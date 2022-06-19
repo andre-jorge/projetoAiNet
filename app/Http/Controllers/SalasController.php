@@ -29,10 +29,29 @@ class SalasController extends Controller
       }}
   }
 
-    public function index()
+    public function index(Request $request)
     {
-      $todassalas = Salas::withTrashed()->get();
-      //dd($todassalas);
+      //dd($request);
+      $todassalas = Salas::withTrashed()->paginate(10);
+      if ($request->nome and $request->estado and $request->estado != 'Todas') {
+        if ($request->estado == 'Ativas') {
+          $todassalas = Salas::where('nome', 'like', '%' . $request->nome . '%')->paginate(10);
+        }
+        if ($request->estado == 'Inativas'){
+          $todassalas = Salas::withTrashed()->where('nome', 'like', '%' . $request->nome . '%')->where('deleted_at','!=','null')->paginate(10);
+        }
+      }else{
+      if ($request->nome) {
+        $todassalas = Salas::withTrashed()->where('nome', 'like', '%' . $request->nome . '%')->paginate(10);
+      }
+      if ($request->estado and $request->estado != 'Todas') {
+        if ($request->estado == 'Ativas') {
+          $todassalas = Salas::paginate(10);
+        }else {
+          $todassalas = Salas::withTrashed()->where('deleted_at','!=','null')->paginate(10);
+        }
+      }
+    }
       return view('salas.index')->with('todassalas', $todassalas);
     }
 
@@ -94,11 +113,12 @@ class SalasController extends Controller
     //         ->with('alert-type', 'success');
     // }
 
-    public function sala_recuperar(Request $request,Salas $salas)
+    public function sala_recuperar(Request $request)
     {
+      //dd($request);
       $currentTime = Carbon::now();
       $currentTime = $currentTime->toDateString();
-      $apagar = Salas::withTrashed()->find($salas->id);
+      $apagar = Salas::withTrashed()->find($request->id);
       $ocupacaoSalas = Sessao::where('data','>', $currentTime)
                              ->where('sala_id', $apagar->id)->first();
                              
@@ -113,7 +133,8 @@ class SalasController extends Controller
           return redirect()->back()
                 ->with('alert-msg', 'Sala '.$apagar->name.' eliminada com sucesso!')
                 ->with('alert-type', 'success');
-        }else{
+        }
+        if ($apagar->deleted_at != null){
           $lugares = Lugares::withTrashed()->where('sala_id',$apagar->id)->get();
           foreach ($lugares as $lugar) {
             $lugar->restore();
@@ -132,6 +153,7 @@ class SalasController extends Controller
       //recuperar/eleminar
       
     }
+
 }
 
 

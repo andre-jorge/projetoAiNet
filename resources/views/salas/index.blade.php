@@ -3,7 +3,34 @@
 <div class="container text-center"
 <h3 class="align-middle"><strong><h1 class="align-middle">Salas</h1></strong></h3>
 </div>
-
+<form  action="{{route('salas.index')}}" method="GET">
+<div class="row mb-2">
+    <div class="col-sm-5 col-md-5">
+        <!-- Nome -->
+        <input type="search" name="nome" id="nome" class="form-control rounded" placeholder="Pesquisar por Nome ou Email" aria-label="Search" aria-describedby="search-addon" />    
+        <!-- Nome --> 
+    </div>
+    <div class="col-sm-5 col-md-5">
+    
+        <!-- estado -->
+        <select class="form-select" name="estado" id="inputGroupSelect04">
+                <option value="Todas" >
+                Todas
+                </option>
+                <option value="Ativas">
+                Ativas
+                </option>
+                <option value="Inativas">
+                Inativas
+                </option>
+        </select>
+        <!-- estado -->
+    </div>  
+    <div class="col-sm-5 col-md-2 .ml-md-auto" >
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+    </div>
+</div>
+</form> 
 <br>
     <table class="table table-striped">
         <thead>
@@ -27,19 +54,26 @@
                 <td>
                 <a style="float: right;" class="btn btn-outline-dark" href="{{ route('salas.edit', $salas) }}" name="salaid" value='{{$salas}}' role="button" aria-pressed="true">Alterar</a>
                 </td>
-                <td>
-                    <a href="{{ route('salas.index.recuperar', $salas) }}" style="float: right" name="sala" value='{{$salas}}' class="btn btn-outline-danger" role="button" aria-pressed="true">
-                    @if($salas->deleted_at == null)
-                    &nbsp&nbspEliminar&nbsp&nbsp
-                    @else
-                    Recuperar
-                    @endif
-                    </a>
-                </td>
                 
+                <td>
+                @if($salas->deleted_at == null)
+                <form  action="{{route('salas.index.recuperar')}}" method="GET">
+                    <input type="hidden" id="id" name="id" value="{{$salas->id}}">
+                    <button style="float: right;" type="submit" class="btn btn-outline-danger">&nbsp&nbspEliminar&nbsp&nbsp</button>              
+                </form>
+                @else
+                <form  action="{{route('salas.index.recuperar')}}" method="GET">
+                    <input type="hidden" id="id" name="id" value="{{$salas->id}}">
+                    <button style="float: right;" type="submit" class="btn btn-outline-success">Recuperar</button>
+                </form>
+                @endif
+                </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-
+    <div class="d-flex justify-content-center">
+            {!! $todassalas->links() !!}
+    </div>
+    
 @endsection
