@@ -16,6 +16,7 @@
     <div class="col-sm-2 col-md-2 .ml-md-auto" >
         <label for="submit"></label>
         <button type="submit" name="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+        <a href="{{action('App\Http\Controllers\EstatisticasController@export')}}">Export</a>
     </div>
 </div>
 </form> 
@@ -39,5 +40,6 @@
         @endforeach
     </tbody>
 </table>
+
 
 @endsection
