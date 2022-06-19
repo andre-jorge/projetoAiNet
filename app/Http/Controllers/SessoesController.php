@@ -16,6 +16,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery\Generator\Parameter;
 use PHPUnit\Framework\MockObject\Rule\Parameters;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Query\Expression;
+use Illuminate\Database\Migrations\Migration;
 
 class SessoesController extends Controller
 {
@@ -26,7 +30,14 @@ class SessoesController extends Controller
                                     ->where('data','>', $currentTime)
                                     ->paginate(5);
                                     //dd($sessoesFilme);
-        
+
+        for ($i=0; $i < 10; $i++) { 
+            Schema::table('salas', function (Blueprint $table) {
+                $table->text('custom')->change();
+            });
+            $totalLugares= Lugares::where('sala_id',$i)->count();
+            Salas::where('id',$i)->update(['custom' => $totalLugares]);
+        }
         //dd($contaBilhetes);
         return view('sessoes.index')
                     ->with('filme', $filme)
@@ -166,6 +177,7 @@ class SessoesController extends Controller
     public function validaBilhete(Request $request, Bilhetes $bilhete)
     {
         //dd($request);
+
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
         $sessaoBilhete = Bilhetes::where('id', $bilhete->id)->pluck('sessao_id');
@@ -229,6 +241,7 @@ class SessoesController extends Controller
 
     public function validado(Request $request, Bilhetes $bilhete){
         //dd($bilhete->cliente_id);
+        $user = User::where('id', $bilhete->cliente_id)->first();
         $bloqueado = User::where('id',$bilhete->cliente_id)->first();
         //dd($bloqueado->bloqueado == 1);
         if ($bloqueado->bloqueado == 1) {
