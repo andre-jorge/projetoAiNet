@@ -196,7 +196,7 @@ class SessoesController extends Controller
             if ($bilhete->estado == 'não usado') {
                 return view('sessoes.funcionario.validado')
                         ->with('bilhete', $bilhete)
-                        ->with('sessao', $sessao->id)
+                        ->with('sessao', $sessao)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' validado com sucesso!')
                         ->with('alert-type', 'success');
@@ -204,7 +204,7 @@ class SessoesController extends Controller
                 //dd($bilhete->estado);
                 return back()
                         ->with('bilhete', $bilhete)
-                        ->with('sessao', $sessao->id)
+                        ->with('sessao', $sessao)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' já validado!!')
                         ->with('alert-type', 'danger');
@@ -213,7 +213,7 @@ class SessoesController extends Controller
             $outroFilme = Filme::where('id',$sessao->filme_id)->first();
             return back()
                         ->with('bilhete', $bilhete)
-                        ->with('sessao', $sessao->id)
+                        ->with('sessao', $sessao)
                         ->with('user', $user)
                         ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme!!, mas sim ao filme '.$outroFilme->titulo.'.')
                         ->with('alert-type', 'danger');
@@ -234,6 +234,7 @@ class SessoesController extends Controller
                                 ->get();
             return view('sessoes.funcionario.validarSessao')
                 ->with('sessao', $sessao)
+                ->with('user', $user)
                 ->with('todosBilhetes', $todosBilhetes);
         }else {
             Bilhetes::where('id', $bilhete->id)

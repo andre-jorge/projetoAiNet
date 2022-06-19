@@ -24,10 +24,9 @@
         <tbody>
             <tr>
                 <td><img class="rounded" style="max-height: 150px; max-width: 150px;" src="/storage/fotos/{{$user->foto_url ?? 'default-profile.png'}}" alt="..." /></td>
-                <td>{{$user->name}}
-                </td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->nif}}</td>
+                <td>{{$user->name ?? ' '}} </td>
+                <td>{{$user->email ?? ' '}} </td>
+                <td>{{$user->nif ?? ' '}} </td>
                 <td>{{$user->Cliente->tipo_pagamento ?? ' '}} </td>
                 <td>{{$user->Cliente->ref_pagamento ?? ' '}}</td>
                 <td>
