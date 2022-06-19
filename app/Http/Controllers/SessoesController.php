@@ -222,7 +222,7 @@ class SessoesController extends Controller
                         ->with('bilhete', $bilhete)
                         ->with('sessao', $sessao)
                         ->with('user', $user)
-                        ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme!!, mas sim ao filme '.$outroFilme->titulo.'.')
+                        ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme ou Sessão!!, mas sim ao filme '.$outroFilme->titulo.'.')
                         ->with('alert-type', 'danger');
         }
     }

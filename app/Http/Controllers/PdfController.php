@@ -20,12 +20,6 @@ class PdfController extends Controller
         //dd($pdf);
         return $pdf->setPaper('A4')->stream('bilhete.pdf');
     }
-    public static function geraQrCode($idBilhete)
-    {
-        $qr = 'http://projeto.test/recibos/bilhete/'.$idBilhete;
-        $qrcode = base64_encode(QrCode::size(100)->generate($qr));
-        return $qrcode;
-    }
 
     public function geraPdfRecibo(Recibo $recibo)
     {

@@ -31,7 +31,5 @@
     <div style="height:400px;width:900px;margin:auto;">
         <canvas id="barChart"></canvas>
         
-    </div> 
-
-    {{ QrCode::generate('Make me into a QrCode')}}    
+    </div>   
  @endsection
