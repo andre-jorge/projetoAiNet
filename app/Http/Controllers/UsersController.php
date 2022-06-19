@@ -83,7 +83,8 @@ class UsersController extends Controller
       {
          $user = auth()->user();
          $id = auth()->user()->id;
-         //dd($request->string);                          
+         $tipoUtilizador = 'Todos';
+         //                         
          //Se tiver String e Tipo                 
          if(($request->string && $request->string != null) && ($request->tipo && $request->tipo != 'Todos' ) ){
             $dadosFuncionarios = User::withTrashed()
@@ -94,9 +95,13 @@ class UsersController extends Controller
                            ->orWhere('email', 'like', '%' . $request->string . '%')
                            ->paginate(10, ['*'], 'funcionario');  
                            //dd($dadosFuncionarios);
+                           $tipoUtilizador = $request->tipo;
                            return view('users.funcionarios.index')
+                                 ->with('tipoUtilizador', $tipoUtilizador)
                                  ->with('Funcionarios', $dadosFuncionarios);
+                                 
                         }
+                        
                         //dd($request->string); 
          //Se tiver String                  
          if($request->string && $request->string != null ){
@@ -109,6 +114,7 @@ class UsersController extends Controller
                            ->paginate(10, ['*'], 'funcionario');  
                            //dd($dadosFuncionarios);
                            return view('users.funcionarios.index')
+                                 ->with('tipoUtilizador', $tipoUtilizador)
                                  ->with('Funcionarios', $dadosFuncionarios);
                         }
          //dd($request->string && $request->string != null );
@@ -118,15 +124,20 @@ class UsersController extends Controller
                            ->where('id','<>',$id)
                            ->where('tipo', $request->tipo)
                            ->paginate(10, ['*'], 'funcionario');  
+                           $tipoUtilizador = $request->tipo;
                            return view('users.funcionarios.index')
+                                 ->with('tipoUtilizador', $tipoUtilizador)
                                  ->with('Funcionarios', $dadosFuncionarios);
                            //dd($dadosFuncionarios);
-            }
+                           
+         }
+         //dd($tipoUtilizador); 
          $dadosFuncionarios = User::withTrashed()
-         ->where('id','<>',$id)
-         ->where('tipo','<>','C')
-         ->paginate(10, ['*'], 'funcionario');
+                                    ->where('id','<>',$id)
+                                    ->where('tipo','<>','C')
+                                    ->paginate(10, ['*'], 'funcionario');
          return view('users.funcionarios.index')
+                     ->with('tipoUtilizador', $tipoUtilizador)
                      ->with('Funcionarios', $dadosFuncionarios);   
       }
 

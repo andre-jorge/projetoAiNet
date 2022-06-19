@@ -185,7 +185,7 @@ Route::delete('admin/filmes/{filme}', [FilmesController::class, 'destroy'])
 //-----------------------------------------------------------------------------
 
 Auth::routes(['verify' => true]);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
         ->name('home');
     
 

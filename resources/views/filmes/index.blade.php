@@ -15,8 +15,14 @@
         <!-- STRING --> 
     </div>
     <div class="col-sm-5 col-md-5">
+    
         <!-- Tipo -->
         <select class="form-select" name="genero" id="inputGroupSelect04">
+        @if($generoPedido != null)
+                <option value="{{$generoPedido->code}}" selected>
+                    {{$generoPedido->nome}}
+                </option>
+        @endif
             @foreach ($listaGeneros as $gen)
                 <option value="{{$gen->code}}">
                     {{$gen->nome}}

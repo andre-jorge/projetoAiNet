@@ -16,9 +16,9 @@
     <div class="col-sm-5 col-md-5">
         <!-- Tipo -->
         <select class="form-select" name="tipo" id="inputGroupSelect04">
-            <option value="Todos" selected>Todos</option>
-            <option value="F">Funcionarios</option>
-            <option value="A">Administradores</option>
+            <option value="Todos" @if ($tipoUtilizador == 'Todos') selected @endif>Todos</option>
+            <option value="F"     @if ($tipoUtilizador == 'F') selected @endif>Funcionarios</option>
+            <option value="A"     @if ($tipoUtilizador == 'A') selected @endif>Administradores</option>
         </select>
         <!-- Tipo -->
     </div>  

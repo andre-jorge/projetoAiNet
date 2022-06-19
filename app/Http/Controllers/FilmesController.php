@@ -43,16 +43,18 @@ class FilmesController extends Controller
          $filmesAtuais = Sessao::where('data','>', $currentTime)
                         ->get()
                         ->unique('filme_id');
-         $generoPedido = 'Todos';
+
+         $generoPedido = Genero::where('code','=','Todos')->first();
+         //dd($generoPedido);
          if($request->genero && $request->genero != null ){
             $filmesGenero = Filme::where('genero_code',$request->genero)->pluck('id');
             $filmesAtuais = Sessao::where('data','>', $currentTime)
                         ->whereIn('filme_id',$filmesGenero)
                         ->get()
                         ->unique('filme_id'); 
-            $generoPedido =$request->genero;    
-         }
+            $generoPedido = Genero::where('code','=',$request->genero)->first();
 
+         }
          if($request->string && $request->string != null){
             $filmeString = Filme::where('titulo', 'like', '%' . $request->string . '%')
                            ->OrWhere('sumario', 'like', '%' . $request->string . '%')
