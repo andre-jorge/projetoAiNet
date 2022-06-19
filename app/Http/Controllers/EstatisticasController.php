@@ -98,6 +98,23 @@ class EstatisticasController extends Controller
               ->with('totaisAnual', $totaisAnual);
     }
 
+    public function estatisticas_bilhetes_dia(Request $request) 
+    {
+      $dataInicio = Carbon::now()->format('Y-m-d');
+      $totaisDiarios = Recibo::where('data','=',$dataInicio)
+                          ->select(DB::raw("SUM(preco_total_sem_iva) as PrecoTotalSiva, SUM(iva) as iva, SUM(preco_total_com_iva) as PrecoTotalCiva, month(data)"))
+                          ->groupBy('month(data)')
+                          ->get();   
+      return view('estatisticas.bilhetes.dia')
+              ->with('dataSelecionada', $dataInicio)
+              ->with('totaisDiarios', $totaisDiarios);
+    }
+
+
+
+
+
+
 
     public function estatisticas_bilhetes_filmes(Request $request)
     { 
@@ -233,6 +250,8 @@ class EstatisticasController extends Controller
                   ->with('sessoesFilme', $sessoesFilme);
     }
 
+
+    
     // //OLDDDDDDDDDDDDDDDD
     // public static function totalLugaresSessao($sessao){
     //   $idSalaSessao = Sessao::where('id',$sessao)->pluck('sala_id');
@@ -265,8 +284,7 @@ class EstatisticasController extends Controller
 
     //   return $taxaOcupacaoSessao;
     // }
-
-
+    
     public function export() 
     {
         return Excel::download(new EstatisticasController, 'excel.xlsx');

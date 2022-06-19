@@ -185,7 +185,14 @@ class SessoesController extends Controller
         //dd($request->string);
         $idBilhete = $request->string;
         //buscar apenas o id no fim do link
-        $idBilhete = substr($idBilhete,strpos($idBilhete, "bilhete/")+8);
+        $teste = Bilhetes::where('id',$idBilhete)->first();
+        //dd($teste);
+
+        if (is_null($teste)) {
+            $idBilhete = substr($idBilhete,strpos($idBilhete, "bilhete/")+8);
+        }else{
+            $idBilhete = $request->string;
+        }
         $sessao = Sessao::where('id',$sessao->id)->first();
         //dd($idBilhete);
         $bilhete = Bilhetes::where('id',$idBilhete)->first();

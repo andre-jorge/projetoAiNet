@@ -322,6 +322,11 @@ Route::get('admin/estatisticas/bilhetes/filmes/{filme}/sessoes/', [EstatisticasC
         ->middleware('can:viewAdmin,App\Models\User')
         ;
 
+Route::get('admin/estatisticas/bilhetes/dia', [EstatisticasController::class, 'estatisticas_bilhetes_dia'])
+        ->middleware('auth')->name('estatisticas.bilhetes.dia')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
+
 Route::get('export', [EstatisticasController::class, 'export']);
 
 

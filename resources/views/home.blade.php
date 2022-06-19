@@ -152,7 +152,7 @@
                                     <div class="collapse" id="pagesCollapseError2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="{{route('estatisticas.bilhetes.filmes')}}">Bilhetes por Filme</a>
-                                            <a class="nav-link" href=""></a>
+                                            <a class="nav-link" href="{{route('estatisticas.bilhetes.dia')}}">Bilhetes por Dia</a>
                                             <a class="nav-link" href=""></a>
                                         </nav>
                                     </div>
