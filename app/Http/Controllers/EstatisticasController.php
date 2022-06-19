@@ -109,45 +109,75 @@ class EstatisticasController extends Controller
 
     public function estatisticas_bilhetes_filmes_sessoes(Request $request, Filme $filme)
     { 
-      //dd($filme);
-      $sessoesFilme = Sessao::where('filme_id', $filme->id)->paginate(10);
-      //dd($sessoesFilme);         
+      $sessoesFilme =DB::select('SELECT ses.*,(
+      SELECT COUNT(*) FROM bilhetes bil
+      WHERE bil.sessao_id = ses.id
+      ) AS "BilhetesVendidos", 
+      (
+      SELECT COUNT(*) FROM bilhetes bil
+      WHERE bil.sessao_id = ses.id
+      AND bil.estado = "usado"
+      ) AS "Usados",
+      (
+      SELECT COUNT(*) FROM bilhetes bil
+      WHERE bil.sessao_id = ses.id
+      AND bil.estado = "não usado"
+      ) AS "Naousados",
+      (
+      SELECT COUNT(*)
+      FROM lugares lug
+      WHERE lug.sala_id = ses.sala_id
+      ) AS "Totallugares",
+      round(
+      (SELECT COUNT(*) FROM bilhetes bil
+      WHERE bil.sessao_id = ses.id)*100/
+      (SELECT COUNT(*)
+      FROM lugares lug
+      WHERE lug.sala_id = ses.sala_id),2
+      )AS "TaxaOcupação" 
+        
+      FROM sessoes ses
+      LEFT JOIN filmes fil
+      ON ses.filme_id=fil.id
+      WHERE fil.id = '. $filme->id . '');
+
+      //dd($sessoesFilme);
       return view('estatisticas.bilhetes.sessoes')
                   ->with('sessoesFilme', $sessoesFilme);
     }
 
-    //HELPERS
-    public static function totalLugaresSessao($sessao){
-      $idSalaSessao = Sessao::where('id',$sessao)->pluck('sala_id');
-      $totalLugaresSessao = Lugares::where('sala_id',$idSalaSessao)->count();
-      return $totalLugaresSessao;
-    }
-    public static function totalBilhetesVendidos($sessao){
-      $totalBilhetesVendidos = Bilhetes::where('sessao_id',$sessao)->count();
-      return $totalBilhetesVendidos;
-    }
-    public static function totalBilhetesVendidosUsados($sessao){
-      $totalBilhetesVendidosUsados = Bilhetes::where('sessao_id',$sessao)
-                                                ->where('estado','=','usado')
-                                                ->count();
-      return $totalBilhetesVendidosUsados;
-    }
-    public static function totalBilhetesVendidosNaoUsados($sessao){
-      $totalBilhetesVendidosNaoUsados = Bilhetes::where('sessao_id',$sessao)
-                                                ->where('estado','=','não usado')
-                                                ->count();
-      return $totalBilhetesVendidosNaoUsados;
-    }
+    // //OLDDDDDDDDDDDDDDDD
+    // public static function totalLugaresSessao($sessao){
+    //   $idSalaSessao = Sessao::where('id',$sessao)->pluck('sala_id');
+    //   $totalLugaresSessao = Lugares::where('sala_id',$idSalaSessao)->count();
+    //   return $totalLugaresSessao;
+    // }
+    // public static function totalBilhetesVendidos($sessao){
+    //   $totalBilhetesVendidos = Bilhetes::where('sessao_id',$sessao)->count();
+    //   return $totalBilhetesVendidos;
+    // }
+    // public static function totalBilhetesVendidosUsados($sessao){
+    //   $totalBilhetesVendidosUsados = Bilhetes::where('sessao_id',$sessao)
+    //                                             ->where('estado','=','usado')
+    //                                             ->count();
+    //   return $totalBilhetesVendidosUsados;
+    // }
+    // public static function totalBilhetesVendidosNaoUsados($sessao){
+    //   $totalBilhetesVendidosNaoUsados = Bilhetes::where('sessao_id',$sessao)
+    //                                             ->where('estado','=','não usado')
+    //                                             ->count();
+    //   return $totalBilhetesVendidosNaoUsados;
+    // }
 
-    public static function taxaOcupacaoSessao($sessao){
+    // public static function taxaOcupacaoSessao($sessao){
 
-      $idSalaSessao = Sessao::where('id',$sessao)->pluck('sala_id');
-      $totalLugaresSessao = Lugares::where('sala_id',$idSalaSessao)->count();
-      $totalBilhetesVendidos = Bilhetes::where('sessao_id',$sessao)->count();
-      $taxaOcupacaoSessao = round(($totalBilhetesVendidos*100)/$totalLugaresSessao,2).'%';
+    //   $idSalaSessao = Sessao::where('id',$sessao)->pluck('sala_id');
+    //   $totalLugaresSessao = Lugares::where('sala_id',$idSalaSessao)->count();
+    //   $totalBilhetesVendidos = Bilhetes::where('sessao_id',$sessao)->count();
+    //   $taxaOcupacaoSessao = round(($totalBilhetesVendidos*100)/$totalLugaresSessao,2).'%';
 
-      return $taxaOcupacaoSessao;
-    }
+    //   return $taxaOcupacaoSessao;
+    // }
 
 
     public function export() 

@@ -11,7 +11,6 @@
                   <th scope="col">Nº Sessao</th>
                   <th scope="col">Data</th>
                   <th scope="col">Hora</th>
-                  <th scope="col">Sala</th>
                   <th scope="col">Bilhetes Disponiveis</th>
                   <th scope="col">Bilhetes Vendidos</th>
                   <th scope="col">Bilhetes Usado</th>
@@ -25,29 +24,16 @@
                     <td><?= $sessao->id ?></td>
                     <td><?= $sessao->data ?></td>
                     <td><?= $sessao->horario_inicio ?></td>
-                    <td><?= $sessao->Salas->nome ?></td>
-                    <td> 
-                        @php echo App\Http\Controllers\EstatisticasController::totalLugaresSessao($sessao->id);  @endphp
-                    </td>
-                    <td> 
-                        @php echo App\Http\Controllers\EstatisticasController::totalBilhetesVendidos($sessao->id);  @endphp
-                    </td>
-                    <td> 
-                        @php echo App\Http\Controllers\EstatisticasController::totalBilhetesVendidosUsados($sessao->id);  @endphp
-                    </td>
-                    <td> 
-                        @php echo App\Http\Controllers\EstatisticasController::totalBilhetesVendidosNaoUsados($sessao->id);  @endphp
-                    </td>
-                    <td> 
-                        @php echo App\Http\Controllers\EstatisticasController::taxaOcupacaoSessao($sessao->id);  @endphp
-                    </td>
+                    <td><?= $sessao->BilhetesVendidos ?></td>
+                    <td><?= $sessao->Naousados ?></td>
+                    <td><?= $sessao->Usados ?></td>
+                    <td><?= $sessao->Naousados ?></td>
+                    <td><?= $sessao->TaxaOcupação ?></td>
                 </tr>
                 @endforeach
             </tbody>  
         </table>
-        <div class="d-flex justify-content-center">
-            {!! $sessoesFilme->links() !!}
-        </div>          
+              
     </div>              
   </div>
 </div>
