@@ -144,6 +144,7 @@ class EstatisticasController extends Controller
       LEFT JOIN filmes fil
       ON ses.filme_id=fil.id
       WHERE fil.id = '. $filme->id . '');
+      
       //dd($sessoesFilme);
         //dd($request->ordenar);
         
@@ -226,7 +227,7 @@ class EstatisticasController extends Controller
             ) desc');
         }
 
-      
+        //$data = $this->($sessoesFilme);
       return view('estatisticas.bilhetes.sessoes')
                   ->with('filme', $filme)
                   ->with('sessoesFilme', $sessoesFilme);

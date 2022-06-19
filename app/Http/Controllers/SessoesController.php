@@ -221,8 +221,22 @@ class SessoesController extends Controller
     }
 
     public function validado(Request $request, Bilhetes $bilhete){
-        //dd($bilhete);
-        Bilhetes::where('id', $bilhete->id)
+        //dd($bilhete->cliente_id);
+        $bloqueado = User::where('id',$bilhete->cliente_id)->first();
+        //dd($bloqueado->bloqueado == 1);
+        if ($bloqueado->bloqueado == 1) {
+            $sessao = Sessao::where('id',$bilhete->sessao_id)->first();
+            //dd($sessao);
+            $currentTime = Carbon::now();
+            $currentTime = $currentTime->toDateString();
+            $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
+                                ->where('estado','=','não usado')
+                                ->get();
+            return view('sessoes.funcionario.validarSessao')
+                ->with('sessao', $sessao)
+                ->with('todosBilhetes', $todosBilhetes);
+        }else {
+            Bilhetes::where('id', $bilhete->id)
                         ->update(['estado' => 'usado']);
         $sessao = Sessao::where('id',$bilhete->sessao_id)->first();
         //dd($sessao);
@@ -231,11 +245,10 @@ class SessoesController extends Controller
         $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
                             ->where('estado','=','não usado')
                             ->get();
-        //dd($sessao);
         return view('sessoes.funcionario.validarSessao')
                 ->with('sessao', $sessao)
                 ->with('todosBilhetes', $todosBilhetes);
-
+        }   
     }
 //------------END--FUNCIONARIOS VALIDAR SESSOES----------END--------------------
 //------------END--FUNCIONARIOS VALIDAR SESSOES----------END--------------------

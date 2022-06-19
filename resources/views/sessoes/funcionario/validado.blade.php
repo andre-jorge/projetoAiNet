@@ -24,11 +24,7 @@
         <tbody>
             <tr>
                 <td><img class="rounded" style="max-height: 150px; max-width: 150px;" src="/storage/fotos/{{$user->foto_url ?? 'default-profile.png'}}" alt="..." /></td>
-                <td><?php 
-                    $string = explode(' ', $user->name);
-                    $first_word = $string[0];
-                    $last_word  = $string[count($string)-1];
-                    echo $first_word. ' '.$last_word; ?>
+                <td>{{$user->name}}
                 </td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->nif}}</td>
@@ -42,9 +38,11 @@
                 @endif    
                 </td>
                 <td> 
-                
+                @if($user->bloqueado == 0)
                 <a href="{{route('sessoes.funcionario.validado', $bilhete )}}" name="sessao" value='{{$bilhete}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbsp&nbspContinuar&nbsp&nbsp&nbsp</a>
-               
+                @else
+                <a href="{{route('sessoes.funcionario.validado', $bilhete )}}" name="sessao" value='{{$bilhete}}' class="btn btn-outline-success" role="button" aria-pressed="true">Voltar Sem Validar</a>
+                @endif 
                 </td>
             </tr>
         </tbody>   
