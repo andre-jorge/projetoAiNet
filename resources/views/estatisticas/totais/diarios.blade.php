@@ -5,6 +5,7 @@
 </div>
 <br>
 <br>
+
 <form  action="{{route('estatisticas.totais.diarios')}}" method="GET">
 <div class="row mb-2">
     <label for="datainicio">Mês/Ano</label>
@@ -16,6 +17,7 @@
     <div class="col-sm-2 col-md-2 .ml-md-auto" >
         <label for="submit"></label>
         <button type="submit" name="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+        <a href="{{action('App\Http\Controllers\EstatisticasController@export')}}">Export</a>
     </div>
 </div>
 </form> 
@@ -37,7 +39,9 @@
             <td>{{$totais->PrecoTotalCiva}}</td>
         </tr>
         @endforeach
+        
     </tbody>
+    
 </table>
 
 @endsection

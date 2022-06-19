@@ -23,7 +23,7 @@
             <td>{{$totais->PrecoTotalCiva}}</td>
         </tr>
         @endforeach
-        <a href="{{action('EstatisticasController@export')}}">Export</a>
+        <a href="{{action('App\Http\Controllers\EstatisticasController@export')}}">Export</a>
     </tbody>
 </table>
 
