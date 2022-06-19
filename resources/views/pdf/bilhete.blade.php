@@ -90,7 +90,7 @@
   </head>
 
   <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
-
+  
   @foreach($bilhetes as $bilhete)
   <div style="border: 2px solid black">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -98,7 +98,8 @@
                       <table cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                           <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                            Bilhete nº{{$bilhete->id}}
+                          <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate('http://projeto.test/recibos/bilhete/'.$bilhete->id)) !!} ">
+                          Bilhete nº{{$bilhete->id}}
                           </td>
                           <td width="60%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                           Cliente: {{$bilhete->Recibo->nome_cliente}}
@@ -130,8 +131,10 @@
                       </table>
                     </td>
                     </table>  
-                    </div>                    
+                    </div>   
+                                     
                       @endforeach
                       </div>
+                      
   </body>
 </html>

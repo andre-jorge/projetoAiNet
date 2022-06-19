@@ -1,5 +1,6 @@
 <!-- THIS EMAIL WAS BUILT AND TESTED WITH LITMUS http://litmus.com -->
 <!-- IT WAS RELEASED UNDER THE MIT LICENSE https://opensource.org/licenses/MIT -->
+{{ QrCode::generate('Make me into a QrCode')}}
 <!DOCTYPE html>
 <html>
    <head>

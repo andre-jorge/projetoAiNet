@@ -86,6 +86,7 @@ class FilmesController extends Controller
       {
          $filme = Filme::where('id', $id)->first();
          $listaGeneros = Genero::pluck('code', 'nome');
+         //$generoAtual = Genero::where('code',$filme->genero)->pluck('code', 'nome')
          return view('filmes.edit')->withFilme($filme)
                                    ->with('Generos', $listaGeneros);
       }

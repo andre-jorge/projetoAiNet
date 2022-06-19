@@ -7,6 +7,7 @@ use App\Models\Bilhetes;
 use App\Models\Recibo;
 use App\Models\User;
 use PDF;
+use QrCode;
 
 class PdfController extends Controller
 {
@@ -18,6 +19,12 @@ class PdfController extends Controller
         $pdf = PDF::loadView('pdf.bilhete', compact('bilhetes'));
         //dd($pdf);
         return $pdf->setPaper('A4')->stream('bilhete.pdf');
+    }
+    public static function geraQrCode($idBilhete)
+    {
+        $qr = 'http://projeto.test/recibos/bilhete/'.$idBilhete;
+        $qrcode = base64_encode(QrCode::size(100)->generate($qr));
+        return $qrcode;
     }
 
     public function geraPdfRecibo(Recibo $recibo)

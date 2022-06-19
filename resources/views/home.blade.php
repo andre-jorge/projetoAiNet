@@ -153,7 +153,7 @@
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="{{route('estatisticas.bilhetes.filmes')}}">Bilhetes por Filme</a>
                                             <a class="nav-link" href="{{route('estatisticas.bilhetes.dia')}}">Bilhetes por Dia</a>
-                                            <a class="nav-link" href=""></a>
+                                            <a class="nav-link" href="{{route('estatisticas.bar-chart')}}">Grafico Testes</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -203,6 +203,9 @@
       </div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
       <script src="js/scripts.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.esm.min.js" integrity="sha512-yPOQ2pPoQ9JtP0/jDKpXiKyWNCJWT5OI+6r1EqZmTg+afKQOBpy08VYboeq+Tt9kl9/FOCueEhH6cmHN3nAdJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
       @yield('footer-scripts')
    </body>
 </html>

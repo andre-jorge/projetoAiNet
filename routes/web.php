@@ -14,6 +14,7 @@ use App\Http\Controllers\ConfiguracoesController;
 use App\Http\Controllers\EmailController;
 use App\Services\Payment;
 use App\Http\Controllers\EstatisticasController;
+use App\Http\Controllers\ChartController;
 
 
 /*
@@ -324,6 +325,11 @@ Route::get('admin/estatisticas/bilhetes/filmes/{filme}/sessoes/', [EstatisticasC
 
 Route::get('admin/estatisticas/bilhetes/dia', [EstatisticasController::class, 'estatisticas_bilhetes_dia'])
         ->middleware('auth')->name('estatisticas.bilhetes.dia')
+        ->middleware('can:viewAdmin,App\Models\User')
+        ;
+
+Route::get('admin/estatisticas/bar-chart', [ChartController::class, 'barchart'])
+        ->middleware('auth')->name('estatisticas.bar-chart')
         ->middleware('can:viewAdmin,App\Models\User')
         ;
 
