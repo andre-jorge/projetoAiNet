@@ -15,7 +15,6 @@
         <!-- STRING --> 
     </div>
     <div class="col-sm-5 col-md-5">
-    
         <!-- Tipo -->
         <select class="form-select" name="genero" id="inputGroupSelect04">
             @foreach ($listaGeneros as $gen)
