@@ -222,11 +222,11 @@ class UsersController extends Controller
               ]);
               if ($user->tipo == 'C') {
                   return redirect()->back()
-                  ->with('alert-msg', 'Cliente '.$user->name. ' Bolqueado')
+                  ->with('alert-msg', 'Cliente '.$user->name. ' Bloqueado')
                   ->with('alert-type', 'success');
             }else{
                return redirect()->back()
-                  ->with('alert-msg', 'Utilizador '.$user->name. ' Bolqueado')
+                  ->with('alert-msg', 'Utilizador '.$user->name. ' Bloqueado')
                   ->with('alert-type', 'success');
             }
          }
@@ -320,7 +320,7 @@ class UsersController extends Controller
       if (is_null($user->deleted_at)) {
          $user->delete();
          return redirect()->back()
-               ->with('alert-msg', 'Utilizador '.$user->name.' Eliminado com sucesso!')
+               ->with('alert-msg', 'Utilizador '.$user->name.' eliminado com sucesso!')
                ->with('alert-type', 'success');
       }else{
          $user->restore();

@@ -281,12 +281,11 @@ class SessoesController extends Controller
                         ->with('alert-type', 'danger');
             }
         }else{
-            $outroFilme = Filme::where('id',$sessao->filme_id)->first();
             return back()
                         ->with('bilhete', $bilhete)
                         ->with('sessao', $sessao)
                         ->with('user', $user)
-                        ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme ou Sessão!!, mas sim ao filme '.$outroFilme->titulo.'.')
+                        ->with('alert-msg', 'Bilhete '.$bilhete->id.' não pertence a este filme ou Sessão!!')
                         ->with('alert-type', 'danger');
         }
     }
@@ -303,7 +302,7 @@ class SessoesController extends Controller
             $currentTime = $currentTime->toDateString();
             $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
                                 ->where('estado','=','não usado')
-                                ->get();
+                                ->paginate(10);
             return view('sessoes.funcionario.validarSessao')
                 ->with('sessao', $sessao)
                 ->with('user', $user)
