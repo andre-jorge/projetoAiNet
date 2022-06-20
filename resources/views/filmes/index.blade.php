@@ -46,7 +46,7 @@
         <div class="card h-100">
         <div class="bg-image">
             <!-- Product image-->
-            <img class="card-img-top" src="/storage/cartazes/{{$filme->Filmes->cartaz_url}}" alt="..." />
+            <img class="card-img-top" src="/storage/cartazes/{{$filme->Filmes->cartaz_url ?? 'CineMagic.png'}}" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
                 <div class="text-center">

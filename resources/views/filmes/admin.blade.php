@@ -56,7 +56,7 @@
         <tbody>
             @foreach ($filmes as $filme)
             <tr>
-                <td><img class="rounded" style="max-height: 100px; max-width: 100px;" src="/storage/cartazes/{{$filme->cartaz_url}}" alt="..." /></td>
+                <td><img class="rounded" style="max-height: 100px; max-width: 100px;" src="/storage/cartazes/{{$filme->cartaz_url ?? 'CineMagic.png'}}" alt="..." /></td>
                 <td>{{$filme->titulo}}</td>
                 <!-- <td>{{$filme->genero_code}}</td>
                 <td>{{$filme->ano}}</td> -->
