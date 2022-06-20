@@ -40,7 +40,7 @@
                 @if($user->bloqueado == 0)
                 <a href="{{route('sessoes.funcionario.validado', $bilhete )}}" name="sessao" value='{{$bilhete}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbsp&nbsp&nbspContinuar&nbsp&nbsp&nbsp</a>
                 @else
-                <a href="{{route('sessoes.funcionario.validado', $bilhete )}}" name="sessao" value='{{$bilhete}}' class="btn btn-outline-success" role="button" aria-pressed="true">Voltar Sem Validar</a>
+                <a href="{{route('sessoes.funcionario.validado', $bilhete )}}" name="sessao" value='{{$bilhete}}' class="btn btn-outline-success" role="button" aria-pressed="true">Voltar (sem validar)</a>
                 @endif 
                 </td>
             </tr>
