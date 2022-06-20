@@ -8,6 +8,7 @@
 <br>
 <form  action="{{route('users.admin')}}" method="GET">
 <div class="row mb-2">
+
     <div class="col-sm-5 col-md-5">
         <!-- STRING -->
         <input type="search" name="string" id="string" class="form-control rounded" placeholder="Pesquisar por Nome ou Email" aria-label="Search" aria-describedby="search-addon" />    
@@ -15,7 +16,7 @@
     </div>
     <div class="col-sm-5 col-md-5">
         <!-- NIF -->
-        <input type="search" name="nif" id="nif" class="form-control rounded" placeholder="NIF" aria-label="Search" aria-describedby="search-addon" />    
+        <input type="search" name="nif" id="nif" class="form-control rounded" placeholder="NIF" aria-label="Search" aria-describedby="search-addon" />       
         <!-- NIF --> 
     </div>  
     <div class="col-sm-5 col-md-2 .ml-md-auto" >

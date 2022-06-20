@@ -23,7 +23,7 @@ class UsersController extends Controller
    
    public function index_admin(Request $request)//Pagina clientes
       {
-         //dd($request);
+         
          if(($request->string) && ($request->nif) ){
             if ($request->nif > 100000000 and $request->nif < 999999999) {
                $dadosClientes = User::withTrashed()
@@ -61,7 +61,7 @@ class UsersController extends Controller
          //Se tiver NIF               
          if($request->nif){
             if ($request->nif > 100000000 and $request->nif < 999999999) {
-            $numeroClienteNif = Cliente::where('nif', 'like', '%' . $request->nif . '%')->pluck('id');
+            $numeroClienteNif = Cliente::withTrashed()->where('nif', 'like', '%' . $request->nif . '%')->pluck('id');
             $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
                            ->Where('id',$numeroClienteNif)
