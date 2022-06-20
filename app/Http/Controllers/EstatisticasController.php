@@ -101,6 +101,7 @@ class EstatisticasController extends Controller
     public function estatisticas_bilhetes_dia(Request $request) 
     {
       $dataInicio = Carbon::now()->format('Y-m-d');
+      $dataInicioxpto = Carbon::now()->format('d-m-Y');
       $dataMenos7Dias = date('Y-m-d', strtotime('-7 days', strtotime($dataInicio)));
       $dataMenos30Dias = date('Y-m-d', strtotime('-30 days', strtotime($dataInicio)));
       //dd($dataMenos30Dias);
@@ -147,8 +148,7 @@ class EstatisticasController extends Controller
               ->with('sessoesFilmes', $sessoesFilmes)
               ->with('totalSessoesDia', $totalSessoesDia)
               ->with('totalBilhetesVendidosDia', $totalBilhetesVendidosDia)
-              ->with('dataSelecionada', $dataInicio)
-              
+              ->with('dataInicioxpto', $dataInicioxpto)
               ->with('totaisDiarios', $totaisDiarios);
     }
 
