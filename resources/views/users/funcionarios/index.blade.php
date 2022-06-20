@@ -84,7 +84,9 @@
                 </td>
                 @endif
                 <td>
+                @if(is_null($user->deleted_at))
                 <a href="{{ route('users.funcionarios.edit', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-dark" role="button" aria-pressed="true">Alterar</a>
+                @endif    
                 </td> 
             </tr>
             @endforeach
