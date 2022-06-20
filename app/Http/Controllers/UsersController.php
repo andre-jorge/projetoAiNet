@@ -23,11 +23,12 @@ class UsersController extends Controller
    
    public function index_admin(Request $request)//Pagina clientes
       {
-         if(($request->string && $request->string != null ) && ($request->nif && $request->nif != null ) ){
+         //dd($request);
+         if(($request->string) && ($request->nif) ){
             if ($request->nif > 100000000 and $request->nif < 999999999) {
                $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
-                           ->Where('name', 'like', '%' . $request->string . '%')
+                           ->orWhere('name', 'like', '%' . $request->string . '%')
                            ->orWhere('email', 'like', '%' . $request->string . '%')
                            ->orWhere('nif', 'like', '%' . $request->nif . '%')
                            ->paginate(6, ['*'], 'ativos'); 
@@ -39,7 +40,8 @@ class UsersController extends Controller
                               ->where('tipo','=','C')
                               ->paginate(6, ['*'], 'ativos'); 
                      //dd($dadosClientes);
-                     return back()
+                     return redirect()->route('users.admin')
+                                 ->with('dadosClientes', $dadosClientes)
                                  ->with('alert-msg', 'NIF não existe')
                                  ->with('alert-type', 'danger');  
             }
@@ -47,17 +49,17 @@ class UsersController extends Controller
                         
          //dd($request->string); 
          //Se tiver String nome e email                  
-         if($request->string && $request->string != null ){
+         if($request->string){
             $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
-                           ->Where('name', 'like', '%' . $request->string . '%')
+                           ->orWhere('name', 'like', '%' . $request->string . '%')
                            ->orWhere('email', 'like', '%' . $request->string . '%')
                            ->paginate(6, ['*'], 'ativos'); 
                            return view('users.admin')
                                  ->with('dadosClientes', $dadosClientes); 
                         }
          //Se tiver NIF               
-         if($request->nif && $request->nif != null ){
+         if($request->nif){
             if ($request->nif > 100000000 and $request->nif < 999999999) {
             $numeroClienteNif = Cliente::where('nif', 'like', '%' . $request->nif . '%')->pluck('id');
             $dadosClientes = User::withTrashed()
@@ -72,7 +74,8 @@ class UsersController extends Controller
                               ->paginate(6, ['*'], 'ativos'); 
                      //dd($dadosClientes);
                      
-                     return back()
+                     return redirect()->route('users.admin')
+                                 ->with('dadosClientes', $dadosClientes)
                                  ->with('dadosClientes', $dadosClientes)
                                  ->with('alert-msg', 'NIF não existe')
                                  ->with('alert-type', 'danger'); 
@@ -260,11 +263,11 @@ class UsersController extends Controller
                   ]);
                if ($user->tipo == 'C') {
                      return redirect()->back()
-                     ->with('alert-msg', 'Cliente '.$user->name. ' Desbolqueado')
+                     ->with('alert-msg', 'Cliente '.$user->name. ' Desbloqueado')
                      ->with('alert-type', 'success');
                }else{
                   return redirect()->back()
-                     ->with('alert-msg', 'Utilizador '.$user->name. ' Desbolqueado')
+                     ->with('alert-msg', 'Utilizador '.$user->name. ' Desbloqueado')
                      ->with('alert-type', 'success');
                }
       }
