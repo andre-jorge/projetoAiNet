@@ -1,5 +1,4 @@
 @extends('home')
-
 @section('content')
 <div class="container text-center"
 <h3 class="align-middle"><strong><h1 class="align-middle">Todas Sessoes com Bilhetes Validados</h1></strong></h3>
@@ -20,8 +19,6 @@
     </div>
 </div>
 </form>
-
-
 <div>
     <table class="table table-striped">
         <thead>
@@ -52,10 +49,6 @@
     </table>
     <div class="d-flex justify-content-center">
         {!! $sessoesValidadas->links() !!}
-    </div> 
-    
+    </div>   
 </div>
-
-
-
 @endsection

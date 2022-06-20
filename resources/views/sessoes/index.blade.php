@@ -75,6 +75,4 @@ $height = '450px'; ?>
     </div>              
   </div>
 </div>
-
-
 @endsection

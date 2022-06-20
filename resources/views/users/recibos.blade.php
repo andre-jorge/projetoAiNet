@@ -37,5 +37,4 @@
     </table>
     {{ $recibos->links() }}
 </div> 
-
 @endsection

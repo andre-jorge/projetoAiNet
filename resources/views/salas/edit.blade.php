@@ -26,9 +26,4 @@
         </div>
     </div>
 </form>
-<!-- <div class="bt-area">
-        <button type="submit" class="bt">Criar</button>
-        <button type="reset" class="bt">Apagar</button>
-    </div> -->
-
 @endsection

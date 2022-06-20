@@ -77,6 +77,5 @@
     </table>
     <div class="d-flex justify-content-center">
             {!! $todassalas->links() !!}
-    </div>
-    
+    </div>   
 @endsection

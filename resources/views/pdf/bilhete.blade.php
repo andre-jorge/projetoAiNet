@@ -1,15 +1,13 @@
-<!-- THIS EMAIL WAS BUILT AND TESTED WITH LITMUS http://litmus.com -->
-<!-- IT WAS RELEASED UNDER THE MIT LICENSE https://opensource.org/licenses/MIT -->
 <!DOCTYPE html>
 <html>
 
 <head>
-  <title>Your invoice for HealthPlanG purchase</title>
+  <title>CineMagic</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <style type="text/css">
-    /* CLIENT-SPECIFIC STYLES */
+    
     body,
     table,
     td,
@@ -44,7 +42,7 @@
       width: 100% !important;
     }
     
-    /* iOS BLUE LINKS */
+    
     a[x-apple-data-detectors] {
       color: inherit !important;
       text-decoration: none !important;
@@ -54,7 +52,7 @@
       line-height: inherit !important;
     }
     
-    /* MEDIA QUERIES */
+    
     @media screen and (max-width: 480px) {
       .mobile-hide {
         display: none !important;
@@ -76,7 +74,7 @@
         max-width: 50%;
       }
     }
-    /* ANDROID CENTER FIX */
+    
     div[style*="margin: 16px 0;"] {
       margin: 0 !important;
     }
@@ -133,8 +131,7 @@
                     </table>  
                     </div>   
                                      
-                      @endforeach
-                      </div>
-                      
+          @endforeach
+      </div>           
   </body>
 </html>

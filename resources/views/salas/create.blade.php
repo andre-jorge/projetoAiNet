@@ -38,15 +38,6 @@
                     </div>
                 </div>
                 <input type="hidden" class="form-control" name="custom" value="0" >
-                <!-- <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" name="custom" id="custom" type="number" value="{{old('custom')}}" placeholder="Lotação Max."> 
-                        @error('custom')
-                            <div class="error">{{ $message }}</div>
-                        @enderror
-                        <label for="costum">Lotação Maxima</label>
-                    </div>
-                </div> -->
             </div>  
             <div class="mt-4 mb-0">
                 <div class="d-grid">
@@ -56,8 +47,4 @@
         </div>
     </div>
 </form>
-<!-- <div class="bt-area">
-        <button type="submit" class="bt">Criar</button>
-        <button type="reset" class="bt">Apagar</button>
-    </div> -->
 @endsection

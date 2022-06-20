@@ -1,5 +1,4 @@
 @extends('home')
-
 @section('content')
 <div>
     <table class="table table-striped">
@@ -33,10 +32,6 @@
     </table>
     <div class="d-flex justify-content-center">
         {!! $sessoesValidar->links() !!}
-    </div> 
-    
+    </div>    
 </div>
-
-
-
 @endsection

@@ -1,5 +1,4 @@
 @extends('home')
-@section('title','Editar' )
 @section('content')
 <form action="{{ route('users.funcionarios.update', $funcionario) }}" enctype="multipart/form-data" id="funcs-form" method="POST">
     <div class="card-header">

@@ -1,5 +1,4 @@
 @extends('home')
-
 @section('content')
 <div class="container text-center"
 <h3 class="align-middle"><strong><h1 class="align-middle">Funcionarios e Administradores</h1></strong></h3>

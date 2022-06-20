@@ -27,16 +27,6 @@ use App\Http\Controllers\ChartController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/home', function () {
-//     return view('home');
-// });
-
-
-// Route::get('/', function () {
-//      return view('page.index');
-// });
-
 Route::get('/', [FilmesController::class, 'index'])
         ->name('filme.index');
 
@@ -91,15 +81,6 @@ Route::get('funcionario/sessoes/validaBilhete/validado/{bilhete}', [SessoesContr
 ;
 //end validar
 //----------END------------FUNCIONARIOS VALIDA SESSOES----------------END-----------------
-
-
-Route::get('funcionario/sessoes/{id?}', [SessoesController::class, 'edit'])
-->middleware('auth')->name('sessoes.edit')
-->middleware('can:viewFuncionario,App\Models\User');//sessoes
-
-Route::put('funcionario/sessoes/{id?}', [SessoesController::class, 'update'])
-->middleware('auth')->name('sessoes.update')
-->middleware('can:viewFuncionario,App\Models\User');
 
 
 //---------------------------Sessoes ADMIN-------------------------------------

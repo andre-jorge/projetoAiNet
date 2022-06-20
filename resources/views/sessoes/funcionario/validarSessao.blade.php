@@ -1,5 +1,4 @@
 @extends('home')
-
 @section('content')
 <div class="container text-center"
 <h3 class="align-middle"><strong><h1 class="align-middle">Validar Sessao Filme {{$sessao->Filmes->titulo}}</h1></strong></h3>
@@ -22,8 +21,6 @@
     </div>
 </div>
 </form>
-
-
 <div>
     <table class="table table-striped">
         <thead>
@@ -52,14 +49,9 @@
             </tr>
             @endforeach
         </tbody>
-        
     </table>
     <div class="d-flex justify-content-center">
         {!! $todosBilhetes->links() !!}
     </div> 
-    
 </div>
-
-
-
 @endsection

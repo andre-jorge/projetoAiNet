@@ -1,5 +1,4 @@
 @extends('home')
-@section('title','Criar Funcionario' )
 @section('content')
 <form action="{{ route('users.funcionarios.store') }}" enctype="multipart/form-data" id="funcs-form" method="POST">
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Novo</h3></div>  

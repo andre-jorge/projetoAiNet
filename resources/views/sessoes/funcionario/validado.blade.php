@@ -1,7 +1,6 @@
 @extends('home')
-
 @section('content') 
-<div class="container text-center"
+<div class="container text-center">
 <h3 class="align-middle" ><strong><h1 class="align-middle" style="background-color:green;">Bilhete {{$bilhete->id}} é Valido</h1></strong></h3>
 <h3 class="align-middle"><strong><h1 class="align-middle">Verficação dos Dados do Cliente</h1></strong></h3>
 </div>
@@ -46,7 +45,6 @@
             </tr>
         </tbody>   
     </table>
+
 </div> 
-
-
 @endsection

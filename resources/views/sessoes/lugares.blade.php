@@ -4,7 +4,6 @@
 <html>
     <head>
     <link href="{{asset("/css/lugares.css")}}" rel="stylesheet" />
-
         <script>
             var EMPTY = 0; // Still available for reservation and purchase.
             var RESERVED = 1; // reserved but not yet paid for.
@@ -152,7 +151,6 @@
             }
         </script>
     </head>
-    
     <body onload="renderSeatplan(getSeatInfo({{$num_filas}},{{$num_pos}}));">
         <div class="container text-center">
             <h3 class="align-middle"><strong><h1 class="align-middle">Plano da Sala</h1></strong></h3>
