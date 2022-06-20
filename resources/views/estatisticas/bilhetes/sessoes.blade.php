@@ -31,7 +31,7 @@
                   <th scope="col">Bilhetes Vendidos</th>
                   <th scope="col">Bilhetes Usado</th>
                   <th scope="col">Bilhetes Não Usados</th>
-                  <th scope="col">Taxa de Ocupação da Sessao</th>
+                  <th scope="col">Taxa de Ocupação da Sessao (%)</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +44,7 @@
                     <td><?= $sessao->Naousados ?></td>
                     <td><?= $sessao->Usados ?></td>
                     <td><?= $sessao->Naousados ?></td>
-                    <td><?= $sessao->TaxaOcupação ?></td>
+                    <td><?= $sessao->TaxaOcupação ?> %</td>
                 </tr>
                 @endforeach
             </tbody>  
