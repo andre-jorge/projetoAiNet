@@ -1,8 +1,24 @@
 @extends('home')
 @section('content')
+<div class="container text-center"
+<h3 class="align-middle"><strong><h1 class="align-middle">Dashboard Diario {{$dataInicioxpto}}</h1></strong></h3>
+</div>
 
 <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard Diario {{$dataInicioxpto}}</h1>                        
+                        <form  action="{{route('estatisticas.bilhetes.dia')}}" method="GET">
+                            <div class="row mb-2">
+                                <div class="col-sm-10 col-md-10">
+                                <br><br>
+                                    <!-- STRING -->
+                                    <input type="date" name="data" id="data" class="form-control rounded" placeholder="Data" aria-label="Search" aria-describedby="search-addon" value="{{$dataInicio}}"/>    
+                                    <!-- STRING --> 
+                                </div>  
+                                <div class="col-sm-5 col-md-2 .ml-md-auto" >
+                                <br><br>
+                                    <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
+                                </div>
+                            </div>
+                        </form>                        
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>

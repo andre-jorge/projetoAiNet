@@ -100,10 +100,21 @@ class EstatisticasController extends Controller
 
     public function estatisticas_bilhetes_dia(Request $request) 
     {
-      $dataInicio = Carbon::now()->format('Y-m-d');
-      $dataInicioxpto = Carbon::now()->format('d-m-Y');
-      $dataMenos7Dias = date('Y-m-d', strtotime('-7 days', strtotime($dataInicio)));
-      $dataMenos30Dias = date('Y-m-d', strtotime('-30 days', strtotime($dataInicio)));
+      if ($request->data) {
+        $date = $request->get('data');
+        //$newDate = date('d-m-Y', strtotime($date));
+
+        $dataInicio = date('Y-m-d', strtotime($date));
+        $dataInicioxpto = date('d-m-Y', strtotime($date));
+        $dataMenos7Dias = date('Y-m-d', strtotime('-7 days', strtotime($dataInicio)));
+        $dataMenos30Dias = date('Y-m-d', strtotime('-30 days', strtotime($dataInicio)));
+      }else {
+        $dataInicio = Carbon::now()->format('Y-m-d');
+        $dataInicioxpto = Carbon::now()->format('d-m-Y');
+        $dataMenos7Dias = date('Y-m-d', strtotime('-7 days', strtotime($dataInicio)));
+        $dataMenos30Dias = date('Y-m-d', strtotime('-30 days', strtotime($dataInicio)));
+      }
+      
       //dd($dataMenos30Dias);
       $totaisDiarios = Recibo::where('data','=',$dataInicio)
                           ->select(DB::raw("SUM(preco_total_sem_iva) as PrecoTotalSiva, SUM(iva) as iva, SUM(preco_total_com_iva) as PrecoTotalCiva, data"))
@@ -149,6 +160,7 @@ class EstatisticasController extends Controller
               ->with('totalSessoesDia', $totalSessoesDia)
               ->with('totalBilhetesVendidosDia', $totalBilhetesVendidosDia)
               ->with('dataInicioxpto', $dataInicioxpto)
+              ->with('dataInicio', $dataInicio)
               ->with('totaisDiarios', $totaisDiarios);
     }
 
