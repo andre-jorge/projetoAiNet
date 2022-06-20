@@ -26,11 +26,12 @@ class UsersController extends Controller
          
          if(($request->string) && ($request->nif) ){
             if ($request->nif > 100000000 and $request->nif < 999999999) {
+               $numeroClienteNif = Cliente::withTrashed()->where('nif', 'like', '%' . $request->nif . '%')->pluck('id');
                $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
+                           ->Where('id', $numeroClienteNif)
                            ->orWhere('name', 'like', '%' . $request->string . '%')
                            ->orWhere('email', 'like', '%' . $request->string . '%')
-                           ->orWhere('nif', 'like', '%' . $request->nif . '%')
                            ->paginate(6, ['*'], 'ativos'); 
                            //dd($dadosFuncionarios);
                            return view('users.admin')
