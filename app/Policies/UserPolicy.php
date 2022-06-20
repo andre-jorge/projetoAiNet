@@ -36,11 +36,11 @@ class UserPolicy
         return  ($user->tipo == 'C') || ($user->tipo == 'A');
     }
 
-    public function viewAdminFunc(User $user, User $model)
+    public function viewAdminFunc(User $user)
     {
         return  ($user->tipo == 'A') || ($user->tipo == 'F') && ($user->bloqueado == '0');
     }
-    }
+
     /**
      * Determine whether the user can view the model.
      *
