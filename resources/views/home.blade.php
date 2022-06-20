@@ -165,10 +165,10 @@
                      <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                      Validar Sessões
                   </a>
-                  <!-- <a class="nav-link" href="#">
+                  <a class="nav-link" href="{{route('sessoes.funcionario.sessoesValidadas')}}">
                      <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                      Sessões Validadas
-                  </a> -->
+                  </a> 
                   @endcan
                </div>
             </div>

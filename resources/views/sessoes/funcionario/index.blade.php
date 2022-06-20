@@ -22,13 +22,16 @@
                 <td>{{$sessao->horario_inicio}}</td>
                 <td>{{$sessao->Salas->nome}}</td>   
                 <td>
-                    <a href="{{route('sessoes.funcionario.validarSessao', $sessao)}}" class="btn btn-outline-dark" role="button" aria-pressed="true">Validar</a>
+                    <a href="{{route('sessoes.funcionario.validarSessao', $sessao)}}" class="btn btn-outline-success" role="button" aria-pressed="true">Validar</a>
                 </td>
             </tr>
             @endforeach
         </tbody>
         
     </table>
+    <div class="d-flex justify-content-center">
+        {!! $sessoesValidar->links() !!}
+    </div> 
     
 </div>
 

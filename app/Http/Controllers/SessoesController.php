@@ -46,8 +46,6 @@ class SessoesController extends Controller
 
 
 
-
-
     //FUNÇAO PARA CONTAR BILHETES E DIZER LOTAÇÃO
     public static function ContaBilhetes($arg1){
         $sessoesFilmeBilhetes = Bilhetes::where('sessao_id',$arg1)->count();
@@ -166,14 +164,47 @@ class SessoesController extends Controller
         //dd($request);
         $currentTime = Carbon::now();
         $currentTime = $currentTime->toDateString();
-        $sessoesValidar = Sessao::where('data','>', $currentTime)->get();  
-        $sessoesPorFilme = Sessao::where('data','>', $currentTime)
-                                    ->where('filme_id', $request)
-                                    ->get();
+        $sessoesValidar = Sessao::where('data',$currentTime)->paginate(5);  
         return view('sessoes.funcionario.index')
                 ->with('sessoesValidar', $sessoesValidar);
     }
+    //---------------------------------------------------------------------
+    //--------------------------Sessoes Validadas--------------------------
+    public function sessoesValidadas(Request $request)
+    {
+        //dd($request);
+        $sessoesValidadas = Sessao::paginate(8);
+        if ($request->string) {
+            $sessoesValidadas = Sessao::where('id', $request->string)->paginate(8);
+            if ($sessoesValidadas->isEmpty()) {
+                return redirect()->route('sessoes.funcionario.sessoesValidadas')
+                            ->with('sessoesValidadas', $sessoesValidadas)
+                            ->with('alert-msg', 'Id Sessao Invalido')
+                            ->with('alert-type', 'danger');
+            }
+        }
+          
+        return view('sessoes.funcionario.sessoesValidadas')
+                ->with('sessoesValidadas', $sessoesValidadas);
+    }
 
+    public function sessoesValidadas2(Request $request, Sessao $sessao)
+    {
+        //dd($sessao);
+        $currentTime = Carbon::now();
+        $currentTime = $currentTime->toDateString();
+        $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
+                            ->where('estado','=','usado')
+                            ->paginate(10);
+        $sessao = Sessao::where('id',$sessao->id)->first();
+        //dd($sessao);
+        return view('sessoes.funcionario.sessoesValidadas2')
+                ->with('sessao', $sessao)
+                ->with('todosBilhetes', $todosBilhetes);
+    }
+    //-------------------------END Sessoes Validadas-------------------------
+    //-----------------------------------------------------------------------
+    
     public function funcionarioValidarSessoes(Request $request, Sessao $sessao)
     {
         //dd($sessao);
@@ -181,7 +212,7 @@ class SessoesController extends Controller
         $currentTime = $currentTime->toDateString();
         $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
                             ->where('estado','=','não usado')
-                            ->get();
+                            ->paginate(10);
         $sessao = Sessao::where('id',$sessao->id)->first();
         //dd($sessao);
         return view('sessoes.funcionario.validarSessao')

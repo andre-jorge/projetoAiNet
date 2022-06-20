@@ -56,9 +56,21 @@ Route::post('email/mailable', [EmailController::class, 'send_email_with_mailable
 //--------------------------FUNCIONARIOS---------------------------------------------------        
 //----------------------------------------------------------------------------------------- 
 //--------------------FUNCIONARIOS VALIDA SESSOES------------------------------------------
+
+//validadas
+
+Route::get('funcionario/sessoesValidadas', [SessoesController::class, 'sessoesValidadas'])
+->middleware('auth')->name('sessoes.funcionario.sessoesValidadas')
+->middleware('can:viewFuncionario,App\Models\User'); 
+Route::get('funcionario/sessoesValidadas/{sessao}', [SessoesController::class, 'sessoesValidadas2'])
+->middleware('auth')->name('sessoes.funcionario.sessoesValidadas2')
+->middleware('can:viewFuncionario,App\Models\User')
+; 
+//end validadas
+//validar
 Route::get('funcionario/sessoes', [SessoesController::class, 'funcionarioSessoes'])
 ->middleware('auth')->name('sessoes.funcionario.index')
-->middleware('can:viewFuncionario,App\Models\User'); //sessoes
+->middleware('can:viewFuncionario,App\Models\User'); 
 
 Route::get('funcionario/sessoes/{sessao}', [SessoesController::class, 'funcionarioValidarSessoes'])
 ->middleware('auth')->name('sessoes.funcionario.validarSessao')
@@ -77,6 +89,7 @@ Route::get('funcionario/sessoes/validaBilhete/validado/{bilhete}', [SessoesContr
 ->middleware('auth')->name('sessoes.funcionario.validado')
 ->middleware('can:viewFuncionario,App\Models\User')
 ;
+//end validar
 //----------END------------FUNCIONARIOS VALIDA SESSOES----------------END-----------------
 
 
