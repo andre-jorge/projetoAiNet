@@ -317,7 +317,7 @@ class SessoesController extends Controller
         $currentTime = $currentTime->toDateString();
         $todosBilhetes = Bilhetes::where('sessao_id',$sessao->id)
                             ->where('estado','=','não usado')
-                            ->get();
+                            ->paginate(10);
         return view('sessoes.funcionario.validarSessao')
                 ->with('sessao', $sessao)
                 ->with('todosBilhetes', $todosBilhetes);
