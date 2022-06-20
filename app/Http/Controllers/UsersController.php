@@ -153,7 +153,7 @@ class UsersController extends Controller
       $hashedPassword = Hash::make($request->password);
       $lastId = User::latest('id')->first()->id+1;
       $random = Str::random(10);
-      dd($user);
+      //dd($user);
       //valida nome
       if ($request->name == null) {
          return back()
