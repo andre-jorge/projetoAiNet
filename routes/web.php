@@ -255,7 +255,7 @@ Route::post('admin/funcionarios', [usersController::class, 'funcionario_store'])
 
 Route::get('admin/funcionarios/{user}/inativar', [usersController::class, 'funcionario_inativar'])
         ->middleware('auth')->name('users.funcionarios.inativar')
-        ->middleware('can:viewAdmin,App\Models\User')
+        ->middleware('can:viewAdminFunc,App\Models\User')
         ; 
 
 Route::get('admin/funcionarios/{user}', [usersController::class, 'funcionario_edit'])
