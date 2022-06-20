@@ -51,13 +51,18 @@
                 <td>{{$user->Cliente->nif ?? ' '}}</td>
                 <td>{{$user->Cliente->tipo_pagamento ?? ' '}} </td>
                 <td>{{$user->Cliente->ref_pagamento ?? ' '}}</td>
-                @if($user->bloqueado == 0)
-                <td>
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">&nbsp&nbsp&nbspBloquear&nbsp&nbsp&nbsp</a>
-                </td>
+                @if(is_null($user->deleted_at))
+                    @if($user->bloqueado == 0)
+                    <td>
+                    <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">&nbsp&nbsp&nbspBloquear&nbsp&nbsp&nbsp</a>
+                    </td>
+                    @else
+                    <td>
+                    <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">Desbloquear</a>
+                    </td>
+                    @endif
                 @else
                 <td>
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">Desbloquear</a>
                 </td>
                 @endif
                 @if(is_null($user->deleted_at))  

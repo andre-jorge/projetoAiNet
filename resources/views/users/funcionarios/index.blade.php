@@ -60,13 +60,18 @@
                     @else Funcionario 
                     @endif 
                 </td>
-                @if($user->bloqueado == 1)
-                <td>
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbspAtivar&nbsp&nbsp</a>
-                </td>
+                @if(is_null($user->deleted_at))
+                    @if($user->bloqueado == 1)
+                    <td>
+                    <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-success" role="button" aria-pressed="true">&nbspAtivar&nbsp&nbsp</a>
+                    </td>
+                    @else
+                    <td>
+                    <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">Inativar</a>
+                    </td>
+                    @endif
                 @else
                 <td>
-                <a href="{{ route('users.funcionarios.inativar', $user) }}" name="user" value='{{$user}}' class="btn btn-outline-danger" role="button" aria-pressed="true">Inativar</a>
                 </td>
                 @endif
                 @if(is_null($user->deleted_at))
