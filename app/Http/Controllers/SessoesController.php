@@ -76,7 +76,7 @@ class SessoesController extends Controller
                     ->count();
         //dd($num_pos);
 
-
+        
         $lugaresOcupados=DB::table('lugares')
                          ->select('lugares.id')
                          ->leftJoin('bilhetes', 'bilhetes.lugar_id', '=', 'lugares.id')
@@ -108,7 +108,22 @@ class SessoesController extends Controller
         //dd($lugares2->toArray());
         $lugares=$sessao->Salas->Lugares
                         ->whereNotIn('id', $lugares2);
-                        //dd($lugares2);
+                        //dd($lugares2);           
+        if ($lugares->isEmpty()) {
+            $currentTime = Carbon::now();
+            $currentTime = $currentTime->toDateString();
+            $filme = Filme::where('id',$sessao->filme_id)->first();
+            $sessoesFilme = Sessao::where('filme_id', $filme->id)
+                                    ->where('data','>', $currentTime)
+                                    ->paginate(5);
+            return view('sessoes.index')
+                        ->with('filme', $filme)
+                        ->with('sessoesFilme', $sessoesFilme)
+                        ->with('success', 'thank you')
+                        ->with('alert-msg', 'Sem Lugares Disponiveis')
+                        ->with('alert-type', 'danger');
+            
+        }
         $lugaresOcupados=$sessao->Salas->Lugares->whereIn('id', $lugares2=$sessao->Bilhetes->pluck('lugar_id'));
         //$fila = $lugaresOcupados->pluck('fila');
         //$posicao = $lugaresOcupados->pluck('posicao');
