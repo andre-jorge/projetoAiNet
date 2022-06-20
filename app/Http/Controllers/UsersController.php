@@ -24,7 +24,8 @@ class UsersController extends Controller
    public function index_admin(Request $request)//Pagina clientes
       {
          if(($request->string && $request->string != null ) && ($request->nif && $request->nif != null ) ){
-            $dadosClientes = User::withTrashed()
+            if ($request->nif > 100000000 and $request->nif < 999999999) {
+               $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
                            ->Where('name', 'like', '%' . $request->string . '%')
                            ->orWhere('email', 'like', '%' . $request->string . '%')
@@ -32,9 +33,19 @@ class UsersController extends Controller
                            ->paginate(6, ['*'], 'ativos'); 
                            //dd($dadosFuncionarios);
                            return view('users.admin')
-                                 ->with('dadosClientes', $dadosClientes);  
-                        }
-                        //dd($request->string); 
+                                 ->with('dadosClientes', $dadosClientes);
+            }else {
+               $dadosClientes = User::withTrashed()
+                              ->where('tipo','=','C')
+                              ->paginate(6, ['*'], 'ativos'); 
+                     //dd($dadosClientes);
+                     return back()
+                                 ->with('alert-msg', 'NIF não existe')
+                                 ->with('alert-type', 'danger');  
+            }
+         }
+                        
+         //dd($request->string); 
          //Se tiver String nome e email                  
          if($request->string && $request->string != null ){
             $dadosClientes = User::withTrashed()
@@ -47,6 +58,7 @@ class UsersController extends Controller
                         }
          //Se tiver NIF               
          if($request->nif && $request->nif != null ){
+            if ($request->nif > 100000000 and $request->nif < 999999999) {
             $numeroClienteNif = Cliente::where('nif', 'like', '%' . $request->nif . '%')->pluck('id');
             $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
@@ -54,7 +66,18 @@ class UsersController extends Controller
                            ->paginate(6, ['*'], 'ativos'); 
                            return view('users.admin')
                                  ->with('dadosClientes', $dadosClientes); 
-                        }
+            }else {
+               $dadosClientes = User::withTrashed()
+                              ->where('tipo','=','C')
+                              ->paginate(6, ['*'], 'ativos'); 
+                     //dd($dadosClientes);
+                     
+                     return back()
+                                 ->with('dadosClientes', $dadosClientes)
+                                 ->with('alert-msg', 'NIF não existe')
+                                 ->with('alert-type', 'danger'); 
+               }
+            }
          $dadosClientes = User::withTrashed()
                               ->where('tipo','=','C')
                               ->paginate(6, ['*'], 'ativos'); 

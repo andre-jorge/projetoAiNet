@@ -53,7 +53,9 @@
                 <td>{{$salas->nome}}</td>
                 <td>{{$salas->custom}}</td>
                 <td>
+                @if($salas->deleted_at == null)
                 <a style="float: right;" class="btn btn-outline-dark" href="{{ route('salas.edit', $salas) }}" name="salaid" value='{{$salas}}' role="button" aria-pressed="true">Alterar</a>
+                @endif
                 </td>
                 
                 <td>

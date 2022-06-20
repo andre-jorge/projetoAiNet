@@ -384,7 +384,7 @@ class SessoesController extends Controller
 
                 $filmes = Filme::paginate(8);
                 $listaGeneros = Genero::all();   
-                return back('filmes.admin')
+                return view('filmes.admin')
                     ->with('listaGeneros', $listaGeneros)
                     ->with('filmes', $filmes)
                     ->with('alert-msg', 'Sessao criada com sucesso')

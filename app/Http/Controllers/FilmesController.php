@@ -132,6 +132,16 @@ class FilmesController extends Controller
    //STORE OK------------
    public function store(Request $request)
    {
+      if (is_null($request->cartaz_url)) {
+         return redirect()->back()
+               ->with('alert-msg', 'Cartaz em falta')
+               ->with('alert-type', 'danger');
+      }
+      if (is_null($request->titulo)) {
+         return redirect()->back()
+               ->with('alert-msg', 'Titulo em falta')
+               ->with('alert-type', 'danger');
+      }
       $lastId = Filme::latest('id')->first()->id+1;
       $random = Str::random(10);
       $nameFile = $lastId . '_'. $random . '.' . $request->cartaz_url->extension(); 
