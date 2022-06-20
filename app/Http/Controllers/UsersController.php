@@ -360,9 +360,11 @@ class UsersController extends Controller
              ->with('alert-type', 'success');
       }   
       }
-      //update nif
+      //update tipo_pagamento
       if($request->tipo_pagamento){
-         Cliente::where('id', $user->id)->update(['tipo_pagamento' => $request->tipo_pagamento]);
+         if ($request->tipo_pagamento != 'NENHUM') {
+            Cliente::where('id', $user->id)->update(['tipo_pagamento' => $request->tipo_pagamento]);
+         } 
       }
       //update foto
       if($request->foto_url){
