@@ -58,7 +58,7 @@ $height = '450px'; ?>
                   @if(Auth::guest() or Auth::user()->tipo == 'C')
                     <form action="{{route('sessoes.lugares', $sessao)}}" id="form" method="GET">
                         @csrf
-                        <button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="open">Reservar</button>
+                        <button type="submit" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal" id="open">Reservar</button>
                         
                           </form>
                           

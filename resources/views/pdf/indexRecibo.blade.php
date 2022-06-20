@@ -65,15 +65,18 @@
             <td>{{$recibo->nif}}</td>
             <td>{{$recibo->tipo_pagamento}}</td>
             <td>
-                <a href="{{ route('pdf.recibo', $recibo->id ) }}" name="recibo" value='{{$recibo}}' class="btn btn-info" role="button" aria-pressed="true">Recibo</a>
+                <a href="{{ route('pdf.recibo', $recibo->id ) }}" name="recibo" value='{{$recibo}}' class="btn btn-outline-success" role="button" aria-pressed="true">Recibo</a>
             </td>
             <td>
-                <a href="{{ route('pdf.bilhete', $recibo->id ) }}" name="bilhetes" value='{{$recibo}}' class="btn btn-info" role="button" aria-pressed="true">Bilhete(s)</a>
+                <a href="{{ route('pdf.bilhete', $recibo->id ) }}" name="bilhetes" value='{{$recibo}}' class="btn btn-outline-success" role="button" aria-pressed="true">Bilhete(s)</a>
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+<div class="d-flex justify-content-center">
 {{ $recibos->links() }}
+    </div>
+
 
 @endsection

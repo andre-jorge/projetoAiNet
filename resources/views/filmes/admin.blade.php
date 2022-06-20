@@ -8,7 +8,7 @@
 <div class="row mb-2">
     <div class="col-sm-5 col-md-5">
         <!-- STRING -->
-        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Pesquisar por Nome ou Email" aria-label="Search" aria-describedby="search-addon" />    
+        <input type="search" name="string" id="string" class="form-control rounded" placeholder="Pesquisar por Titulo ou Sumario" aria-label="Search" aria-describedby="search-addon" />    
         <!-- STRING --> 
     </div>
     <div class="col-sm-5 col-md-5">

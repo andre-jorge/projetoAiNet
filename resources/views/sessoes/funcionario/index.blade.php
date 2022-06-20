@@ -5,6 +5,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th scope="col">ID Sessao</th>
                 <th scope="col"></th>
                 <th scope="col">Titulo</th>
                 <th scope="col">Data</th>
@@ -16,6 +17,7 @@
         <tbody>
             @foreach ($sessoesValidar as $sessao)  
             <tr>
+                <td>{{$sessao->id}}</td> 
                 <td><img class="rounded" style="max-height: 150px; max-width: 150px;" src="/storage/cartazes/{{$sessao->Filmes->cartaz_url ?? 'default-profile.png'}}" alt="..." /></td>
                 <td>{{$sessao->Filmes->titulo}}</td> 
                 <td>{{$sessao->data}}</td>

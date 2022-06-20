@@ -3,6 +3,7 @@
 <div class="container text-center"
 <h3 class="align-middle"><strong><h1 class="align-middle">Salas</h1></strong></h3>
 </div>
+<br>
 <form  action="{{route('salas.index')}}" method="GET">
 <div class="row mb-2">
     <div class="col-sm-5 col-md-5">

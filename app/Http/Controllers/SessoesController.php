@@ -330,7 +330,7 @@ class SessoesController extends Controller
     //INDEX JA OK -----------------------------------------------------
     public function admin_index(Filme $filme)
     {
-        $sessoesFilme=Sessao::where('filme_id',$filme->id)->get();
+        $sessoesFilme=Sessao::where('filme_id',$filme->id)->paginate(10);
         return view('sessoes.admin.index', compact('sessoesFilme'));
     }
 
