@@ -122,18 +122,10 @@
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                {{--<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Salas
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                <a class="nav-link" href="{{route('estatisticas.bilhetes.dia')}}">
+                                       
+                                       Dashboard
                                     </a>
-                                    
-                                        <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="">Salas</a>
-                                            <a class="nav-link" href="">Lugares</a>
-                                        </nav>
-                                    </div> 
-                                    --}}
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
                                         Totais
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -152,8 +144,6 @@
                                     <div class="collapse" id="pagesCollapseError2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="{{route('estatisticas.bilhetes.filmes')}}">Bilhetes por Filme</a>
-                                            <a class="nav-link" href="{{route('estatisticas.bilhetes.dia')}}">Bilhetes por Dia</a>
-                                            <a class="nav-link" href="{{route('estatisticas.bar-chart')}}">Grafico Testes</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -186,26 +176,15 @@
                <span>{{ session('alert-msg') }}</span>
             </div>
             @endif
-            @yield('content')
-            <!-- <footer class="py-4 bg-light mt-auto">
-               <div class="container-fluid px-4">
-                   <div class="d-flex align-items-center justify-content-between small">
-                       <div class="text-muted">Copyright &copy; Your Website 2022</div>
-                       <div>
-                           <a href="#">Privacy Policy</a>
-                           &middot;
-                           <a href="#">Terms &amp; Conditions</a>
-                       </div>
-                   </div>
-               </div>
-               </footer> -->
+               @yield('content')
          </div>
       </div>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+      
+   </body>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
       <script src="js/scripts.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.esm.min.js" integrity="sha512-yPOQ2pPoQ9JtP0/jDKpXiKyWNCJWT5OI+6r1EqZmTg+afKQOBpy08VYboeq+Tt9kl9/FOCueEhH6cmHN3nAdJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.esm.min.js" integrity="sha512-yPOQ2pPoQ9JtP0/jDKpXiKyWNCJWT5OI+6r1EqZmTg+afKQOBpy08VYboeq+Tt9kl9/FOCueEhH6cmHN3nAdJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
       @yield('footer-scripts')
-   </body>
 </html>

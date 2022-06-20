@@ -101,12 +101,54 @@ class EstatisticasController extends Controller
     public function estatisticas_bilhetes_dia(Request $request) 
     {
       $dataInicio = Carbon::now()->format('Y-m-d');
+      $dataMenos7Dias = date('Y-m-d', strtotime('-7 days', strtotime($dataInicio)));
+      $dataMenos30Dias = date('Y-m-d', strtotime('-30 days', strtotime($dataInicio)));
+      //dd($dataMenos30Dias);
       $totaisDiarios = Recibo::where('data','=',$dataInicio)
-                          ->select(DB::raw("SUM(preco_total_sem_iva) as PrecoTotalSiva, SUM(iva) as iva, SUM(preco_total_com_iva) as PrecoTotalCiva, month(data)"))
-                          ->groupBy('month(data)')
-                          ->get();   
+                          ->select(DB::raw("SUM(preco_total_sem_iva) as PrecoTotalSiva, SUM(iva) as iva, SUM(preco_total_com_iva) as PrecoTotalCiva, data"))
+                          ->groupBy('data')
+                          ->get(); 
+       // dd($totaisDiarios); 
+      $sessoesDia = Sessao::where('data','=',$dataInicio)->pluck('id');
+      $sessoesFilmes = Sessao::where('data','=',$dataInicio)->distinct('filme_id')->count();
+      $totalSessoesDia = $sessoesDia->count();
+      $totalRecibosCount = Recibo::where('data','=',$dataInicio)->count();
+      //clientes
+      $totalCliente = Cliente::count();
+      $clientesNovosHoje = Cliente::where('created_at',$dataInicio)->count();
+      $clientesBloqueados = User::where('tipo','=','C')->where('bloqueado','=','1')->count();
+      $clientesEleminados = User::withTrashed()->where('deleted_at','!=','null')->count();
+      $melhoresClientes30Dias = DB::select('SELECT SUM(recibos.preco_total_com_iva) as "soma",users.name as name, users.foto_url AS foto_url, users.id AS id  FROM recibos 
+      LEFT JOIN users 
+      ON users.id = recibos.cliente_id
+      WHERE recibos.data between "'.$dataMenos30Dias.'" and "'.$dataInicio.'"
+      GROUP BY users.name, users.foto_url, users.id
+      ORDER BY SUM(recibos.preco_total_com_iva) DESC limit 3');
+      $melhoresClientes7Dias = DB::select('SELECT SUM(recibos.preco_total_com_iva) as "soma",users.name as name, users.foto_url AS foto_url, users.id AS id  FROM recibos 
+      LEFT JOIN users 
+      ON users.id = recibos.cliente_id
+      WHERE recibos.data between "'.$dataMenos7Dias.'" and "'.$dataInicio.'"
+      GROUP BY users.name, users.foto_url, users.id
+      ORDER BY SUM(recibos.preco_total_com_iva) DESC limit 3');
+      //dd($melhoresClientes);
+      
+         
+      $totalBilhetesVendidosDia = Bilhetes::whereIn('sessao_id',$sessoesDia)->count();
+      //dd($totalBilhetesVendidosDia);            
       return view('estatisticas.bilhetes.dia')
+              ->with('totalCliente', $totalCliente)
+              ->with('clientesNovosHoje', $clientesNovosHoje)
+              ->with('clientesBloqueados', $clientesBloqueados)
+              ->with('clientesEleminados', $clientesEleminados)
+              ->with('melhoresClientes30Dias', $melhoresClientes30Dias)
+              ->with('melhoresClientes7Dias', $melhoresClientes7Dias)
+              ->with('sessoesDia', $sessoesDia)
+              ->with('totalRecibosCount', $totalRecibosCount)
+              ->with('sessoesFilmes', $sessoesFilmes)
+              ->with('totalSessoesDia', $totalSessoesDia)
+              ->with('totalBilhetesVendidosDia', $totalBilhetesVendidosDia)
               ->with('dataSelecionada', $dataInicio)
+              
               ->with('totaisDiarios', $totaisDiarios);
     }
 

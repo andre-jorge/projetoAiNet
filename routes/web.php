@@ -336,13 +336,8 @@ Route::get('admin/estatisticas/bilhetes/filmes/{filme}/sessoes/', [EstatisticasC
         ->middleware('can:viewAdmin,App\Models\User')
         ;
 
-Route::get('admin/estatisticas/bilhetes/dia', [EstatisticasController::class, 'estatisticas_bilhetes_dia'])
+Route::get('admin/dashboard', [EstatisticasController::class, 'estatisticas_bilhetes_dia'])
         ->middleware('auth')->name('estatisticas.bilhetes.dia')
-        ->middleware('can:viewAdmin,App\Models\User')
-        ;
-
-Route::get('admin/estatisticas/bar-chart', [ChartController::class, 'barchart'])
-        ->middleware('auth')->name('estatisticas.bar-chart')
         ->middleware('can:viewAdmin,App\Models\User')
         ;
 
