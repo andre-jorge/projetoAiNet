@@ -52,7 +52,7 @@ class UsersController extends Controller
          if($request->string){
             $dadosClientes = User::withTrashed()
                            ->where('tipo','=','C')
-                           ->orWhere('name', 'like', '%' . $request->string . '%')
+                           ->Where('name', 'like', '%' . $request->string . '%')
                            ->orWhere('email', 'like', '%' . $request->string . '%')
                            ->paginate(6, ['*'], 'ativos'); 
                            return view('users.admin')
