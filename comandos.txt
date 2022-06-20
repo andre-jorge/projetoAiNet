@@ -7,3 +7,16 @@ composer require doctrine/dbal
 Fotos:
 Colocar foto CineMagic.png na pasta "\storage\CineMagic.png" e na pasta "storage\cartazes\CineMagic.png"
 Colocar foto default-profile.png na pasta "\storage\fotos\default-profile.png"
+
+
+No ficheiro config/app.php tive de adicionar isto:
+
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+'aliases' => Facade::defaultAliases()->merge([
+        //'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'ExampleClass' => App\Example\ExampleClass::class,
+    ])->toArray(),
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
