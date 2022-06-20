@@ -25,9 +25,15 @@ class SessoesController extends Controller
 {
     public function index(Request $request, Filme $filme){
         $currentTime = Carbon::now();
-        $currentTime = $currentTime->toDateString();
+        $currentDay = $currentTime->format('Y-m-d');
+        $currenthourMenos5 = $currentTime->subMinutes(5)->toTimeString();
+        //$currenthour = $currenthour->subMinutes(5);
+        //dd($currenthourMenos5);
         $sessoesFilme = Sessao::where('filme_id', $filme->id)
-                                    ->where('data','>', $currentTime)
+                                    ->where('data','>=', $currentDay)
+                                    ->where('horario_inicio','>=', $currenthourMenos5)
+                                    ->orderby('horario_inicio','asc')
+                                    ->orderby('data','asc')
                                     ->paginate(5);
                                     //dd($sessoesFilme);
 
@@ -350,15 +356,14 @@ class SessoesController extends Controller
     {
         //dd($request);
         //$todassessoes= Sessao::all();
-        
-        $validatedData = $request->validate([
-            'filme_id' => 'required|max:500',
-            'sala_id' => 'required|max:2',
-            'data' => 'required|date',
-            'horario_inicio' => 'required|date_format:H:i']);
-            $newSessao = Sessao::create($validatedData);
-
         if ($request->continuar == 1) {
+            $validatedData = $request->validate([
+                'filme_id' => 'required|max:500',
+                'sala_id' => 'required|max:2',
+                'data' => 'required|date',
+                'horario_inicio' => 'required|date_format:H:i']);
+                $newSessao = Sessao::create($validatedData);
+
                 $sessoes = Sessao::paginate(8);
                 $listaFilmes = Filme::pluck('id', 'Titulo');
                 $listaSalas = Salas::pluck('id', 'nome');
@@ -371,11 +376,20 @@ class SessoesController extends Controller
                     ->with('alert-msg', 'Sessao criada com sucesso')
                     ->with('alert-type', 'success');
             }else{
+                $validatedData = $request->validate([
+                    'filme_id' => 'required|max:500',
+                    'sala_id' => 'required|max:2',
+                    'data' => 'required|date',
+                    'horario_inicio' => 'required|date_format:H:i']);
+                    $newSessao = Sessao::create($validatedData);
+
                 $filmes = Filme::paginate(8);
                 $listaGeneros = Genero::all();   
-                return view('filmes.admin', compact('filmes','listaGeneros'))
-                ->with('alert-msg', 'Sessao criada com sucesso')
-                ->with('alert-type', 'success');
+                return back('filmes.admin')
+                    ->with('listaGeneros', $listaGeneros)
+                    ->with('filmes', $filmes)
+                    ->with('alert-msg', 'Sessao criada com sucesso')
+                    ->with('alert-type', 'success');
             }
     }
 
