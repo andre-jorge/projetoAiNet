@@ -4,6 +4,9 @@
 <h3 class="align-middle"><strong><h1 class="align-middle">Totais Diarios</h1></strong></h3>
 </div>
 <br>
+<div class="container text-center"
+<h3 class="align-middle"><a href="{{route('exportDiario',$datas)}}">Exportar Listagem</a></h3>
+</div>
 <br>
 
 <form  action="{{route('estatisticas.totais.diarios')}}" method="GET">
@@ -17,8 +20,9 @@
     <div class="col-sm-2 col-md-2 .ml-md-auto" >
         <label for="submit"></label>
         <button type="submit" name="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
-        <a href="{{action('App\Http\Controllers\EstatisticasController@export')}}">Export</a>
+        
     </div>
+
 </div>
 </form> 
 <table class="table table-striped">

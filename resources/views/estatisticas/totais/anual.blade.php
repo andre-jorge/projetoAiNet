@@ -5,6 +5,10 @@
 </div>
 <br>
 <br>
+<div class="container text-center"
+<h3 class="align-middle"><a href="{{route('exportAnual')}}">Exportar Listagem</a></h3>
+</div>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -23,7 +27,7 @@
             <td>{{$totais->PrecoTotalCiva}}</td>
         </tr>
         @endforeach
-        <a href="{{action('App\Http\Controllers\EstatisticasController@export')}}">Export</a>
+        
     </tbody>
 </table>
 

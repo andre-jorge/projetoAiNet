@@ -341,12 +341,15 @@ Route::get('admin/dashboard', [EstatisticasController::class, 'estatisticas_bilh
         ->middleware('can:viewAdmin,App\Models\User')
         ;
 
-Route::get('export', [EstatisticasController::class, 'export']);
 
-
-
-
-
+//exporta Ecxel
+Route::get('admin/estatisticas/totais/diarios/exportDiario', [EstatisticasController::class, 'exportDiario'])
+                        ->name('exportDiario');
+Route::get('admin/estatisticas/totais/mensal/exportMensal', [EstatisticasController::class, 'exportMensal'])
+                        ->name('exportMensal');
+                        
+Route::get('admin/estatisticas/totais/anual/exportAnual', [EstatisticasController::class, 'exportAnual'])
+                        ->name('exportAnual');
 
 
 Auth::routes();

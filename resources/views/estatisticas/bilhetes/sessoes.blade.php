@@ -17,7 +17,7 @@
     </div>  
     <div class="col-sm-5 col-md-2 .ml-md-auto" >
         <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i> Pesquisar</button>
-        <a href="{{action('App\Http\Controllers\EstatisticasController@export')}}">Export</a>
+        
     </div>
 </div>
 </form>

@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\DB; // para poder usar o DB:..........
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
-use App\Exports\ExcelExport;
+use App\Exports\DiarioExport;
+use App\Exports\MensalExport;
+use App\Exports\AnualExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -47,8 +49,13 @@ class EstatisticasController extends Controller
                           ->groupBy('data')
                           ->get();   
                           //dd($totaisDiarios);  
+      $datas = array(
+        "data"=> $dataInicio,
+        "data2"=> $dataFim,
+        );
 
       return view('estatisticas.totais.diarios')
+              ->with('datas', $datas)
               ->with('dataSelecionada', $dataSelecionada)
               ->with('totaisDiarios', $totaisDiarios);
     }
@@ -83,8 +90,13 @@ class EstatisticasController extends Controller
                           ->groupBy('month(data)')
                           ->get();
       }    
-      //dd($totaisMensal);          
+      //dd($totaisMensal);  
+      $datas = array(
+        "data"=> $dataInicio,
+        "data2"=> $dataFim,
+        );        
       return view('estatisticas.totais.mensal')
+              ->with('datas', $datas)
               ->with('anoPedido', $anoPedido)
               ->with('totaisMensal', $totaisMensal);
     }
@@ -304,9 +316,19 @@ class EstatisticasController extends Controller
                   ->with('sessoesFilme', $sessoesFilme);
     }
 
-    public function export() 
+    //exporta ecxel
+    public function exportDiario(Request $request) 
     {
-        return Excel::download(new EstatisticasController, 'excel.xlsx');
+      return (new DiarioExport)->forDate($request->data,$request->data2)->download('TotalDiario.xlsx');
     }
 
+    public function exportMensal(Request $request) 
+    {
+      return (new MensalExport)->forDate($request->data,$request->data2)->download('TotalMensal.xlsx');
+    }
+
+    public function exportAnual() 
+    {
+      return (new AnualExport)->download('TotalAnual.xlsx');
+    }
 }
