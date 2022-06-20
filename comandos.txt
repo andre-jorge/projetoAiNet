@@ -1,1 +1,9 @@
-composer require barryvdh/laravel-dompdf
+
+PDF: composer require barryvdh/laravel-dompdf
+
+composer require doctrine/dbal
+(este composer é apenas porque decidimos usar o custom para a lotação da sala e como o script mantem a null o campo, existe uma funcao dentro do index das sessoesController que faz a soma dos lugares e atribui a sala)
+
+Fotos:
+Colocar foto CineMagic.png na pasta "\storage\CineMagic.png" e na pasta "storage\cartazes\CineMagic.png"
+Colocar foto default-profile.png na pasta "\storage\fotos\default-profile.png"
